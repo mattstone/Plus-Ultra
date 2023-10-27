@@ -1,0 +1,14 @@
+<div id="request_2fa">
+  
+  <%= form_with url: request_2fa_users_path, method: :post do |f| %>
+     <p>
+       To reset your your password you will need confirm your email address.
+     </p>
+     <p>
+       Enter your email to receive a one time verification code
+    </p>
+    <%= f.email_field :email, value: params[:email], placeholder: "Email Address" %>
+    <%= f.submit "Request verification code", class: "btn btn-sm btn-primary" %>
+  <% end %>
+  
+</div>

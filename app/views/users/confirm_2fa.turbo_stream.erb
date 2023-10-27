@@ -1,0 +1,6 @@
+<% if @success %>
+  <%= turbo_stream.replace "confirm_2fa", partial: 'devise/passwords/new' %>
+<% else %>
+  <%= turbo_stream.replace "confirm_2fa", partial: 'devise/passwords/2fa/confirm' %>
+<% end %>
+
