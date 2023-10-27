@@ -15,7 +15,8 @@ class ISBaseWatir
     setup_for_tests
     
     @browser  = Watir::Browser.new
-    @browser.goto @base_url
+    
+    go_home
     
     header "Watir Tests are alive!"
   end
@@ -42,23 +43,29 @@ class ISBaseWatir
     User.where(email: test_user[:email]).destroy_all
   end
   
+  def go_home
+    @browser.goto @base_url
+  end
+  
   def good(message) 
     @total_passed += 1
-    "👍: #{message}"
+    "  👍: #{message}"
   end
   
   def bad(message)
     @total_failed += 1
-    "🍄: #{message}"
+    "  🍄: #{message}"
   end
   
   def header(message)
+    p ""
     p "=========================================="
     p "👊 #{message}"
     p "=========================================="
   end
   
   def tests_complete 
+    p ""
     p "=========================================="
     p "✅ Tests Complete"
     p "=========================================="
