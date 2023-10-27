@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable         
          
-         
+  enum :role, { customer: 0, admin: 100}, prefix: true
 
   def send_new_one_time_code!         
     generate_one_time_code!
@@ -25,5 +25,7 @@ class User < ApplicationRecord
      
     self.save 
   end
-   
+  
+  def admin!
+  end
 end

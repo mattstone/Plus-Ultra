@@ -1,5 +1,17 @@
 # README
 
+Aim:
+
+Everything you need to launch a business
+
+1. Blog 
+2. Launch page with email collections
+3. Mailing lists
+4. User creation 
+5. Admin section 
+6. Products 
+7. Product purchase - one off & subscription
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
@@ -35,5 +47,5 @@ Things you may want to cover:
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
-
+gem install watir
 * ...
