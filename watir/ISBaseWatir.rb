@@ -101,8 +101,38 @@ class ISBaseWatir
     p ""
   end
   
+  def sign_in_admin
+    
+    go_home 
+    header("Admin user sign in")
+    
+    @admin = get_test_user
+    
+    case @admin.role_admin? 
+    when true  then good("Admin user created successfully")
+    when false then bad("Admin user not created successfully")
+    end
+    
+    link = @browser.link(href: '/users/sign_in')
+    link.click
+    
+    @browser.wait_until { @browser.h2.text == 'Log in' }
+    
+    text_field = @browser.text_field(id: 'user_email')
+    text_field.value = test_user[:email]
+    
+    text_field = @browser.text_field(id: 'user_password')
+    text_field.value = test_user[:password]
+    
+    @browser.button(:id => "log_in_button").click
+    
+    @browser.wait_until { @browser.text.include? 'Admin' }
+    good("Signed in successfully")
+  end
+  
+  
   def screenshot!
-  @browser.screenshot.save "#{Time.now}.png"
-end
+    @browser.screenshot.save "#{Time.now}.png"
+  end
 
 end
