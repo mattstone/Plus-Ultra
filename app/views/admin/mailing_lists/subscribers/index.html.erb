@@ -1,0 +1,76 @@
+<%= render 'admin/shared/header', title: "Manage Subscribers for #{@mailing_list.name}" %>
+<br>
+
+
+<%= form_with url: admin_mailing_list_subscribers_path(@mailing_list, @subscriber), method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |f| %>
+    <div class="col-2">
+      <div class="input-group">
+        <%= f.text_field :email, value: params[:email], class: "form-control", placeholder: "Name", id: "filter_name" %>
+      </div>
+    </div>
+
+    <div class="col-2">
+      <div class="input-group">
+        <%= f.text_field :mobile_number, value: params[:mobile_number], class: "form-control", placeholder: "Name", id: "filter_mobile_number" %>
+      </div>
+    </div>
+
+    <div class="col">
+      <%= f.submit "Filter", class: admin_button_class, id: "mailing_list_subscriber_filter_button" %>
+    </div>
+
+<% end %>
+
+<br>
+
+<div class="row"">
+  <div class="col-3 <%= admin_background_class %>">
+    <strong>Email</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %> text-center">
+    <strong>Full Name</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %> text-center">
+    <strong>Mobile</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Action</strong>
+  </div>
+</div>
+
+
+
+<% if @subscribers.empty? %>
+  <div class="row">
+    <div class="col-12 d-flex">
+      <p>
+        There are no subscribers
+      </p>
+    </div>
+  </div>
+<% else %>
+  <% @subscribers.each do |s| %>
+    <div class="row">
+      <div class="col-3">
+        <%= s.email %>
+      </div>
+      <div class="col-2">
+        <%= s.full_name %>
+      </div>
+      <div class="col-2">
+        <%= s.international_mobile %>
+      </div>
+      <div class="col-2 d-flex align-items-start">
+        <%= link_to "Edit",   edit_admin_mailing_list_subscriber_path(@mailing_list, s) %> &nbsp; | &nbsp;
+        <%= button_to "Delete", admin_mailing_list_subscriber_path(@mailing_list, s), method: :delete, class: "btn btn-sm btn-danger", id: "admin_mailing_list_subscriber_delete_#{dom_id(s)}", form: {data: {turbo_confirm: 'Are you sure?'}} %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<br>
+
+<%= render 'shared/paging', resources: @subscribers %>
+
+
+<%= link_to "New Subscriber", new_admin_mailing_list_subscriber_path(@mailing_list) %>

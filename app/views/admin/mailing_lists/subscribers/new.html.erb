@@ -1,0 +1,11 @@
+<%= render 'admin/shared/header', title: "New Subscriber" %>
+<br>
+<h1>New Subscriber </h1>
+
+<%= render "form", mailing_list: @mailing_list, subscriber: @subscriber %>
+
+<br>
+
+<div>
+  <%= link_to "Back to Subscibers", admin_mailing_list_subscribers_path(@mailing_list) %>
+</div>

@@ -1,0 +1,38 @@
+<%= form_with(model: [:admin, mailing_list, subscriber]) do |f| %>
+  <%= render '/shared/form_results', resource: subscriber %>
+  
+ <div class="field">
+   <%= f.label :email, class: "form-label" %><br />
+   <%= f.email_field :email, placeholder: "Email", class: "form-control" %>
+ </div>
+
+ <div class="field">
+   <%= f.label :first_name, class: "form-label" %><br />
+   <%= f.text_field :first_name, placeholder: "First name", class: "form-control" %>
+ </div>
+
+ <div class="field">
+   <%= f.label :last_name, class: "form-label" %><br />
+   <%= f.text_field :last_name, placeholder: "Last name", class: "form-control" %>
+ </div>
+ 
+ <% subscriber.mobile_number_country_code = "AU" if subscriber.mobile_number_country_code.blank? %>
+ 
+ <div class="field">
+  <%= f.label :country, class: "form-label" %>
+  <%= f.country_select :mobile_number_country_code, { selected: subscriber.mobile_number_country_code } , { class: 'form-control' } %>
+</div>
+
+<br>
+<div class="field">
+  <%= f.label :mobile_number, class: "form-label" %><br />
+  <%= f.text_field :mobile_number, placeholder: "Mobile", class: "form-control" %>
+</div>
+
+<br>
+
+ <div>
+   <%= f.submit class: admin_button_class, id: "mailing_list_subscriber_save_button" %>
+ </div>
+
+<% end %>

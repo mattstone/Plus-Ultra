@@ -6,7 +6,8 @@ class User < ApplicationRecord
          :confirmable, :lockable, :timeoutable, :trackable         
          
   enum :role, { customer: 0, admin: 100}, prefix: true
-
+  
+  validates :first_name, :last_name, presence: true
 
   def full_name 
     "#{first_name} #{last_name}"

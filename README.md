@@ -11,6 +11,7 @@ Everything you need to launch a business
 5. Admin section 
 6. Products 
 7. Product purchase - one off & subscription
+8. User profiles
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
@@ -48,4 +49,10 @@ Things you may want to cover:
 
 * Deployment instructions
 gem install watir
+gem install mailcatcher 
+
+Phony & Phonelib for international telephone numbers
+
 * ...
+
+

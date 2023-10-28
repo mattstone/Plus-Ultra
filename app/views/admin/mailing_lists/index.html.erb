@@ -1,0 +1,64 @@
+<%= render 'admin/shared/header', title: "Manage Mailing Lists" %>
+<br>
+
+
+<%= form_with url: admin_mailing_lists_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |f| %>
+    <div class="col-10">
+      <div class="input-group">
+        <%= f.text_field :name, value: params[:name], class: "form-control", placeholder: "Name", id: "filter_name" %>
+      </div>
+    </div>
+
+    <div class="col">
+      <%= f.submit "Filter", class: admin_button_class, id: "mailing_lists_filter_button" %>
+    </div>
+
+<% end %>
+
+<br>
+
+<div class="row"">
+  <div class="col-8 <%= admin_background_class %>">
+    <strong>Name</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %> text-center">
+    <strong>Subscribers</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Action</strong>
+  </div>
+</div>
+
+
+
+<% if @mailing_lists.empty? %>
+  <div class="row">
+    <div class="col-12 d-flex">
+      <p>
+        There are no Mailing Lists
+      </p>
+    </div>
+  </div>
+<% else %>
+  <% @mailing_lists.each do |ml| %>
+    <div class="row">
+      <div class="col-8">
+        <%= ml.name %>
+      </div>
+      <div class="col-2 text-center">
+        <%= link_to ml.subscribers.count,  admin_mailing_list_subscribers_path(ml) %>
+      </div>
+      <div class="col-2 d-flex align-items-start">
+        <%= link_to "Edit",   edit_admin_mailing_list_path(ml) %> &nbsp; | &nbsp;
+        <%= button_to "Delete", admin_mailing_list_path(ml), method: :delete, class: "btn btn-sm btn-danger", id: "admin_mailing_list_delete_#{dom_id(ml)}", form: {data: {turbo_confirm: 'Are you sure?'}} %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<br>
+
+<%= render 'shared/paging', resources: @mailing_lists %>
+
+
+<%= link_to "New mailing list", new_admin_mailing_list_path %>

@@ -10,15 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_27_224407) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_28_044455) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "mailing_lists", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.string "sku"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "subscribers", force: :cascade do |t|
+    t.bigint "mailing_list_id"
+    t.string "email"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "mobile_number"
+    t.string "mobile_number_country_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mailing_list_id"], name: "index_subscribers_on_mailing_list_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :products
+  resources :subscribers
   devise_for :users 
   
   resources :users do 
@@ -13,9 +13,14 @@ Rails.application.routes.draw do
     get 'dashboard', to: 'dashboard#index'
     get 'logout',    to: 'dashboard#logout'
     
-    resources :users
-  end
-  
+    resources :users,
+              :products
+            
+    resources :mailing_lists do 
+      resources :subscribers, controller: 'mailing_lists/subscribers' do 
+      end
+    end
+  end  
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

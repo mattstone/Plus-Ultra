@@ -1,0 +1,13 @@
+<%= form_with(model: [:admin, mailing_list]) do |f| %>
+  <%= render 'shared/form_results', resource: mailing_list %>
+
+  <div class="field">
+    <%= f.label :name, class: "form-label" %><br />
+    <%= f.text_field :name, autocomplete: "Mailing List name", class: "form-control" %>
+  </div>
+
+  <br>
+  <div>
+    <%= f.submit class: admin_button_class, id: "mailing_list_save_button" %>
+  </div>
+<% end %>

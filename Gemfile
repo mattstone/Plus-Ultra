@@ -63,11 +63,16 @@ gem 'kaminari'
 # https://www.ruby-toolbox.com/projects/sanitize
 gem 'sanitize'
 
-# AciveRecord paging
-gem 'kaminari'
-
 # Pretty logs 
 gem 'colorize'
+
+# International telephone
+gem 'phony'
+gem 'phonelib'
+
+# International stuff
+gem 'countries', require: 'countries/global'
+gem 'country_select', '~> 8.0'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
