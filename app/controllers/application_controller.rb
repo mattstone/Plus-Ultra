@@ -4,7 +4,15 @@ class ApplicationController < ActionController::Base
   def l(string)
     Rails.logger.info string.yellow
   end
-  
+
+  #
+  # Devise callbacks
+  #
+
+  def after_sign_in_path_for(resource)
+    return admin_dashboard_path if resource.role_admin?
+    root_url
+  end
 
   protected
 

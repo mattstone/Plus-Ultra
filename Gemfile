@@ -63,10 +63,8 @@ gem 'kaminari'
 # https://www.ruby-toolbox.com/projects/sanitize
 gem 'sanitize'
 
-# Email preview
-# gem 'mailcatcher'
-# gem 'letter_opener'
-# gem 'eventmachine', ''
+# AciveRecord paging
+gem 'kaminari'
 
 # Pretty logs 
 gem 'colorize'

@@ -8,6 +8,11 @@ class ISUser < ISBaseWatir
       sign_up
       sign_in 
       
+      destroy_test_data!
+      create_and_confirm_admin_user!
+      
+      sign_in_admin
+      
       tests_complete
     end 
     
@@ -69,7 +74,65 @@ class ISUser < ISBaseWatir
       @browser.wait_until { @browser.text.include? 'Signed in successfully' }
 
       good("Signed in successfully")
+
+      sleep 1
+      
+      @browser.button(:id => "log_out_button").click
+
+
+      @browser.wait_until { @browser.text.include? 'Signed out successfully' }
+
+      good("Signed out successfully")
     end 
+    
+    def sign_in_admin
+      
+      go_home 
+      header("Admin user sign in")
+      
+      admin = get_test_user
+      
+      case admin.role_admin? 
+      when true  then good("Admin user created successfully")
+      when false then bad("Admin user not created successfully")
+      end
+      
+      link = @browser.link(href: '/users/sign_in')
+      link.click
+      
+      @browser.wait_until { @browser.h2.text == 'Log in' }
+      
+      text_field = @browser.text_field(id: 'user_email')
+      text_field.value = test_user[:email]
+      
+      text_field = @browser.text_field(id: 'user_password')
+      text_field.value = test_user[:password]
+      
+      @browser.button(:id => "log_in_button").click
+      
+      @browser.wait_until { @browser.text.include? 'Admin' }
+      good("Signed in successfully")
+      
+      admin_users_crud
+      
+      # good("Signed out successfully")
+      
+    end
+    
+    
+    def admin_users_crud
+      
+      link = @browser.link(href: '/admin/users')
+      link.click
+
+      @browser.wait_until { @browser.text.include? 'Manage Users' }
+      good("browsed to admin/users")
+
+# Manage Users
+
+      sleep 160
+      
+    end
   
 end
 

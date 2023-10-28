@@ -1,0 +1,68 @@
+<%= render 'admin/shared/header', title: "Manage Users" %>
+<br>
+
+<%= form_with url: admin_users_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |f| %>
+    <div class="col">
+      <div class="input-group">
+        <div class="input-group-text">@</div>
+        <%= f.text_field :email, value: params[:email], class: "form-control", placeholder: "Email", id: "filter_email" %>
+      </div>
+    </div>
+    <div class="col">
+      <div class="input-group">
+        <%= f.text_field :first_name, class: "form-control", placeholder: "First Name", id: "filter_first_name" %>
+      </div>
+    </div>
+    <div class="col">
+      <div class="input-group">
+        <%= f.text_field :last_name, class: "form-control", placeholder: "Last Name", id: "filter_last_name" %>
+      </div>
+    </div>
+
+    <div class="col">
+      <%= f.submit "Filter", class: admin_button_class %>
+    </div>
+
+<% end %>
+
+<br>
+
+<div class="row"">
+  <div class="col-4 <%= admin_background_class %>">
+    <strong>Email</strong>
+  </div>
+  <div class="col-3 <%= admin_background_class %>">
+    <strong>Name</strong>
+  </div>
+  <div class="col-3 <%= admin_background_class %>">
+    <strong>Role</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Action</strong>
+  </div>
+</div>
+
+<% if @users.empty? %>
+  <div class="row">
+    <div class="col-12 d-flex">
+      <p>
+        There are no users
+      </p>
+    </div>
+  </div>
+<% else %>
+  <% @users.each do |u| %>
+    <div class="row">
+      <div class="col-4"><%= u.email %></div>
+      <div class="col-3"><%= u.full_name %></div>
+      <div class="col-3"><%= u.role.to_s.capitalize.humanize %></div>
+      <div class="col-2">
+        <%= link_to "Edit", edit_admin_user_path(u) %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<br>
+
+<%= render 'shared/paging', resources: @users %>

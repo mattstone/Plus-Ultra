@@ -7,6 +7,15 @@ class User < ApplicationRecord
          
   enum :role, { customer: 0, admin: 100}, prefix: true
 
+
+  def full_name 
+    "#{first_name} #{last_name}"
+  end
+
+  #
+  # One time code
+  #
+  
   def send_new_one_time_code!         
     generate_one_time_code!
     send_one_time_code
@@ -26,6 +35,11 @@ class User < ApplicationRecord
     self.save 
   end
   
+  #
+  # One time code End
+  #
+  
   def admin!
+    self.role_admin!
   end
 end

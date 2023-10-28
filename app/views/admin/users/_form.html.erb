@@ -1,0 +1,36 @@
+<br>
+<%= form_with(model: [:admin, user], local: true) do |f| %>
+  <%= render 'shared/form_results', resource: user %>
+  
+  
+    <div class="field">
+      <%= f.label :email, class: "form-label" %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+    </div>
+    
+    <br>
+    
+    <div class="field">
+      <%= f.label :first_name, class: "form-label" %><br />
+      <%= f.text_field :first_name, autocomplete: "first name", class: "form-control" %>
+    </div>
+    
+    <br>
+    
+    <div class="field">
+      <%= f.label :last_name, class: "form-label" %><br />
+      <%= f.text_field :last_name, autocomplete: "last name", class: "form-control" %>
+    </div>
+
+    <br>
+
+    <div class="field">
+      <%= f.label :role, class: "form-label" %><br />
+      <%= f.select :role, User.roles.keys.map { |key| [key.titleize, key]}, {}, { class: "form-control" } %>
+    </div>
+  
+    <br>
+    
+    <%= f.submit "Save", class: admin_button_class %>
+<% end %>
+<br>

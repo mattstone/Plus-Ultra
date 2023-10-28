@@ -1,17 +1,6 @@
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Starter</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<%= render 'layouts/shared/header' %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
-
-  <body>
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -56,7 +45,8 @@
                           "Log Out",
                           destroy_user_session_path,
                           method: :delete,
-                          class: "nav-button btn btn-sm btn-primary"
+                          class: "nav-button btn btn-sm btn-primary",
+                          id: "log_out_button"
                         ) %>
                 </li>
               <% end %>
@@ -68,14 +58,9 @@
             </form>
           </div>
         </div>
-      </nav>      
-      <% if notice %>
-        <p class="alert alert-success"><%= notice %></p>
-      <% end %>
-      <% if alert %>
-        <p class="alert alert-danger"><%= alert %></p>
-      <% end %>
+      </nav>
+      <%= render 'layouts/shared/notices' %>      
       <%= yield %>
     </div>
-  </body>
-</html>
+
+<%= render 'layouts/shared/footer' %>

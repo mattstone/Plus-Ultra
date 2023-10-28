@@ -26,7 +26,6 @@ class ISBaseWatir
     @total_passed = 0
     @total_failed = 0
     destroy_test_data!
-    
   end
   
   def test_user 
@@ -39,6 +38,32 @@ class ISBaseWatir
     }
   end 
   
+  def create_and_confirm_test_user!
+    u = User.new
+    u.email      = test_user[:email]
+    u.first_name = test_user[:first_name]
+    u.last_name  = test_user[:last_name]
+    # u.role = test_user[:role]  # role will default to customer
+    u.password   = test_user[:password]
+    u.password_confirmation  = test_user[:password]
+    u.skip_confirmation!
+    u.save     
+  end
+  
+  def create_and_confirm_admin_user! 
+    create_and_confirm_test_user!
+    make_test_user_admin!
+  end
+  
+  def make_test_user_admin! 
+    u = User.find_by(email: test_user[:email])
+    u.role_admin!
+  end
+  
+  def get_test_user
+    User.find_by(email: test_user[:email])
+  end
+  
   def destroy_test_data! 
     User.where(email: test_user[:email]).destroy_all
   end
@@ -49,12 +74,12 @@ class ISBaseWatir
   
   def good(message) 
     @total_passed += 1
-    "  👍: #{message}"
+    p "  👍: #{message}"
   end
   
   def bad(message)
     @total_failed += 1
-    "  🍄: #{message}"
+    p "  🍄: #{message}"
   end
   
   def header(message)
