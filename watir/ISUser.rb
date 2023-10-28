@@ -121,17 +121,56 @@ class ISUser < ISBaseWatir
     
     
     def admin_users_crud
-      
+      header("Admin user CRUD")
+
       link = @browser.link(href: '/admin/users')
       link.click
 
       @browser.wait_until { @browser.text.include? 'Manage Users' }
       good("browsed to admin/users")
 
-# Manage Users
+      @browser.wait_until { @browser.text.include? test_user[:email] }
+      good("found test user email: #{test_user[:email]}")
 
-      sleep 160
+      text_field = @browser.text_field(id: 'filter_email')
+      text_field.value = "zz"
+
+      @browser.button(:id => "users_filter_button").click
       
+      @browser.wait_until { @browser.text.include? "There are no users" }
+      good("Filter filtered out #{test_user[:email]}")
+
+      text_field = @browser.text_field(id: 'filter_email')
+      text_field.value = ""
+
+      @browser.button(:id => "users_filter_button").click
+      @browser.wait_until { @browser.text.include? test_user[:email] }
+      good("found test user email: #{test_user[:email]}")
+      
+      user = get_test_user
+      link = @browser.link(href: "/admin/users/#{user.id}/edit")
+      link.click
+      
+      @browser.wait_until { @browser.text.include? "Edit User" }
+      good("Editing test user")
+
+      text_field = @browser.text_field(id: 'user_first_name')
+      text_field.value = "Changed"
+
+      @browser.button(:id => "admin_users_update_button").click
+
+      @browser.wait_until { @browser.text.include? "successfully updated" }
+      good("Edited test user successfully")
+      
+      link = @browser.link(href: "/admin/users")
+      link.click
+
+      @browser.wait_until { @browser.text.include? "Manage Users" }
+      good("Back button worked")
+
+      @browser.wait_until { @browser.text.include? "Changed" }
+      good("Edit was successful")
+
     end
   
 end
