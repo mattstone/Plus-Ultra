@@ -9,8 +9,6 @@ class UsersController < ApplicationController
   end 
   
   def confirm_2fa
-    l "params[:commit]: #{params[:commit]}"
-
     @attempts  = params[:attempts].to_i ||= 0
 
     if @attempts > 3

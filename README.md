@@ -52,6 +52,7 @@ gem install watir
 gem install mailcatcher 
 
 Phony & Phonelib for international telephone numbers
+Captcha
 
 * ...
 

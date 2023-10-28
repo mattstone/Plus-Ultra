@@ -117,8 +117,6 @@ class ISMailingList < ISBaseWatir
       
       ml   = test_mailing_list
       
-      p ml.inspect
-      
       link = @browser.link(href: "/admin/mailing_lists/#{ml.id}/subscribers")
       link.click
       
@@ -149,6 +147,16 @@ class ISMailingList < ISBaseWatir
 
       @browser.wait_until { @browser.text.include? "Subscriber was successfully created" }
       good("created subscriber")
+      
+      # test country code and mobile numbers
+      sub = test_subscriber_record
+      sub.mobile_number_country_code = "AU"
+      sub.mobile_number               = "0491570006"
+      
+      case sub.international_mobile == "61491570006"
+      when true  then good("international mobile")
+      when false then bad("international mobile")
+      end
       
     end
     
