@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :subscribers
+  resources :subscribers, :blogs
   devise_for :users 
   
   resources :users do 
@@ -13,13 +13,13 @@ Rails.application.routes.draw do
   post 'subscribe_to_newsletter', to: 'subscribers#subscribe_to_newsletter'  
   get ' confirm_news_letter_subscription', to: 'subscribers#confirm_news_letter_subscription'  
   
-  
   namespace :admin do
     get 'dashboard', to: 'dashboard#index'
     get 'logout',    to: 'dashboard#logout'
     
     resources :users,
-              :products
+              :products,
+              :blogs
             
     resources :mailing_lists do 
       resources :subscribers, controller: 'mailing_lists/subscribers' do 

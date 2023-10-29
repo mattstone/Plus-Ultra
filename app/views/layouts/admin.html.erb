@@ -17,7 +17,8 @@
         <%= form_with url: admin_logout_path, method: :get, class: "d-flex" do |f| %>
           <%= f.submit(
                   "Log Out",
-                  class: "nav-button btn btn-sm btn-primary"
+                  class: "nav-button btn btn-sm btn-primary",
+                  id: "admin_sign_out"
                 ) %>
         <% end %>
       </div>
@@ -32,6 +33,7 @@
     <ul class="list-group"> 
       <li class="list-group-item"><%= link_to "Users",         admin_users_path,         id: "admin_users_crud" %></li>
       <li class="list-group-item"><%= link_to "Mailing Lists", admin_mailing_lists_path, id: "admin_mailing_lists_crud" %></li>
+      <li class="list-group-item"><%= link_to "Blogs",         admin_blogs_path,         id: "admin_blogs_crud" %></li>
     </ul>
   </div>  
   

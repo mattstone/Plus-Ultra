@@ -1,0 +1,37 @@
+<%= form_with(model: [:admin, blog]) do |f| %>
+  <%= render 'shared/form_results', resource: blog %>
+
+  <div class="field">
+    <%= f.label :status, class: "form-label" %><br />
+    <%= f.select :status, Blog.statuses.keys.map { |key| [key.titleize, key]}, {}, { class: "form-control" } %>
+  </div>
+
+  <div class="field">
+    <%= f.label :title, class: "form-label" %><br />
+    <%= f.text_field :title, autocomplete: "Mailing List name", class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :published_when, class: "form-label" %><br />
+    <%= f.datetime_field :datetime_to_publish, class: "form-control" %>
+  </div>
+
+  <br>
+  
+  <div class="field">
+      <%= f.label :teaser %>
+      <%= f.rich_text_area :teaser, class: "form-control" %>
+  </div>
+  
+  <br>
+  
+  <div class="field">
+      <%= f.label :content %>
+      <%= f.rich_text_area :content, class: "form-control" %>
+  </div>
+  
+  <br>
+  <div>
+    <%= f.submit class: admin_button_class, id: "blog_save_button" %>
+  </div>
+<% end %>

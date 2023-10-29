@@ -51,8 +51,10 @@ Things you may want to cover:
 gem install watir
 gem install mailcatcher 
 
+Active Storage for file uploads
+ActionText Trix WYSIWYG editor
 Phony & Phonelib for international telephone numbers
-Captcha
+Invisible Captcha
 
 * ...
 

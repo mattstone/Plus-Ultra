@@ -1,7 +1,6 @@
 <%= render 'admin/shared/header', title: "Manage Subscribers for #{@mailing_list.name}" %>
 <br>
 
-
 <%= form_with url: admin_mailing_list_subscribers_path(@mailing_list, @subscriber), method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |f| %>
     <div class="col-2">
       <div class="input-group">

@@ -7,10 +7,10 @@
     <%= hidden_field_tag :mailing_list_id, MailingList::newsletter.id %>
     
     <div class="form-floating mb-3">
-      <input type="email" name="email" class="form-control" id="floatingInput" placeholder="" required>
+      <input type="email" name="email" class="form-control" id="newsletter_email" placeholder="" required>
       <label for="floatingInput">Email address</label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Subscribe</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit" id="newsletter_email_button">Subscribe</button>
     <hr class="my-4">
     <!--
     <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>

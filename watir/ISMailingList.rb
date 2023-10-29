@@ -266,4 +266,4 @@ class ISMailingList < ISBaseWatir
     
 end
 
-ml = ISMailingList.new
+ISMailingList.new

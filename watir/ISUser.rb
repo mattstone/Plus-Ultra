@@ -148,4 +148,4 @@ class ISUser < ISBaseWatir
   
 end
 
-user = ISUser.new
+ISUser.new

@@ -1,0 +1,67 @@
+<%= render 'admin/shared/header', title: "Blogs" %>
+<br>
+
+<%= form_with url: admin_blogs_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |f| %>
+  <div class="col-10">
+    <div class="input-group">
+      <%= f.text_field :title, value: params[:title], class: "form-control", placeholder: "Title", id: "filter_title" %>
+    </div>
+  </div>
+
+  <div class="col">
+    <%= f.submit "Filter", class: admin_button_class, id: "blogs_filter_button" %>
+  </div>
+<% end %>
+
+<br>
+
+<div class="row"">
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Status</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Date Published</strong>
+  </div>
+  <div class="col-6 <%= admin_background_class %> text-center">
+    <strong>Title</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Action</strong>
+  </div>
+</div>
+
+<% if @blogs.empty? %>
+  <div class="row">
+    <div class="col-12 d-flex">
+      <p>
+        There are no Blogs
+      </p>
+    </div>
+  </div>
+<% else %>
+  <% @blogs.each do |b| %>
+    <div class="row">
+      <div class="col-2">
+        <%= b.status.to_s.capitalize.humanize %>
+      </div>
+      <div class="col-2">
+        <%= b.datetime_to_publish&.strftime("%d/%m/%Y %H:%M") %>
+      </div>
+      <div class="col-6">
+        <%= b.title %>
+      </div>
+      <div class="col-2 d-flex align-items-start">
+        <%= link_to "Edit",   edit_admin_blog_path(b) %> &nbsp; | &nbsp;
+        <%= button_to "Delete", admin_blog_path(b), method: :delete, class: "btn btn-sm btn-danger", id: "admin_blog_delete_#{dom_id(b)}", form: {data: {turbo_confirm: 'Are you sure?'}} %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<br>
+
+<%= render 'shared/paging', resources: @blogs %>
+
+
+<%= link_to "New Blog", new_admin_blog_path %>
+
