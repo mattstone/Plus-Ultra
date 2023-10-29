@@ -18,6 +18,8 @@ class ISMailingList < ISBaseWatir
       delete_subscriber
        
       delete_mailing_list
+      
+      newsletter_signup
     end
     
     def test_data 
@@ -29,6 +31,12 @@ class ISMailingList < ISBaseWatir
     def test_subscriber 
       {
         email: "hello@internetschinternet.com"
+      }
+    end
+    
+    def newsletter_subscriber 
+      {
+        email: "newsletter@internetschinternet.com"
       }
     end
     
@@ -45,6 +53,8 @@ class ISMailingList < ISBaseWatir
     def remove_test_data!
       MailingList.where(name: test_data[:name]).destroy_all
       MailingList.where(name: "Changed").destroy_all
+      
+      Subscriber.where(email: newsletter_subscriber[:email]).destroy_all
     end
     
     def create_mailing_list 
@@ -216,8 +226,42 @@ class ISMailingList < ISBaseWatir
       text_field.value = ""
       
       @browser.button(:id => "mailing_lists_filter_button").click
+    end
+    
+    def newsletter_signup
+      header("newsletter_signup")
       
-      sleep 180
+      subscriber = newsletter_subscriber
+
+      @browser.button(:id => "admin_sign_out").click
+      sleep 1 
+      
+      @browser.wait_until { @browser.text.include? "You have been successfully signed out" }
+      good("signed out")
+
+      # Valid signup
+      text_field = @browser.text_field(id: 'newsletter_email')
+      text_field.value = subscriber[:email]
+
+      sleep 3 # Stop capatch from killing request
+      @browser.button(:id => "newsletter_email_button").click
+      @browser.wait_until { @browser.text.include? "Thanks for your interest!" }
+      good("successfully subscribed")
+
+      # Already signed up
+      go_home
+      sleep 2
+      
+      # Valid signup
+      text_field = @browser.text_field(id: 'newsletter_email')
+      text_field.value = subscriber[:email]
+
+      sleep 2 # Stop capatch from killing request
+
+      @browser.button(:id => "newsletter_email_button").click
+      @browser.wait_until { @browser.text.include? "Email already subscribed" }
+      good("successfully unable to subscribe twice")
+
     end
     
 end
