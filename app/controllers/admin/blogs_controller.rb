@@ -83,6 +83,7 @@ class Admin::BlogsController < Admin::BaseController
         :status,
         :title,
         :teaser,
+        :hero_image,
         :content,
         :datetime_to_publish
       )

@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   
   def l(string)
-    Rails.logger.info string.yellow
+    Rails.logger.info string.to_s.yellow
   end
 
   #

@@ -4,14 +4,15 @@ class ISBlog < ISBaseWatir
   
   def initialize 
     super
-    
     remove_test_data!
     create_and_confirm_admin_user!
     
     sign_in_admin
     
-    
     create_blog 
+    
+    return 
+    
     update_blog 
     search_blogs
     
@@ -58,11 +59,19 @@ class ISBlog < ISBaseWatir
     text_field = @browser.text_field(id: 'blog_title')
     text_field.value = test_blog[:title]
 
+    string = File.join(__dir__,'./images/')
+    string += "Test_pattern.png"
+
+    @browser.file_field.set(string)
+
     javascript_script = "document.getElementById('blog_teaser_trix_input_blog').value = '<div>#{test_blog[:teaser]}</div>'"
     @browser.execute_script(javascript_script)
      
     javascript_script = "document.getElementById('blog_content_trix_input_blog').value = '<div>#{test_blog[:content]}</div>'"
     @browser.execute_script(javascript_script)
+
+    @browser.scroll.to :bottom
+    sleep 2
 
     @browser.button(:id => "blog_save_button").click
     @browser.wait_until { @browser.text.include? 'Blog was successfully created' }

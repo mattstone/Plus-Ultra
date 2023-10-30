@@ -5,7 +5,6 @@ class BlogsController < ApplicationController
   def index
     @featured_blog = Blog.last 
     
-    
     @blogs = Blog
                .order(created_at: :desc)
                .page params[:page]

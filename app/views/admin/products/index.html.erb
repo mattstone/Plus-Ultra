@@ -1,0 +1,74 @@
+<%= render 'admin/shared/header', title: "Manage Users" %>
+<br>
+
+<%= form_with url: admin_products_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |f| %>
+    <div class="col">
+      <div class="input-group">
+        <%= f.text_field :name, value: params[:name], class: "form-control", placeholder: "Name", id: "filter_name" %>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="input-group">
+        <%= f.text_field :sku, value: params[:sku], class: "form-control", placeholder: "SKU", id: "filter_sku" %>
+      </div>
+    </div>
+
+    <div class="col">
+      <%= f.submit "Filter", class: admin_button_class, id: "users_filter_button" %>
+    </div>
+
+<% end %>
+
+<br>
+
+<div class="row"">
+  <div class="col-3 <%= admin_background_class %>">
+    <strong>Name</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>SKU</strong>
+  </div>
+  <div class="col-1 <%= admin_background_class %>">
+    <strong>Price</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Image</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Action</strong>
+  </div>
+</div>
+
+<% if @products.empty? %>
+  <div class="row">
+    <div class="col-12 d-flex">
+      <p>
+        There are no products
+      </p>
+    </div>
+  </div>
+<% else %>
+  <% @products.each do |p| %>
+    <div class="row">
+      <div class="col-3"><%= p.name %></div>
+      <div class="col-2"><%= p.sku %></div>
+      <div class="col-1"><%= cents_to_dollars p.price %></div>
+      <div class="col-2">
+        <% if b.main_image.attached? %>
+          <%= main_image b.hero_image.variant(:thumb) %>
+        <% end %>
+      </div>
+      <div class="col-2">
+        <%= link_to "Edit", edit_admin_product_path(p) %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<br>
+
+<%= render 'shared/paging', resources: @products %>
+
+<%= link_to "New Product", new_admin_product_path %>
+

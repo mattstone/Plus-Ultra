@@ -22,8 +22,11 @@
   <div class="col-2 <%= admin_background_class %>">
     <strong>Date Published</strong>
   </div>
-  <div class="col-6 <%= admin_background_class %> text-center">
+  <div class="col-4 <%= admin_background_class %> text-center">
     <strong>Title</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %> text-center">
+    <strong>Hero</strong>
   </div>
   <div class="col-2 <%= admin_background_class %>">
     <strong>Action</strong>
@@ -47,8 +50,13 @@
       <div class="col-2">
         <%= b.datetime_to_publish&.strftime("%d/%m/%Y %H:%M") %>
       </div>
-      <div class="col-6">
+      <div class="col-4">
         <%= b.title %>
+      </div>
+      <div class="col-2">
+        <% if b.hero_image.attached? %>
+          <%= image_tag b.hero_image.variant(:thumb) %>
+        <% end %>
       </div>
       <div class="col-2 d-flex align-items-start">
         <%= link_to "Edit",   edit_admin_blog_path(b) %> &nbsp; | &nbsp;

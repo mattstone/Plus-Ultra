@@ -2,7 +2,22 @@
 
 Aim:
 
-Everything you need to launch a business
+All the functionality needed to launch and run a business. Just add an idea and a designer.
+
+1. Marketing 
+- prospect lists 
+- blog 
+
+
+2. Sales
+- products 
+- Stripe
+
+3. Operations
+- Customer management
+- Sales management
+
+4. Reporting
 
 1. Blog 
 2. Launch page with email collections
@@ -55,7 +70,10 @@ Active Storage for file uploads
 ActionText Trix WYSIWYG editor
 Phony & Phonelib for international telephone numbers
 Invisible Captcha
+dotenv
+QRCode
 
+```
 * ...
 
 

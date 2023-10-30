@@ -1,0 +1,50 @@
+<%= form_with(model: [:admin, product]) do |f| %>
+  <%= render 'shared/form_results', resource: product %>
+  
+  <div class="field">
+    <%= f.label :name, class: "form-label" %><br />
+    <%= f.text_field :name, placeholder: "Product name", class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :sku, class: "form-label" %><br />
+    <%= f.text_field :sku, placeholder: "SKU", class: "form-control" %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :price, class: "form-label" %><br />
+    <%= f.number_field :price, class: "form-control", min: 0, step: 0.01 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :main_image, class: "form-label" %><br />
+    <%= f.file_field :main_image, class: "form-control" %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :purchase_type, class: "form-label" %><br />
+    <%= f.select :role, Product.purchase_types.keys.map { |key| [key.titleize, key]}, {}, { class: "form-control" } %>
+  </div>
+
+  <div class="field">
+    <%= f.label :billing_type, class: "form-label" %><br />
+    <%= f.select :role, Product.billing_types.keys.map { |key| [key.titleize, key]}, {}, { class: "form-control" } %>
+  </div>
+  
+  <div class="field">
+      <%= f.label :teaser %>
+      <%= f.rich_text_area :teaser, class: "form-control" %>
+  </div>
+
+  <div class="field">
+      <%= f.label :description %>
+      <%= f.rich_text_area :description, class: "form-control" %>
+  </div>
+  
+  <br>
+  
+  <%= f.submit "Save", class: admin_button_class, id: "admin_products_update_button" %>
+
+<% end %>

@@ -81,6 +81,26 @@ gem 'invisible_captcha'
 gem "chartkick"
 gem 'groupdate'
 
+# Environment variables
+gem 'dotenv-rails', groups: [:development, :test]
+
+# Stripe 
+gem 'stripe'
+
+# Networking API
+gem 'httparty'
+
+# Image processing 
+# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+gem 'ruby-vips'  # more efficient image processing
+
+
+# QR Code
+gem 'barby',  '~> 0.6.2'
+gem 'rqrcode','~> 0.4.2'
+gem 'chunky_png'
+
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

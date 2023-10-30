@@ -143,7 +143,6 @@ class ISUser < ISBaseWatir
 
       @browser.wait_until { @browser.text.include? "Changed" }
       good("Edit was successful")
-
     end
   
 end

@@ -10,7 +10,16 @@
     <%= f.label :title, class: "form-label" %><br />
     <%= f.text_field :title, autocomplete: "Mailing List name", class: "form-control" %>
   </div>
-
+  
+  <br>
+  
+  <div class="field">
+    <%= f.label :hero_image, class: "form-label" %><br />
+    <%= f.file_field :hero_image, class: "form-control" %>
+  </div>
+  
+  <br>
+  
   <div class="field">
     <%= f.label :published_when, class: "form-label" %><br />
     <%= f.datetime_field :datetime_to_publish, class: "form-control" %>

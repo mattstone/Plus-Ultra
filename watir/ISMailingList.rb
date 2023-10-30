@@ -188,7 +188,6 @@ class ISMailingList < ISBaseWatir
       
       @browser.wait_until { @browser.text.include? "Subscriber was successfully destroyed" }
       good("subscriber deleted")
-      
     end
     
     def delete_mailing_list
@@ -261,7 +260,6 @@ class ISMailingList < ISBaseWatir
       @browser.button(:id => "newsletter_email_button").click
       @browser.wait_until { @browser.text.include? "Email already subscribed" }
       good("successfully unable to subscribe twice")
-
     end
     
 end
