@@ -11,8 +11,6 @@ class ISBlog < ISBaseWatir
     
     create_blog 
     
-    return 
-    
     update_blog 
     search_blogs
     
