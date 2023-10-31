@@ -1,6 +1,6 @@
 # https://hashtagjohnt.com/how-to-generage-heic-previews-in-rails-using-activestorage.html
 
-class HEICPreviewer < ActiveStorage::Previewer
+class HeicPreviewer < ActiveStorage::Previewer
   CONTENT_TYPE = 'image/heic'.freeze
 
   class << self

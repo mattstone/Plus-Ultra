@@ -11,7 +11,7 @@ class ISStripe
   def test_card 
     {
     expiry: Time.now + 2.years,
-    number: "4242424242424242".
+    number: "4242424242424242",
     cvv: "123"
     }
   end
