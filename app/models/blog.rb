@@ -10,7 +10,6 @@ class Blog < ApplicationRecord
   
   validates :title, presence:   true
   validates :title, uniqueness: true
-
   validates :slug,  uniqueness: true
   
   validate :acceptable_image
@@ -37,9 +36,9 @@ class Blog < ApplicationRecord
       errors.add(:hero_image, "is too big (file size limit = 10 Megabytes)")
     end
     
-    acceptable_types = ["image/jpeg", "image/png"]
+    acceptable_types = ["image/jpeg", "image/png", "image/heic"]
     unless acceptable_types.include?(hero_image.content_type)
-      errors.add(:hero_image, "must be a JPEG or PNG")
+      errors.add(:hero_image, "must be a JPEG or PNG or Apple HEIC")
     end    
   end
   

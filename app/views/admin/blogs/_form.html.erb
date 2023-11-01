@@ -13,9 +13,21 @@
   
   <br>
   
-  <div class="field">
-    <%= f.label :hero_image, class: "form-label" %><br />
-    <%= f.file_field :hero_image, class: "form-control" %>
+  <% if blog.hero_image.attached? %>
+    <div class="field">
+      <%= image_tag blog.hero_image.variant(:preview) %>
+    </div>
+  <% end %>
+  
+  <div data-controller="fileupload">
+    <div class="field">
+      <%= f.label :hero_image, class: "form-label" %><br />
+      <%= f.file_field :hero_image, 
+                       class:  "form-control",
+                       direct_upload: true,
+                       action: "change->upload#uploadFile"  %>
+      <div data-upload-target="progress"></div>                       
+    </div>
   </div>
   
   <br>
