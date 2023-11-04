@@ -1,6 +1,7 @@
 class Admin::TransactionsController < Admin::BaseController
-  before_action :set_transaction, only: %i[ show edit update destroy ]
-
+  before_action :set_transaction,    only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: %i[ stripe_payment_intent ]
+  
   # GET /transactions or /transactions.json
   def index
     where = ""
@@ -77,6 +78,11 @@ class Admin::TransactionsController < Admin::BaseController
   #     format.json { head :no_content }
   #   end
   # end
+  
+  def stripe_payment_intent
+    product = Product.find(product_id)
+    @transaction = current_user.stripe_customer_charge_once!({ product: product })
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

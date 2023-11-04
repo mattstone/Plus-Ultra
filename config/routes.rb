@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
-  resources :subscribers, :blogs, :products, :transactions
+  resources :subscribers, :blogs, :products
   devise_for :users 
   
   resources :users do 
     collection do     
       post :request_2fa
       post :confirm_2fa
+    end
+  end
+  
+  resources :transactions do 
+    collection do 
+      post 'stripe_payment_intent/product_id', to: 'transactions#stripe_payment_intent'
     end
   end
   

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_04_050351) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_04_102130) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -106,6 +106,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_050351) do
     t.json "history", default: []
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "date_cleared_funds"
+    t.string "stripe_client_secret"
     t.index ["product_id"], name: "index_transactions_on_product_id"
     t.index ["status"], name: "index_transactions_on_status"
     t.index ["user_id"], name: "index_transactions_on_user_id"
