@@ -2,9 +2,19 @@
 
 <h1>Products</h1>
 
+<div class="row">
+  <div class="col d-flex justify-content-center">
+    <%= image_tag(ISCommon::unsplash({width: 800, height: 200}), class: "rounded") %>
+  </div>
+</div>
+
+<br>
+<br>
+
 <div id="products">
   <% @products.each do |product| %>
     <%= render product %>
+    <br>
     <!-- <p>
       <%#= link_to "Show this product", product %>
     </p> -->

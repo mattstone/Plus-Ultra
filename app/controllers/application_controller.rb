@@ -11,7 +11,12 @@ class ApplicationController < ActionController::Base
   #
 
   def after_sign_in_path_for(resource)
-    if resource.class == "User"
+    l "*****************************"
+    l "after_sign_in_path_for"
+    l "*****************************"
+    l "resource.class: -#{resource.class}-"
+    
+    if resource.class.to_s == "User"
       return admin_dashboard_path if resource.admin?
     end
     root_url

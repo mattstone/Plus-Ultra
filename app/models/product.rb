@@ -18,8 +18,26 @@ class Product < ApplicationRecord
   enum :purchase_type, { purchase: 0, subscription: 100}, prefix: true
   enum :billing_type,  { once_off: 0, weekly: 100, fortnightly: 200, monthly: 300, annually: 400 }, prefix: true
 
+  def subscription? 
+    self.purchase_type_subscription?
+  end
 
   def for_sale_to_s 
     for_sale ? "Yes" : "No"
   end
+  
+  def pricing_string 
+    case self.purchase_type 
+    when "purchase"     then ""
+    when "subscription" 
+      case self.billing_type 
+      when "once_off"    then ""
+      when "weekly"      then "per week"
+      when "fortnightly" then "per fortnight"
+      when "monthly"     then "per month"
+      when "annually"    then "per year"
+      end
+    end
+  end
+  
 end
