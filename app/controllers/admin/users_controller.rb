@@ -94,7 +94,8 @@ class Admin::UsersController < Admin::BaseController
         :email,
         :first_name,
         :last_name,
-        :role  
+        :role,
+        :stripe_customer_id
       )
     end
 end

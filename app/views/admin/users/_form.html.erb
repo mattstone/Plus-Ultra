@@ -1,6 +1,5 @@
 <br>
 <%= form_with(model: [:admin, user], local: true) do |f| %>
-  <%= render 'shared/form_results', resource: user %>
   
   
     <div class="field">
@@ -28,6 +27,16 @@
       <%= f.label :role, class: "form-label" %><br />
       <%= f.select :role, User.roles.keys.map { |key| [key.titleize, key]}, {}, { class: "form-control" } %>
     </div>
+
+    <div class="field">
+      <%= f.label :last_name, class: "form-label" %><br />
+      <%#= f.text_field :stripe_customer_id, autocomplete: "Stripe Customer Id", class: "form-control" %>
+
+      <%# Note this should never be changed by an admin user %>
+      <strong><%= user.stripe_customer_id %></strong>
+    </div>
+  
+  
   
     <br>
     
