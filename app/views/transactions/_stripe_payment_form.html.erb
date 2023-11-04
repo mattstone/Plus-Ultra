@@ -1,0 +1,12 @@
+<div data-controller="stripe"></div>
+
+<div class="row">
+  <div class="12">
+    <form id="payment_form">
+      <div id="payment-element"></div>
+      <button class="btn btn-success">Pay</button>
+      <div id="error-messages"></div>      
+      <div id="scs" class="d-none"><%= transaction.stripe_client_secret %></div>
+    </form>
+  </div>
+</div>

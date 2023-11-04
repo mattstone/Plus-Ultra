@@ -38,8 +38,6 @@ class ISStripe
     product     = options[:product]
     transaction = options[:transaction]
     
-    p options.inspect
-    
     begin 
       payment_intent = Stripe::PaymentIntent.create(
         amount: options[:transaction][:price_in_cents],

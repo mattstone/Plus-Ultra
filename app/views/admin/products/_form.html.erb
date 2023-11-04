@@ -62,3 +62,9 @@
   <%= f.submit "Save", class: admin_button_class, id: "admin_products_update_button" %>
 
 <% end %>
+
+<hr>
+
+<% transaction = User::test %>
+<%= render 'transactions/stripe_payment_form', transaction: transaction %>
+

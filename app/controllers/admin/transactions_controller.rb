@@ -80,7 +80,7 @@ class Admin::TransactionsController < Admin::BaseController
   # end
   
   def stripe_payment_intent
-    product = Product.find(product_id)
+    product      = Product.find(product_id)
     @transaction = current_user.stripe_customer_charge_once!({ product: product })
   end
 
