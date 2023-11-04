@@ -7,8 +7,8 @@
     <%= hidden_field_tag :mailing_list_id, MailingList::newsletter.id %>
     
     <div class="form-floating mb-3">
-      <input type="email" name="email" class="form-control" id="newsletter_email" placeholder="" required>
-      <label for="floatingInput">Email address</label>
+      <input type="email" name="email" class="form-control" id="newsletter_email" placeholder="" autocomplete="email" required>
+      <label for="newsletter_email">Email address</label>
     </div>
     <button class="w-100 btn btn-lg btn-primary" type="submit" id="newsletter_email_button">Subscribe</button>
     <hr class="my-4">

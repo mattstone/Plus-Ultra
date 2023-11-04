@@ -86,12 +86,14 @@ class Admin::ProductsController < Admin::BaseController
       params.fetch(:product, {}).permit(
         :name,
         :sku,
-        :price,
+        :price_in_cents,
         :purchase_type,
         :billing_type,
         :teaser,
         :description,
-        :main_image
+        :main_image,
+        :stripe_product_api_id, 
+        :for_sale
       )
     end
     

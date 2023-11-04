@@ -88,6 +88,9 @@ class ISBlog < ISBaseWatir
     
     text_field = @browser.text_field(id: 'blog_title')
     text_field.value = test_blog[:title]
+
+    @browser.scroll.to :bottom
+    sleep 1
     
     @browser.button(:id => "blog_save_button").click
     @browser.wait_until { @browser.text.include? 'Blog was successfully updated.' }

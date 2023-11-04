@@ -3,7 +3,24 @@ class ProductsController < ApplicationController
 
   # GET /products or /products.json
   def index
-    @products = Product.all
+    where = ""
+    args  = []
+
+    if !params[:name].blank?
+      where += "products.name ILIKE ? "
+      args  << "%#{params[:name]}%"
+    end
+
+    if !params[:sku].blank?
+      where += "products.sku ILIKE ? "
+      args  << "%#{params[:sku]}%"
+    end
+    
+    @products = Product
+              .where(for_sale: true)
+              .where(where, *args)
+              .order(created_at: :desc)
+              .page params[:page]
   end
 
   # GET /products/1 or /products/1.json

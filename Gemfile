@@ -84,8 +84,10 @@ gem 'groupdate'
 # Environment variables
 gem 'dotenv-rails', groups: [:development, :test]
 
-# Stripe 
+# Stripe & billing
 gem 'stripe'
+gem 'stripe_event'
+gem 'receipts'  # https://github.com/excid3/receipts
 
 # Networking API
 gem 'httparty'

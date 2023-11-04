@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :subscribers, :blogs
+  resources :subscribers, :blogs, :products, :transactions
   devise_for :users 
   
   resources :users do 
@@ -8,9 +8,12 @@ Rails.application.routes.draw do
       post :confirm_2fa
     end
   end
+  
+  # webhooks 
+  post 'webhooks/stripe',                  to: 'webhooks#stripe'
 
   # Newsletter subscription  
-  post 'subscribe_to_newsletter', to: 'subscribers#subscribe_to_newsletter'  
+  post 'subscribe_to_newsletter',          to: 'subscribers#subscribe_to_newsletter'  
   get ' confirm_news_letter_subscription', to: 'subscribers#confirm_news_letter_subscription'  
   
   namespace :admin do
@@ -19,6 +22,7 @@ Rails.application.routes.draw do
     
     resources :users,
               :products,
+              :transactions,
               :blogs
             
     resources :mailing_lists do 

@@ -8,5 +8,8 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    
+    <script src="https://js.stripe.com/v3"></script>
+    <%= tag.meta name: "stripe-key", content: ENV['STRIPE_API_KEY'] %>
   </head>
   <body>

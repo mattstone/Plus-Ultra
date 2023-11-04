@@ -8,13 +8,18 @@ class Product < ApplicationRecord
     attachable.variant :medium,  resize_to_limit: [600, 600]
   end
   
+  has_many :transactions
 
   # add validations 
-  validates :name, :price, :sku, presence: true
+  validates :name, :price_in_cents, :sku, presence: true
   validates :name, :sku, uniqueness: true  
   
   # add enums
   enum :purchase_type, { purchase: 0, subscription: 100}, prefix: true
   enum :billing_type,  { once_off: 0, weekly: 100, fortnightly: 200, monthly: 300, annually: 400 }, prefix: true
 
+
+  def for_sale_to_s 
+    for_sale ? "Yes" : "No"
+  end
 end

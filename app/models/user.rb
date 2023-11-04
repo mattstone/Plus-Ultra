@@ -7,8 +7,14 @@ class User < ApplicationRecord
          
   enum :role, { customer: 0, admin: 100}, prefix: true
   
+  has_many :transactions
+  
   validates :first_name, :last_name, presence: true
 
+  def admin? 
+    self.role_admin?
+  end
+  
   def full_name 
     "#{first_name} #{last_name}"
   end

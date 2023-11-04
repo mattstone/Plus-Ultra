@@ -11,10 +11,14 @@
     <%= f.text_field :sku, placeholder: "SKU", class: "form-control" %>
   </div>
 
+  <div class="field">
+    <%= f.label :stripe_product_api_id, class: "form-label" %><br />
+    <%= f.text_field :stripe_product_api_id, placeholder: "Stripe Product API ID", class: "form-control" %>
+  </div>
 
   <div class="field">
-    <%= f.label :price, class: "form-label" %><br />
-    <%= f.number_field :price, class: "form-control", min: 0, step: 0.01 %>
+    <%= f.label :price_in_cents, class: "form-label" %><br />
+    <%= f.number_field :price_in_cents, class: "form-control", min: 0, step: 0.01 %>
   </div>
 
   <div class="field">
@@ -25,12 +29,12 @@
 
   <div class="field">
     <%= f.label :purchase_type, class: "form-label" %><br />
-    <%= f.select :role, Product.purchase_types.keys.map { |key| [key.titleize, key]}, {}, { class: "form-control" } %>
+    <%= f.select :purchase_type, Product.purchase_types.keys.map { |key| [key.titleize, key]}, {}, { class: "form-control" } %>
   </div>
 
   <div class="field">
     <%= f.label :billing_type, class: "form-label" %><br />
-    <%= f.select :role, Product.billing_types.keys.map { |key| [key.titleize, key]}, {}, { class: "form-control" } %>
+    <%= f.select :billing_type, Product.billing_types.keys.map { |key| [key.titleize, key]}, {}, { class: "form-control" } %>
   </div>
   
   <div class="field">
@@ -42,6 +46,16 @@
       <%= f.label :description %>
       <%= f.rich_text_area :description, class: "form-control" %>
   </div>
+  
+  <br>
+  <div class="field">
+    <div class="form-check form-switch">
+      <%# checked = product.for_sale ? "checked" : "" %>
+       <!-- <input class="form-check-input" name="product[for_sale]" type="checkbox" id="product_for_sale" <%#= checked %>>  -->
+      <% checked = product.for_sale ? true : "" %>
+      <%= f.check_box :for_sale, class: "form-check-input", checked: checked %>
+      <%= f.label :for_sale, class: "form-check-label", id: "product_for_sale", for: "product_for_sale" %>
+    </div>
   
   <br>
   

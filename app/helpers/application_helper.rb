@@ -20,4 +20,8 @@ module ApplicationHelper
     number_to_currency(amount_in_cents / 100)
   end
     
+  def current_page?(options)
+    params[:controller] == options[:controller] and params[:action] == options[:action]
+  end    
+  
 end

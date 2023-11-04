@@ -102,12 +102,12 @@ class ISBaseWatir
   end
   
   def sign_in_admin
-    
     go_home 
+    
     header("Admin user sign in")
     
     @admin = get_test_user
-    
+
     case @admin.role_admin? 
     when true  then good("Admin user created successfully")
     when false then bad("Admin user not created successfully")

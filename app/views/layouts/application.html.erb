@@ -4,20 +4,29 @@
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+          <p><%= "#{params[:controller]} #{params[:action]}" %></p>
           <a class="navbar-brand" href="<%= root_path %>" title="Home">Home</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <% current_page = current_page?({ controller: "products", action: "index"}) %>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="<%= blogs_path %>">Blog</a>
+                <a class="nav-link <%= current_page ? "active" : "" %>" aria-current="<%= current_page ? "page" : "" %>" href="<%= products_path %>">Products</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="<%= new_user_session_path %>">Sign In</a>
+                <% current_page = current_page?({ controller: "blogs", action: "index"}) %>
+                <a class="nav-link <%= current_page ? "active" : "" %>" aria-current="<%= current_page ? "page" : "" %>" href="<%= blogs_path %>">Blog</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="<%= new_user_registration_path %>">Sign Up</a>
+                <% current_page = current_page?({ controller: "devise/sessions", action: "new"}) %>
+                <a class="nav-link <%= current_page ? "active" : "" %>" aria-current="<%= current_page ? "page" : "" %>" href="<%= new_user_session_path %>">Sign In</a>
+              </li>
+              <li class="nav-item">
+                <% current_page = current_page?({ controller: "devise/registrations", action: "new"}) %>
+                <a class="nav-link <%= current_page ? "active" : "" %>" aria-current="<%= current_page ? "page" : "" %>" href="<%= new_user_registration_path %>">Sign Up</a>
               </li>
               
               <%#

@@ -11,7 +11,8 @@ All the functionality needed to launch and run a business. Just add an idea and 
 
 2. Sales
 - products 
-- Stripe
+- Stripe once off & subscription payments
+- Receipts
 
 3. Operations
 - Customer management
@@ -36,6 +37,10 @@ Things you may want to cover:
 * Mailcatcher url: http://127.0.0.1:1080/
  - run mailcatcher in console 
  - mailcatcher -f -b -v
+
+* Stripe CLI 
+- https://stripe.com/docs/stripe-cli
+- stripe login  - to authenticate - will need to do this every 90 days
 
 * TODO 
 - admin 

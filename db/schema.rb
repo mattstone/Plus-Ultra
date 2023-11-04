@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_30_193158) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_04_024502) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,6 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_30_193158) do
     t.datetime "datetime_to_publish"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_blogs_on_title"
     t.index ["user_id"], name: "index_blogs_on_user_id"
   end
 
@@ -74,9 +75,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_30_193158) do
     t.string "sku"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "price", default: 0
+    t.integer "price_in_cents", default: 0
     t.integer "purchase_type", default: 0
     t.integer "billing_type", default: 0
+    t.string "stripe_product_api_id"
+    t.boolean "for_sale", default: false
+    t.index ["for_sale"], name: "index_products_on_for_sale"
     t.index ["name"], name: "index_products_on_name"
     t.index ["sku"], name: "index_products_on_sku"
   end
@@ -91,6 +95,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_30_193158) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["mailing_list_id"], name: "index_subscribers_on_mailing_list_id"
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "product_id"
+    t.integer "status", default: 0
+    t.string "token"
+    t.integer "price_in_cents"
+    t.json "history", default: []
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_transactions_on_product_id"
+    t.index ["status"], name: "index_transactions_on_status"
+    t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,4 +1,4 @@
-<%= render 'admin/shared/header', title: "Manage Users" %>
+<%= render 'admin/shared/header', title: "Manage Products" %>
 <br>
 
 <%= form_with url: admin_products_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |f| %>
@@ -35,6 +35,9 @@
   <div class="col-2 <%= admin_background_class %>">
     <strong>Image</strong>
   </div>
+  <div class="col-1 <%= admin_background_class %>">
+    <strong>For Sale</strong>
+  </div>
   <div class="col-2 <%= admin_background_class %>">
     <strong>Action</strong>
   </div>
@@ -53,11 +56,14 @@
     <div class="row">
       <div class="col-3"><%= p.name %></div>
       <div class="col-2"><%= p.sku %></div>
-      <div class="col-1"><%= cents_to_dollars p.price %></div>
+      <div class="col-1"><%= cents_to_dollars p.price_in_cents %></div>
       <div class="col-2">
-        <% if b.main_image.attached? %>
-          <%= main_image b.hero_image.variant(:thumb) %>
+        <% if p.main_image.attached? %>
+          <%= image_tag p.main_image.variant(:thumb) %>
         <% end %>
+      </div>
+      <div class="col-1">
+        <%= p.for_sale_to_s %>
       </div>
       <div class="col-2">
         <%= link_to "Edit", edit_admin_product_path(p) %>
