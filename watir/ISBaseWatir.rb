@@ -38,6 +38,10 @@ class ISBaseWatir
     }
   end 
   
+  def test_user_db
+    User.find_by(email: test_user[:email])
+  end
+  
   def create_and_confirm_test_user!
     u = User.new
     u.email      = test_user[:email]

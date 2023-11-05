@@ -4,11 +4,13 @@ class ISUser < ISBaseWatir
   
     def initialize 
       super
+
+      destroy_test_data!
     
       sign_up
+      
       sign_in 
       
-      destroy_test_data!
       create_and_confirm_admin_user!
       
       sign_in_admin_user
@@ -42,16 +44,44 @@ class ISUser < ISBaseWatir
       
       @browser.button(:id => "sign_up_button").click
       
-      @browser.wait_until { @browser.text.include? 'confirmation link' }
+      sleep 1
       
-      good("Received Confirmation link")
+      user = test_user_db
+      
+      string = "#{user.one_time_code}"
+      
+      case string.length == 6 
+      when true  then good("One time code is 6 digits")
+      when false then good("One time code is not 6 digits")
+      end
+      
+      text_field = @browser.text_field(id: 'digit_1')
+      text_field.value = string[0]
 
-      u = User.find_by(email: test_user[:email])
-      link = "#{@base_url}/users/confirmation?confirmation_token=#{u.confirmation_token}"
-      @browser.goto link
+      text_field = @browser.text_field(id: 'digit_2')
+      text_field.value = string[1]
+
+      text_field = @browser.text_field(id: 'digit_3')
+      text_field.value = string[2]
+
+      text_field = @browser.text_field(id: 'digit_4')
+      text_field.value = string[3]
+
+      text_field = @browser.text_field(id: 'digit_5')
+      text_field.value = string[4]
+
+      text_field = @browser.text_field(id: 'digit_6')
+      text_field.value = string[5]
       
-      good("Reached Confirmation link")
+      sleep 1
+
+      @browser.wait_until { @browser.text.include? 'Log Out' }
+      good("User created and successfully logged in")
       
+      
+      @browser.button(:id => "log_out_button").click
+      @browser.wait_until { @browser.text.include? 'Signed out successfully' }
+      good("User logged out")
     end
     
     def sign_in 
