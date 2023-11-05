@@ -44,11 +44,9 @@ class WebhooksController < ApplicationController
       transaction.history << payment_intent
       
       case event.type 
-      when 'charge.succeeded'  
-        transaction.status_cleared_funds!
-        transaction.product.purchased!
-      when 'charge.failed'    then transaction.status_failed!
-      when 'charge.refunded'  then transaction.status_refunded!
+      when 'charge.succeeded' then transaction.cleared_funds!
+      when 'charge.failed'    then transaction.failed!
+      when 'charge.refunded'  then transaction.refunded!
       end      
       
     else 

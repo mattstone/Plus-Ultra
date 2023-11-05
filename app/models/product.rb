@@ -48,6 +48,10 @@ class Product < ApplicationRecord
     # Do what is needed to deliver product to customer
   end
   
+  def refunded! 
+    # Do what is needed to stop product delivery
+  end
+  
   #
   # End fulfillment
   #
