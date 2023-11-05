@@ -96,9 +96,26 @@ class ISStripe
 
   def test_card 
     {
-    expiry: Time.now + 2.years,
-    number: "4242424242424242",
-    cvv: "123"
+      expiry: Time.now + 2.years,
+      number: "4242424242424242",
+      cvv: "123"
     }
   end
+  
+  def test_card_declined
+    {
+      expiry: Time.now + 2.years,
+      number: "4000000000000002",
+      cvv: "123"
+    }
+  end
+
+  def test_card_insufficient_funds
+    {
+      expiry: Time.now + 2.years,
+      number: "4000000000009995",
+      cvv: "123"
+    }
+  end
+  
 end

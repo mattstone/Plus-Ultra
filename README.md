@@ -2,53 +2,63 @@
 
 Aim:
 
-All the functionality needed to launch and run a business. Just add an idea and a designer.
+Starter app with everything needed to launch and run a business. Just and an idea and design.
 
-1. Marketing 
-- prospect lists 
-- blog 
+## 1. Marketing
 
+- Blog 
+- Email lists
+- Campaign management
 
-2. Sales
+## 2. Sales
+
 - products 
-- Stripe once off & subscription payments
+- Once off & subscription payments via Stripe
+
+## 3. Operations
+
+- Customer management
 - Receipts
 
-3. Operations
-- Customer management
-- Sales management
+## 4. Reporting
 
-4. Reporting
+- Customer signup 
+- Sales performance 
+- Campaign tracking
 
-1. Blog 
-2. Launch page with email collections
-3. Mailing lists
-4. User creation 
-5. Admin section 
-6. Products 
-7. Product purchase - one off & subscription
-8. User profiles
+## 5. Testing 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+- Watir & Chrome
 
-Things you may want to cover:
+## Development Environment
+
+### Mailcatcher
 
 * Mailcatcher url: http://127.0.0.1:1080/
  - run mailcatcher in console 
  - mailcatcher -f -b -v
 
-* Stripe CLI 
+### Stripe CLI
 - https://stripe.com/docs/stripe-cli
 - stripe login  - to authenticate - will need to do this every 90 days
 - stripe listen --forward-to localhost:3000/webhooks/stripe
 - Trigger test api calls 
--- stripe trigger checkout.session.completed
+-- stripe trigger checkout.session.completed to test responses will be received
 
+### Notes
+
+- Active Storage for file uploads
+- ActionText Trix WYSIWYG editor
+- Phony & Phonelib for international telephone numbers
+- Invisible Captcha
+- dotenv
+- QRCode
+
+
+# 
 * TODO 
 - admin 
 - invisible captcha 
-- blog 
 - collect emails into prospects list with unsubscribe
 - product 
 - purchase - stripe 
@@ -59,6 +69,7 @@ Things you may want to cover:
 * Ruby version
 
 * System dependencies
+- See Gem file 
 
 * Configuration
 
@@ -67,6 +78,7 @@ Things you may want to cover:
 * Database initialization
 
 * How to run the test suite
+- Watir
 
 * Services (job queues, cache servers, search engines, etc.)
 
@@ -74,12 +86,6 @@ Things you may want to cover:
 gem install watir
 gem install mailcatcher 
 
-Active Storage for file uploads
-ActionText Trix WYSIWYG editor
-Phony & Phonelib for international telephone numbers
-Invisible Captcha
-dotenv
-QRCode
 
 ```
 * ...
