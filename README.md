@@ -4,6 +4,8 @@ Aim:
 
 Starter app with everything needed to launch and run a business. Just and an idea and design.
 
+Modern Rails 7 Hotwire app with no Javascript build complexity.
+
 ## 1. Marketing
 
 - Blog 
@@ -57,11 +59,8 @@ Starter app with everything needed to launch and run a business. Just and an ide
 
 # 
 * TODO 
-- admin 
-- invisible captcha 
-- collect emails into prospects list with unsubscribe
-- product 
-- purchase - stripe 
+
+- captcha 
 - subscriptions - stripe
 - charts - reporting
 
