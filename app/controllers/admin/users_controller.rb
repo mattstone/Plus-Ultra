@@ -88,14 +88,4 @@ class Admin::UsersController < Admin::BaseController
       @user = User.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(
-        :email,
-        :first_name,
-        :last_name,
-        :role,
-        :stripe_customer_id
-      )
-    end
 end

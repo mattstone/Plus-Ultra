@@ -1,0 +1,6 @@
+<div id="signup_resource">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "shared/form_results", resource: resource %>
+    <%= render 'devise/registrations/form_fields', f: f %>
+  <% end %>
+</div>

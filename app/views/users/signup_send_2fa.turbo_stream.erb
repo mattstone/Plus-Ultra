@@ -1,0 +1,5 @@
+<% if @user.valid? %>
+  <%= turbo_stream.replace "signup_user", partial: 'devise/shared/2fa/confirm' %>
+<% else %>
+  <%= turbo_stream.replace "signup_user", partial: 'devise/registrations/signup_user', locals: { resource: @user } %>
+<% end %>

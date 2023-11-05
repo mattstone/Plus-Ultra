@@ -1,0 +1,51 @@
+<div id="confirm_2fa">  
+  <div data-controller="verify2facode">
+    <%= form_with(url: confirm_2fa_users_path, method: :post, id: "confirm_2fa_form") do |f| %>
+        <%= render 'shared/form_results', resource: nil %>
+        <%= hidden_field_tag :attempts, @attempts    %>
+        <%= hidden_field_tag :email,    @user&.email %>
+
+        <div class="row">
+          <div class="col-6 d-flex">
+            <br>
+            <br>
+            <h6>Enter the verification code sent to your email</h6>
+            
+            <% if Rails.env.development? %>
+              <p>
+                Code is <%= @user&.one_time_code %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6 d-flex">
+            <div class="d-flex mb">
+              <input name="digit_1" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_1"> 
+              <input name="digit_2" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_2">
+              <input name="digit_3" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_3">
+              <input name="digit_4" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_4">
+              <input name="digit_5" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_5">
+              <input name="digit_6" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_6">
+            </div>
+          </div>
+        </div>
+        
+        <%= submit_tag "Confirm", class: 'btn btn-primary w-100 mt-4', id: "confirm_2fa_button" %>
+        <%= submit_tag "Resend",  class: 'btn btn-outline-primary btn-sm w-100 mt-2 '%>
+        
+    <% end %>
+    
+  </div>
+</div>
+
+
+
+
+
+    <%#= render "account/account/verify/enter_verification" %>
+
+    <%#= submit_tag :Verify, class: 'btn btn-primary w-100 mt-4' %>
+    <%#= submit_tag "Resend code", class: 'btn btn-outline-primary btn-sm w-100 mt-2 '%>
+

@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
   resources :subscribers, :blogs, :products
-  devise_for :users 
+  devise_for :users
+  # devise_for :users, controllers: { sessions: 'users/sessions' }
   
   resources :users do 
     collection do     
       post :request_2fa
       post :confirm_2fa
+      
+      post :signup_send_2fa 
+      post :signup_confirm_2fa
     end
   end
   

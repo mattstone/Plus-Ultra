@@ -3,15 +3,9 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
 
   connect() {
-    console.log("verify2facode loaded! ")
-    console.log("verify2facode loaded! so good we loaded it twice!")
-    console.log("verify2facode loaded! so good we loaded it trice!")
-    
     const form = document.getElementById('confirm_2fa_form')
     
     if (form) {
-      
-      console.log("form exists")
       
       const code_inputs = form.querySelectorAll('input')
     
@@ -48,8 +42,13 @@ export default class extends Controller {
         if (digit_6.value.replace(/\D/g,'') == "") { return }
 
          // If we get here all is good
-        form.requestSubmit() // submit form with hotwire
-
+        //form.requestSubmit() // submit form with hotwire        
+        let button = document.getElementById('confirm_2fa_button')
+        console.log(button)
+        if (button) { 
+          console.log("about to click button..")
+          button.click() 
+        }
       })
       
       code_inputs[0].addEventListener('paste', this.handlePaste)

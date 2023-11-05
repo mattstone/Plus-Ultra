@@ -14,12 +14,13 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 
 ## 2. Sales
 
-- products 
+- Products 
 - Once off & subscription payments via Stripe
+- Shopping Cart
 
 ## 3. Operations
 
-- Customer management
+- User/Customer management with 2FA
 - Receipts
 
 ## 4. Reporting
@@ -63,6 +64,7 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 - captcha 
 - subscriptions - stripe
 - charts - reporting
+- elastic search
 
 
 * Ruby version
