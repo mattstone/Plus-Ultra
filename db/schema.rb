@@ -108,8 +108,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_102130) do
     t.datetime "updated_at", null: false
     t.datetime "date_cleared_funds"
     t.string "stripe_client_secret"
+    t.string "stripe_payment_intent"
     t.index ["product_id"], name: "index_transactions_on_product_id"
     t.index ["status"], name: "index_transactions_on_status"
+    t.index ["stripe_client_secret"], name: "index_transactions_on_stripe_client_secret"
+    t.index ["stripe_payment_intent"], name: "index_transactions_on_stripe_payment_intent"
     t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 

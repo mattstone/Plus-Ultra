@@ -98,7 +98,8 @@ class User < ApplicationRecord
       payment_intent = stripe.payment_intent(options)
       
       t.history << payment_intent
-      t.stripe_client_secret = payment_intent["client_secret"]
+      t.stripe_client_secret  = payment_intent["client_secret"]
+      t.stripe_payment_intent = payment_intent["id"]
       t.save
     end
     t

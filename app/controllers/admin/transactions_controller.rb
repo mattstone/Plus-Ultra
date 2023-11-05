@@ -79,11 +79,6 @@ class Admin::TransactionsController < Admin::BaseController
   #   end
   # end
   
-  def stripe_payment_intent
-    product      = Product.find(product_id)
-    @transaction = current_user.stripe_customer_charge_once!({ product: product })
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction

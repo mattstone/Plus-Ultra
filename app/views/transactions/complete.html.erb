@@ -1,0 +1,13 @@
+
+<div data-controller="stripe"></div>
+
+<h4>Purchase</h4>
+
+<%= render 'transactions/transaction', transaction: @transaction %>
+
+<%# Polling to receive Stripe response %>
+<div class="d-none">
+  <%= form_with url: transaction_poll_for_webhook_response_path(@transaction), method: :post do |f| %>
+    <%= f.submit "update", id: "transaction_response_poll" %>
+  <% end %>
+</div>

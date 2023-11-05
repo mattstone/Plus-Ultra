@@ -37,6 +37,20 @@ class WebhooksController < ApplicationController
     when 'payment_intent.succeeded'
       payment_intent = event.data.object 
       l "#{event.type} #{payment_intent.id} received status of: #{payment_intent.status}"
+      
+    when 'charge.succeeded', 'charge.failed', 'charge.refunded'
+      payment_intent = event.data.object 
+      transaction    = Transaction.find(payment_intent["metadata"]["transaction_id"])
+      transaction.history << payment_intent
+      
+      case event.type 
+      when 'charge.succeeded'  
+        transaction.status_cleared_funds!
+        transaction.product.purchased!
+      when 'charge.failed'    then transaction.status_failed!
+      when 'charge.refunded'  then transaction.status_refunded!
+      end      
+      
     else 
       l "Unhandled event type: #{event.type}"
     end
@@ -44,4 +58,5 @@ class WebhooksController < ApplicationController
     render json: { message: "ok" }, status: 200
   end 
   
+    
 end

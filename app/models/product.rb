@@ -40,4 +40,16 @@ class Product < ApplicationRecord
     end
   end
   
+  #
+  # Start fulfillment  
+  #
+  
+  def purchased!
+    # Do what is needed to deliver product to customer
+  end
+  
+  #
+  # End fulfillment
+  #
+  
 end

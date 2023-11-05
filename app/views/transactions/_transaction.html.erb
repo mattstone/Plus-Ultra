@@ -1,2 +1,32 @@
 <div id="<%= dom_id transaction %>">
 </div>
+
+<%= turbo_frame_tag "transaction_result" do %>
+   <div class="row">
+     <div class="col-12"><%= transaction.product.name %></div>
+   </div>
+   <div class="row">
+     <div class="col-12"><%= cents_to_dollars transaction.price_in_cents %></div>
+   </div>
+    <div class="row">
+      <div class="col">
+        
+        <% 
+        alert_class = case 
+          when transaction.status_pending?       then "primary"
+          when transaction.status_cleared_funds? then "success"
+          else "warning"
+          end
+         %>
+         <div class="alert alert-<%= alert_class %>">
+           <div id="transaction_status">
+             <%= transaction.status.to_s.humanize %>
+            </div>
+         </div>
+        <br>
+      </div>
+    </div>
+<% end %>
+
+<br>
+<br>

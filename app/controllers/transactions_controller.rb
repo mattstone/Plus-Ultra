@@ -1,5 +1,6 @@
 class TransactionsController < ApplicationController
-  before_action :set_transaction, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: %i[ complete ]
+  before_action :set_transaction,    only: %i[ show edit update destroy poll_for_webhook_response ]
 
   # GET /transactions or /transactions.json
   def index
@@ -57,14 +58,34 @@ class TransactionsController < ApplicationController
   #   end
   # end
   # 
-  # private
-  #   # Use callbacks to share common setup or constraints between actions.
-  #   def set_transaction
-  #     @transaction = Transaction.find(params[:id])
-  #   end
-  # 
-  #   # Only allow a list of trusted parameters through.
-  #   def transaction_params
-  #     params.fetch(:transaction, {})
-  #   end
+  
+  def stripe_payment_intent
+    product      = Product.find(product_id)
+    @transaction = current_user.stripe_customer_charge_once!({ product: product })
+  end
+  
+  def complete 
+    @transaction = Transaction.find_by(stripe_payment_intent: params[:payment_intent])
+  end
+  
+  def poll_for_webhook_response
+
+    render turbo_stream:
+      turbo_stream.replace("transaction_result",
+        partial: 'transactions/transaction',
+        locals:  { transaction: @transaction }
+      )
+
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_transaction
+      @transaction = Transaction.find(params[:id])
+    end
+  
+    # Only allow a list of trusted parameters through.
+    def transaction_params
+      params.fetch(:transaction, {})
+    end
 end
