@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i[ show edit update destroy ]
+  before_action :set_product, only: %i[ show edit update destroy add_to_shopping_cart remove_from_shopping_cart]
 
   # GET /products or /products.json
   def index
@@ -73,6 +73,25 @@ class ProductsController < ApplicationController
   #     format.json { head :no_content }
   #   end
   # end
+  
+  def add_to_shopping_cart
+    if @shopping_cart[@product.id]
+      @shopping_cart[@product.id][:count] += 1
+    else 
+      @shopping_cart[@product.id] = { name: @product.name, count: 1}
+    end
+  end 
+  
+  def remove_from_shopping_cart
+    if @shopping_cart[@product.id]
+      if @shopping_cart[@product.id][:count] > 1
+        @shopping_cart[@product.id][:count] -= 1
+      else 
+        @shopping_cart.delete(@product.id)
+      end
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

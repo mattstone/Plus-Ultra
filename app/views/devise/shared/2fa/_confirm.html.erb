@@ -12,22 +12,23 @@
             <h6>Enter the verification code sent to your email</h6>
             
             <% if Rails.env.development? %>
-              <p>
-                Code is <%= @user&.one_time_code %>
-              </p>
+              <div class="alert alert-info">
+                <strong>Development mode:</strong> Code is <%= @user&.one_time_code %>
+              </div>
             <% end %>
+            
           </div>
         </div>
 
         <div class="row">
           <div class="col-6 d-flex">
             <div class="d-flex mb">
-              <input name="digit_1" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_1"> 
-              <input name="digit_2" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_2">
-              <input name="digit_3" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_3">
-              <input name="digit_4" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_4">
-              <input name="digit_5" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_5">
-              <input name="digit_6" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_6">
+              <input name="digit_1" id="digit_1" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_1"> 
+              <input name="digit_2" id="digit_2" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_2">
+              <input name="digit_3" id="digit_3" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_3">
+              <input name="digit_4" id="digit_4" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_4">
+              <input name="digit_5" id="digit_5" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_5">
+              <input name="digit_6" id="digit_6" type="text" maxlength="1" pattern="[0-9]" class="form-control code" id="digit_6">
             </div>
           </div>
         </div>

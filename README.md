@@ -2,7 +2,7 @@
 
 Aim:
 
-Starter app with everything needed to launch and run a business. Just and an idea and design.
+Starter app with everything needed to launch and run a business. Just add an idea and designer.
 
 Modern Rails 7 Hotwire app with no Javascript build complexity.
 

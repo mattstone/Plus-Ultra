@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :subscribers, :blogs, :products
+  resources :subscribers, :blogs
   devise_for :users
   # devise_for :users, controllers: { sessions: 'users/sessions' }
   
@@ -10,6 +10,13 @@ Rails.application.routes.draw do
       
       post :signup_send_2fa 
       post :signup_confirm_2fa
+    end
+  end
+  
+  resources :products do 
+    member do 
+      post 'add_to_shopping_cart',      to: "products#add_to_shopping_cart"
+      post 'remove_from_shopping_cart', to: "products#remove_from_shopping_cart"
     end
   end
   

@@ -27,19 +27,20 @@ class UsersController < ApplicationController
         if @user 
           case @user.one_time_code == "#{params[:digit_1]}#{params[:digit_2]}#{params[:digit_3]}#{params[:digit_4]}#{params[:digit_5]}#{params[:digit_6]}".to_i
           when true  
-            # New uer process
+            # New uer process - Note: there might be a better way..
             if !@user.confirmed?
               @user.confirmed_at = Time.now 
               @user.save 
               sign_in @user
               
-              # direct to home page..
+              # direct to home page.. should be user dashboard..
+              # or if something in shopping cart, then redirect to purchase page..
               respond_to do |format|
                 format.turbo_stream { redirect_to root_url and return }
-              end
-              
+              end              
             end
-           @success = "Verification successful"
+            
+            @success = "Verification successful"
           when false then @error   = "Verification unsuccessful"
           end
         end

@@ -12,13 +12,15 @@
 <br>
 
 <div id="products">
-  <% @products.each do |product| %>
-    <%= render product %>
-    <br>
-    <!-- <p>
-      <%#= link_to "Show this product", product %>
-    </p> -->
-  <% end %>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <% @products.each do |product| %>
+      <%= render product %>
+      <br>
+      <!-- <p>
+        <%#= link_to "Show this product", product %>
+      </p> -->
+    <% end %>
+  </div>
 </div>
 
 <br>

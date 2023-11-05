@@ -1,4 +1,5 @@
-<div class="card" id="<%= dom_id product %>" style="width: 18rem;">
+<div class="col">
+  <div class="card" id="<%= dom_id product %>">
   <h5 class="card-header d-flex justify-content-center"><%= product.name %></h5>
   <% if product.main_image.attached? %>
     <%= image_tag(product.main_image, class: "image-fluid rounded", alt: product.name, title: product.name) %>
@@ -24,8 +25,11 @@
         <button type="button" class="btn btn-primary">
           <%= cents_to_dollars product.price_in_cents %>
         </button>
+        
+        <%= render 'shared/add_to_cart', product: product %>
     <% end %>
     </p>
     
   </div>
+</div>
 </div>
