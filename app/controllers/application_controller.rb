@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
   protected
   
   def set_shopping_cart 
+    # session[:shopping_cart] = nil
     session[:shopping_cart] ||= {}
     @shopping_cart = session[:shopping_cart]
   end

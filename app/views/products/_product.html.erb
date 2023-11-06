@@ -26,9 +26,12 @@
           <%= cents_to_dollars product.price_in_cents %>
         </button>
         
-        <%= render 'shared/add_to_cart', product: product %>
     <% end %>
     </p>
+    
+    <%= @shopping_cart.inspect %>
+
+    <%= render 'shared/add_to_cart', product: product %>
     
   </div>
 </div>
