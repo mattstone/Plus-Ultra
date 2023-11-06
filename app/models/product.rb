@@ -9,6 +9,8 @@ class Product < ApplicationRecord
   end
   
   has_many :transactions
+  has_many :product_orders
+  has_many :orders, through: :product_orders
 
   # add validations 
   validates :name, :price_in_cents, :sku, presence: true

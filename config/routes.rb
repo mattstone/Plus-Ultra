@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :orders
   resources :subscribers, :blogs
   devise_for :users
   # devise_for :users, controllers: { sessions: 'users/sessions' }
@@ -31,6 +32,9 @@ Rails.application.routes.draw do
   
   # webhooks 
   post 'webhooks/stripe',                  to: 'webhooks#stripe'
+  
+  # Checkout 
+  get 'checkout',                          to: "checkout#index"
 
   # Newsletter subscription  
   post 'subscribe_to_newsletter',          to: 'subscribers#subscribe_to_newsletter'  
@@ -43,7 +47,8 @@ Rails.application.routes.draw do
     resources :users,
               :products,
               :transactions,
-              :blogs
+              :blogs,
+              :orders
             
     resources :mailing_lists do 
       resources :subscribers, controller: 'mailing_lists/subscribers' do 

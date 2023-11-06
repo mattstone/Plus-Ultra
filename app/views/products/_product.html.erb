@@ -29,9 +29,7 @@
     <% end %>
     </p>
     
-    <%= @shopping_cart.inspect %>
-
-    <%= render 'shared/add_to_cart', product: product %>
+    <%= render 'shared/add_to_cart', product: product, show_added: false %>
     
   </div>
 </div>
