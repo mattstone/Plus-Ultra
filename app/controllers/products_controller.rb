@@ -75,8 +75,6 @@ class ProductsController < ApplicationController
   # end
   
   def add_to_shopping_cart
-    
-    Rails.logger.info "add_to_shopping_cart: 3".yellow
     if session[:shopping_cart]["#{@product.id}"]
       session[:shopping_cart]["#{@product.id}"]["count"] += 1
     else 

@@ -35,9 +35,16 @@ class UsersController < ApplicationController
               
               # direct to home page.. should be user dashboard..
               # or if something in shopping cart, then redirect to purchase page..
-              respond_to do |format|
-                format.turbo_stream { redirect_to root_url and return }
-              end              
+              
+              if @shopping_cart.count == 0
+                respond_to do |format|
+                  format.turbo_stream { redirect_to root_url and return }
+                end
+              else 
+                respond_to do |format|
+                  format.turbo_stream { redirect_to checkout_url and return }
+                end
+              end
             end
             
             @success = "Verification successful"

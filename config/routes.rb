@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   
   # Checkout 
   get 'checkout',                          to: "checkout#index"
+  post 'checkout_create_account',          to: "checkout#checkout_create_account"
 
   # Newsletter subscription  
   post 'subscribe_to_newsletter',          to: 'subscribers#subscribe_to_newsletter'  

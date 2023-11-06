@@ -9,4 +9,8 @@ class CheckoutController < ApplicationController
     end 
   end 
   
+  def checkout_create_account 
+    @user = User.new
+  end
+  
 end
