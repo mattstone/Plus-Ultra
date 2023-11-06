@@ -5,5 +5,7 @@ class HomeController < ApplicationController
   
   
   def subscribe_to_newsletter
-  end
+  end 
+  
+  
 end
