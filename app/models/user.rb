@@ -8,6 +8,7 @@ class User < ApplicationRecord
   enum :role, { customer: 0, admin: 100}, prefix: true
   
   has_many :transactions
+  has_many :orders
   
   validates :first_name, :last_name, presence: true
 
@@ -79,28 +80,37 @@ class User < ApplicationRecord
     end
   end
   
+  # current_user.stripe_customer_charge_once!({ product: product })
+  
   def stripe_customer_charge_once!(options)
     # create transaction 
-    product = options[:product]
+    # product = options[:product]
+    order   = options[:order]
     stripe  = ISStripe.new
     t       = nil
     
     ActiveRecord::Base.transaction do
       t = self.transactions.new
-      t.product = product
-      t.price_in_cents = product.price_in_cents
+      t.order          = options[:order]
+      t.price_in_cents = options[:order].amount_in_cents
       t.save!
-      
+
+      options[:order]              = order
       options[:transaction]        = t
       options[:stripe_customer_id] = self.stripe_customer_id
       options[:receipt_email]      = self.email
       
       payment_intent = stripe.payment_intent(options)
       
+      Rails.logger.info "payment_intent".yellow 
+      Rails.logger.info payment_intent.inspect.to_s.yellow
+      
       t.history << payment_intent
       t.stripe_client_secret  = payment_intent["client_secret"]
       t.stripe_payment_intent = payment_intent["id"]
       t.save
+      
+      Rails.logger.info t.errors.inspect.to_s.red
     end
     t
   end

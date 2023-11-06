@@ -3,7 +3,7 @@
 
 <%= turbo_frame_tag "transaction_result" do %>
    <div class="row">
-     <div class="col-12"><%= transaction.product.name %></div>
+     <div class="col-12">Order Id: <%= transaction.order.id %></div>
    </div>
    <div class="row">
      <div class="col-12"><%= cents_to_dollars transaction.price_in_cents %></div>

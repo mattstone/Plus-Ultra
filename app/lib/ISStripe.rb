@@ -34,10 +34,11 @@ class ISStripe
     payment_intent       = nil
     options[:currency] ||= "AUD"
     options[:payment_method_types] ||= ["card", "au_becs_debit"]
-    
-    product     = options[:product]
+
+    order       = options[:order]
     transaction = options[:transaction]
     
+    description = "order: OR-#{order.id}"
     begin 
       payment_intent = Stripe::PaymentIntent.create(
         amount: options[:transaction][:price_in_cents],
@@ -45,10 +46,10 @@ class ISStripe
         # payment_method_types: options[:payment_method_types],
         automatic_payment_methods:  { enabled: true },
         customer: options[:stripe_customer_id],
-        description: product.name,
+        description: description,
         metadata: { transaction_id: transaction.id },
         # receipt_email: options[:receipt_email],  # Turn on when needed
-        statement_descriptor: product.name,
+        statement_descriptor: description,
         # confirm: true,  # Execute payment straight away!
         # off_session: true        
       )

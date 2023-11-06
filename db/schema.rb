@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_06_055057) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_06_203037) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -74,6 +74,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_055057) do
     t.integer "amount_in_cents"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "product_orders", force: :cascade do |t|
@@ -116,7 +118,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_055057) do
 
   create_table "transactions", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "product_id"
     t.integer "status", default: 0
     t.string "token"
     t.integer "price_in_cents"
@@ -126,7 +127,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_055057) do
     t.datetime "date_cleared_funds"
     t.string "stripe_client_secret"
     t.string "stripe_payment_intent"
-    t.index ["product_id"], name: "index_transactions_on_product_id"
+    t.integer "order_id"
+    t.index ["order_id"], name: "index_transactions_on_order_id"
     t.index ["status"], name: "index_transactions_on_status"
     t.index ["stripe_client_secret"], name: "index_transactions_on_stripe_client_secret"
     t.index ["stripe_payment_intent"], name: "index_transactions_on_stripe_payment_intent"

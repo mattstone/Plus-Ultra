@@ -8,12 +8,11 @@
     </svg>"
   %>
   <div class="d-flex <%= shopping_cart_class %> align-text-top">
-    <%= @shopping_cart.inspect %>
-    
     <%
       count = 0
       @shopping_cart.each do |key, value| 
-        count += value["count"] if value["count"]
+        value  = value.symbolize_keys 
+        count += value[:count]
       end
     %>
     <% if count == 0 %>

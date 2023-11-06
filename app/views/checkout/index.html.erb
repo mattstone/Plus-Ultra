@@ -74,9 +74,9 @@
     <div class="col-1">
       
       <% if current_user %>
-        <button class="btn btn-success">
-          Pay Now
-        </button>
+        <%= form_with url: checkout_pay_now_path, method: :post do |f| %>
+          <%= f.submit "Pay Now", class: "btn btn-success" %>
+        <% end %>
       <% else %>
         <%= form_with url: checkout_create_account_path, method: :post do |f| %>
           <%= f.submit "Contine", class: "btn btn-success" %>

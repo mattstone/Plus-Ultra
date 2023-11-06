@@ -1,5 +1,5 @@
 class Transaction < ApplicationRecord
-  belongs_to :product 
+  belongs_to :order 
   belongs_to :user 
   
   scope :recently_created, ->  { where(created_at: 1.minutes.ago..DateTime.now) }
@@ -14,8 +14,6 @@ class Transaction < ApplicationRecord
   
   def cleared_funds! 
     self.status_cleared_funds!
-    self.product.purchased!
-    
     # send invoice, etc..
   end
 
