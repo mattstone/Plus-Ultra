@@ -27,54 +27,10 @@ class ISUser < ISBaseWatir
       
       good("Reached Sign up page")
       
-      text_field = @browser.text_field(id: 'user_email')
-      text_field.value = test_user[:email]
+      fill_in_user_sign_up_form!
+            
+      fill_in_user_2fa! 
       
-      text_field = @browser.text_field(id: 'user_first_name')
-      text_field.value = test_user[:first_name]
-
-      text_field = @browser.text_field(id: 'user_last_name')
-      text_field.value = test_user[:last_name]
-
-      text_field = @browser.text_field(id: 'user_password')
-      text_field.value = test_user[:password]
-
-      text_field = @browser.text_field(id: 'user_password_confirmation')
-      text_field.value = test_user[:password]
-      
-      @browser.button(:id => "sign_up_button").click
-      
-      sleep 1
-      
-      user = test_user_db
-      
-      string = "#{user.one_time_code}"
-      
-      case string.length == 6 
-      when true  then good("One time code is 6 digits")
-      when false then good("One time code is not 6 digits")
-      end
-      
-      text_field = @browser.text_field(id: 'digit_1')
-      text_field.value = string[0]
-
-      text_field = @browser.text_field(id: 'digit_2')
-      text_field.value = string[1]
-
-      text_field = @browser.text_field(id: 'digit_3')
-      text_field.value = string[2]
-
-      text_field = @browser.text_field(id: 'digit_4')
-      text_field.value = string[3]
-
-      text_field = @browser.text_field(id: 'digit_5')
-      text_field.value = string[4]
-
-      text_field = @browser.text_field(id: 'digit_6')
-      text_field.value = string[5]
-      
-      sleep 1
-
       @browser.wait_until { @browser.text.include? 'Log Out' }
       good("User created and successfully logged in")
       

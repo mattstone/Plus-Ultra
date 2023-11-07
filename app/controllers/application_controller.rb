@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_shopping_cart
+  before_action :set_seo
   
   def l(string)
     Rails.logger.info string.to_s.yellow
@@ -28,6 +29,11 @@ class ApplicationController < ActionController::Base
     session[:shopping_cart] ||= {}
     @shopping_cart = session[:shopping_cart]
   end
+  
+  def clear_shopping_cart 
+    session[:shopping_cart] = nil
+    set_shopping_cart
+  end
 
   def configure_permitted_parameters
     attributes = [:first_name, :last_name, :email, :avatar]
@@ -48,5 +54,10 @@ class ApplicationController < ActionController::Base
     )
   end
   
+  def set_seo
+    @title = "Starter - #{params[:controller]}  #{params[:action]}"
+    @meta_description = "#{params[:controller]}  #{params[:action]}"
+    @meta_keywords    = "Starter, #{params[:controller]}, #{params[:action]}}"
+  end
   
 end

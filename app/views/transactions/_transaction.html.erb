@@ -14,7 +14,10 @@
         <% 
         alert_class = case 
           when transaction.status_pending?       then "primary"
-          when transaction.status_cleared_funds? then "success"
+          when transaction.status_cleared_funds?  
+            session["shopping_cart"] = nil
+            session[:shopping_cart]  = nil
+            "success"
           else "warning"
           end
          %>

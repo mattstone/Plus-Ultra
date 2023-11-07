@@ -25,6 +25,8 @@ class ProductsController < ApplicationController
 
   # GET /products/1 or /products/1.json
   def show
+    @meta_description = @product.meta_description if !@product.meta_description.blank?
+    @meta_keywords    = @product.meta_keywords    if !@product.meta_keywords.blank?
   end
 
   # GET /products/new

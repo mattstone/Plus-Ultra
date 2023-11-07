@@ -20,6 +20,16 @@
     <%= f.label :price_in_cents, class: "form-label" %><br />
     <%= f.number_field :price_in_cents, class: "form-control", min: 0, step: 0.01 %>
   </div>
+  
+  <div class="field">
+    <%= f.label :meta_description, class: "form-label" %><br />
+    <%= f.text_field :meta_description, autocomplete: "Meta description", class: "form-control" %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :meta_keywords, class: "form-label" %><br />
+    <%= f.text_field :meta_keywords, autocomplete: "Meta keywords, seperated by comma's", class: "form-control" %>
+  </div>
 
   <div class="field">
     <%= f.label :main_image, class: "form-label" %><br />

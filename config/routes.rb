@@ -62,5 +62,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  
+  if !Rails.env.production?
+    get 'set_for_testing', to: 'home#set_for_testing'
+  end
+  
   root 'home#index'
 end

@@ -93,7 +93,9 @@ class Admin::ProductsController < Admin::BaseController
         :description,
         :main_image,
         :stripe_product_api_id, 
-        :for_sale
+        :for_sale,
+        :meta_description,
+        :meta_keywords        
       )
     end
     

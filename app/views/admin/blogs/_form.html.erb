@@ -11,6 +11,16 @@
     <%= f.text_field :title, autocomplete: "Mailing List name", class: "form-control" %>
   </div>
   
+  <div class="field">
+    <%= f.label :meta_description, class: "form-label" %><br />
+    <%= f.text_field :meta_description, autocomplete: "Meta description", class: "form-control" %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :meta_keywords, class: "form-label" %><br />
+    <%= f.text_field :meta_keywords, autocomplete: "Meta keywords, seperated by comma's", class: "form-control" %>
+  </div>
+  
   <br>
   
   <% if blog.hero_image.attached? %>

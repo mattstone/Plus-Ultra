@@ -1,0 +1,5 @@
+<% if Rails.env.production? %>
+  <h4>All your base are belong to us!</h4>
+<% else %>
+  <h4>OK - <%= Rails.env.to_s.humanize %></h4>
+<% end %>

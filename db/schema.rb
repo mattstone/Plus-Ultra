@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_06_203037) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_07_044653) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,12 +54,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_203037) do
 
   create_table "blogs", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "status"
+    t.integer "status", default: 0
     t.string "title"
     t.string "slug"
     t.datetime "datetime_to_publish"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "meta_description"
+    t.string "meta_keywords"
     t.index ["title"], name: "index_blogs_on_title"
     t.index ["user_id"], name: "index_blogs_on_user_id"
   end
@@ -99,6 +101,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_203037) do
     t.integer "billing_type", default: 0
     t.string "stripe_product_api_id"
     t.boolean "for_sale", default: false
+    t.string "meta_description"
+    t.string "meta_keywords"
     t.index ["for_sale"], name: "index_products_on_for_sale"
     t.index ["name"], name: "index_products_on_name"
     t.index ["sku"], name: "index_products_on_sku"

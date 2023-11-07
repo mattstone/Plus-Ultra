@@ -19,26 +19,7 @@ class ISProduct < ISBaseWatir
   def remove_test_data!
     Product.where(name: test_product[:name]).destroy_all
     Product.where(name: "Changed").destroy_all
-  end 
-  
-  def test_product 
-    {
-      name: "Test product",
-      sku: "12345",
-      price_in_cents: 2000,
-      purchase_type: "purchase",
-      billing_type: "once_off",
-      teaser: "Teaser",
-      description: "Description"
-    }
-  end 
-  
-  def test_product_record 
-    product = Product.find_by(name: test_product[:name])
-    product = Product.find_by(name: "Changed") if product.nil?
-    product
-  end
-  
+  end   
   
   def create_product 
     header("Create Product")

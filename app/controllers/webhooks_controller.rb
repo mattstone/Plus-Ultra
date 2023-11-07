@@ -15,6 +15,11 @@ class WebhooksController < ApplicationController
     end
     
     # If we get here.. all is good!
+    
+    if !Rails.env.production?
+      Rails.logger.info event.type.to_s.red
+    end 
+    
     case event.type 
     when 'payment_intent.created'
       payment_intent = event.data.object 

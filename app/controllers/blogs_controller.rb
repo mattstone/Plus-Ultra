@@ -12,6 +12,8 @@ class BlogsController < ApplicationController
 
   # GET /blogs/1 or /blogs/1.json
   def show
+    @meta_description = @blog.meta_description if !@blog.meta_description.blank?
+    @meta_keywords    = @blog.meta_keywords    if !@blog.meta_keywords.blank?
   end
 
   # # GET /blogs/new

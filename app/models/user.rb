@@ -109,8 +109,6 @@ class User < ApplicationRecord
       t.stripe_client_secret  = payment_intent["client_secret"]
       t.stripe_payment_intent = payment_intent["id"]
       t.save
-      
-      Rails.logger.info t.errors.inspect.to_s.red
     end
     t
   end

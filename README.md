@@ -56,7 +56,7 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 - Invisible Captcha
 - dotenv
 - QRCode
-
+- SEO optimisation - Title, Meta Description/Keywords and image taging
 
 # 
 * TODO 
@@ -65,6 +65,9 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 - subscriptions - stripe
 - charts - reporting
 - elastic search
+- SEO optimisation
+- Outbound campaigns and inbound tracking
+- Auditing
 
 
 * Ruby version

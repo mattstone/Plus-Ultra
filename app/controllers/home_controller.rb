@@ -8,4 +8,11 @@ class HomeController < ApplicationController
   end 
   
   
+  if !Rails.env.production?
+    def set_for_testing 
+      clear_shopping_cart
+    end
+  end
+
+  
 end

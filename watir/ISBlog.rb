@@ -4,6 +4,7 @@ class ISBlog < ISBaseWatir
   
   def initialize 
     super
+    
     remove_test_data!
     create_and_confirm_admin_user!
     
@@ -15,9 +16,11 @@ class ISBlog < ISBaseWatir
     search_blogs
     
     publish_blog 
+
+    browse_blogs
+
     delete_blog
     
-    browse_blogs
   end
 
   def test_blog 
@@ -35,7 +38,8 @@ class ISBlog < ISBaseWatir
   end
 
   def remove_test_data!
-    Blog.where(title: test_blog[:title]).destroy_all
+    # Blog.where(title: test_blog[:title]).destroy_all
+    Blog.destroy_all
   end
 
   def create_blog 
@@ -43,6 +47,10 @@ class ISBlog < ISBaseWatir
 
     link = @browser.link(href: '/admin/blogs')
     link.click
+    
+    @browser.scroll.to :bottom
+    sleep 1
+    
     @browser.wait_until { @browser.text.include? 'Blogs' }
     good("browsed to admin/blogs")
 
@@ -123,9 +131,8 @@ class ISBlog < ISBaseWatir
   def delete_blog
     header("Delete Blog")
 
-    link = @browser.link(href: "/admin/blogs")
-    link.click
-
+    @browser.goto "#{@base_url}/admin/blogs"
+    
     blog = test_blog_record
     @browser.button(:id => "admin_blog_delete_blog_#{blog.id}").click
 
