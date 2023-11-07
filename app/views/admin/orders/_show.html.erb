@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col">
+    <strong>Order Summary</strong>
+  </div>
+</div>
+<br>
+
+<div class="row bg-dark text-white">
+  <div class="col-2">
+    <strong>Date Placed</strong>
+  </div>
+  <div class="col-3">
+    <%= order.created_at.strftime("%A %d/%m/%Y") %>
+  </div>
+  <div class="col-2">
+    <strong>Status</strong>
+  </div>
+  <div class="col-2">
+    <strong><%= order.status %></strong>
+  </div>
+</div>
+
+<br>
+
+<div class="row bg-dark text-white">
+  <div class="col-3">
+    Product
+  </div>
+  <div class="col-1">
+    Quantity
+  </div>
+  <div class="col-1">
+    Amount
+  </div>
+  <div class="col-1">
+    Total
+  </div>
+</div>
+
+<% order.product_orders.each do |po| %>
+  <%
+    product = po.product
+  %>
+  <div class="row">  
+    <div class="col-3">
+      <%= product.name %>
+    </div>
+    <div class="col-1">
+      <%= po.quantity %>
+    </div>
+    <div class="col-1">
+      <%= cents_to_dollars po.price_in_cents %>
+    </div>
+    <div class="col-1">
+      <%= cents_to_dollars po.amount_in_cents %>
+    </div>
+  </div>
+<% end %>
+
+<br>
+
+<div class="row">  
+  <div class="col-3">
+    <strong>Total</strong>
+  </div>
+  <div class="col-1"></div>
+  <div class="col-1"></div>
+  <div class="col-1">
+    <strong>
+      <%= cents_to_dollars order.amount_in_cents %>
+    </strong>
+  </div>
+</div>
+
+<br>

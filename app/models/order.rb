@@ -17,20 +17,23 @@ class Order < ApplicationRecord
       product = Product.find(key)
       order.amount_in_cents   += product.price_in_cents * value["count"]
       shopping_cart[key]["amount_in_cents"] = order.amount_in_cents
+      shopping_cart[key]["price_in_cents"]  = product.price_in_cents
     end
     
-    order.save
-    
-    # create product_orders
-    shopping_cart.each do |key, value|
-      po = order.product_orders.new
-      po.product_id = key 
-      po.amount_in_cents = value["amount_in_cents"]
-      po.save
+    ActiveRecord::Base.transaction do
+      order.save
+      
+      shopping_cart.each do |key, value| # create product_orders
+        po = order.product_orders.new
+        po.product_id      = key 
+        po.quantity        = value["count"]
+        po.price_in_cents  = value["price_in_cents"]
+        po.amount_in_cents = value["amount_in_cents"]
+        po.save
+      end
     end
     
-    # Create transaction
-    current_user.stripe_customer_charge_once!({ order: order })
+    current_user.stripe_customer_charge_once!({ order: order }) # Create transaction
     order
   end
   
