@@ -1,0 +1,16 @@
+<div id="<%= dom_id order %>">
+  <div class="row">
+    <div class="col-1">
+      <%= "OL-#{order.id}" %>
+    </div>
+    <div class="col-2">
+      <%= cents_to_dollars order.amount_in_cents %>
+    </div>
+    <div class="col-2">
+      <%= order.status %>
+    </div>
+    <div class="col-2">
+      <%= link_to "Show", admin_order_path(order) %>
+    </div>
+  </div>
+</div>

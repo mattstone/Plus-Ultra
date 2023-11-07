@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_07_044653) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_07_214801) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,14 +81,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_044653) do
   end
 
   create_table "product_orders", force: :cascade do |t|
-    t.bigint "orders_id"
-    t.bigint "products_id"
+    t.bigint "order_id"
+    t.bigint "product_id"
     t.integer "quantity"
     t.integer "amount_in_cents"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["orders_id"], name: "index_product_orders_on_orders_id"
-    t.index ["products_id"], name: "index_product_orders_on_products_id"
+    t.integer "price_in_cents", default: 0
+    t.index ["order_id"], name: "index_product_orders_on_order_id"
+    t.index ["product_id"], name: "index_product_orders_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|

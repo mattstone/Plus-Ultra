@@ -4,6 +4,7 @@
 # Watir/Selenium Testing 
 #
 # usage: ./go Test.rb
+# Must start server> RAILS_ENV=test bundle exec rails s
 
 # Catch up on tests
 RAILS_ENV=test bundle exec rails db:migrate

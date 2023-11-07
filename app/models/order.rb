@@ -23,11 +23,10 @@ class Order < ApplicationRecord
     
     # create product_orders
     shopping_cart.each do |key, value|
-      product_order = ProductOrder.new 
-      product_order.orders_id   = order.id 
-      product_order.products_id = key 
-      product_order.amount_in_cents = value["amount_in_cents"]
-      product_order.save
+      po = order.product_orders.new
+      po.product_id = key 
+      po.amount_in_cents = value["amount_in_cents"]
+      po.save
     end
     
     # Create transaction
@@ -37,7 +36,7 @@ class Order < ApplicationRecord
   
   def status 
     transaction = self.transactions.first 
-    return "Unprocessable" if transaction.nil 
+    return "Not placed" if transaction == nil
     transaction.status.to_s.humanize
   end
   

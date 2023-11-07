@@ -1,6 +1,6 @@
 require 'stripe'
 
-class ISStripe 
+class ISStripe < ISBaseLib
 
   def initialize 
     Stripe.api_key    = ENV["STRIPE_SECRET_KEY"]
@@ -89,6 +89,71 @@ class ISStripe
 
   #
   # Payments end
+  #
+  
+  #
+  # Products start
+  #
+  
+  def product_list(limit = 20)
+    Stripe::Product.list({limit: limit})
+  end
+  
+  def product_retrieve(product_id)
+    Stripe::Product.retrieve(product_id)
+  end
+  
+  
+  #
+  # Products end
+  #
+  
+  #
+  # Webhook start
+  #
+  
+  def handle_webhook(event)
+    case event.type 
+    when 'payment_intent.created'
+      payment_intent = event.data.object 
+      l "#{event.type} #{payment_intent.id} received status of: #{payment_intent.status}"
+    when 'payment_intent.succeeded'
+      payment_intent = event.data.object 
+      l "#{event.type} #{payment_intent.id} received status of: #{payment_intent.status}"
+    when 'payment_intent.attached'
+      payment_intent = event.data.object 
+      l "#{event.type} #{payment_intent.id} received status of: #{payment_intent.status}"
+    when 'payment_intent.failed'
+      payment_intent = event.data.object 
+      l "#{event.type} #{payment_intent.id} received status of: #{payment_intent.status}"
+    when 'payment_intent.processing'
+      payment_intent = event.data.object 
+      l "#{event.type} #{payment_intent.id} received status of: #{payment_intent.status}"
+    when 'payment_intent.requires_action'
+      payment_intent = event.data.object 
+      l "#{event.type} #{payment_intent.id} received status of: #{payment_intent.status}"
+    when 'payment_intent.succeeded'
+      payment_intent = event.data.object 
+      l "#{event.type} #{payment_intent.id} received status of: #{payment_intent.status}"
+      
+    when 'charge.succeeded', 'charge.failed', 'charge.refunded'
+      
+      payment_intent = event.data.object 
+      transaction    = Transaction.find(payment_intent["metadata"]["transaction_id"])
+      transaction.history << payment_intent
+      
+      case event.type 
+      when 'charge.succeeded' then transaction.cleared_funds!
+      when 'charge.failed'    then transaction.failed!
+      when 'charge.refunded'  then transaction.refunded!
+      end      
+    else 
+      l "Unhandled event type: #{event.type}"
+    end
+  end
+  
+  #
+  # Webhook end
   #
   
   def price_list
