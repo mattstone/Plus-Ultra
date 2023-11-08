@@ -10,7 +10,7 @@
       <%= order.status %>
     </div>
     <div class="col-2">
-      <%= link_to "Show", admin_order_path(order) %>
+      <%= link_to "Show", admin_order_path(order), id: "order_show_#{order.id}" %>
     </div>
   </div>
 </div>

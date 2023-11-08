@@ -20,6 +20,7 @@ class ISPurchase < ISBaseWatir
       logged_in
     end
     
+    tests_complete
   end 
   
   def check_products_exists_to_purchase

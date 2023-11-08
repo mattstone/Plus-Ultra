@@ -13,6 +13,7 @@ class ISProduct < ISBaseWatir
     create_product
     update_product
 
+    tests_complete
   end
   
   

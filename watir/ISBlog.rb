@@ -21,6 +21,7 @@ class ISBlog < ISBaseWatir
 
     delete_blog
     
+    tests_complete
   end
 
   def test_blog 

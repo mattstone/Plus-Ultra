@@ -10,6 +10,10 @@ include Rails.application.routes.url_helpers
 class ISBaseWatir
   
   def initialize 
+    if !Rails.env.test? # Must be run in Test environment
+      Kernel.abort("Tests must be run with RAILS_ENV=test")
+    end
+    
     @base_url     = "http://localhost:3000"
     
     setup_for_tests
@@ -88,6 +92,10 @@ class ISBaseWatir
     
     sleep 1
   end
+  
+  def test_user_record 
+    test_user_db
+  end 
   
   def test_user_db
     User.find_by(email: test_user[:email])
