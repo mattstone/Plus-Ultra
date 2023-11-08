@@ -118,6 +118,8 @@ class ISUser < ISBaseWatir
 
       @browser.button(:id => "admin_users_update_button").click
 
+# sleep 844
+
       @browser.wait_until { @browser.text.include? "successfully updated" }
       good("Edited test user successfully")
       
