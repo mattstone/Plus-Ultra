@@ -57,14 +57,13 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 - dotenv for environment
 - QRCode to generate QR codes
 - SEO optimisation - Title, Meta Description/Keywords and image tagging
+- Charting => https://chartkick.com/
 
 # 
 * TODO 
 
 - subscriptions - stripe
-- charts - reporting
 - elastic search
-- SEO optimisation
 - Outbound campaigns and inbound tracking
 - Auditing
 

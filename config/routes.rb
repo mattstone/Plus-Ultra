@@ -68,6 +68,7 @@ Rails.application.routes.draw do
   
   if !Rails.env.production?
     get 'set_for_testing', to: 'home#set_for_testing'
+    get 'qr_code',         to: 'home#qr_code'
   end
   
   root 'home#index'

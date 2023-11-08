@@ -12,7 +12,10 @@ class HomeController < ApplicationController
     def set_for_testing 
       clear_shopping_cart
     end
+    
+    def qr_code 
+    end 
+    
   end
 
-  
 end
