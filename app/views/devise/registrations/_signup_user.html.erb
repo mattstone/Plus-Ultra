@@ -7,6 +7,7 @@
   <% end %>
   
   <%= form_with model: resource, url: signup_send_2fa_users_path, method: :post do |f| %>
+    <%= invisible_captcha %>
     <%= render 'devise/registrations/form_fields', resource: resource, f: f %>
   <% end %>
 </div>

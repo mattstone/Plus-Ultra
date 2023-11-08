@@ -54,14 +54,13 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 - ActionText Trix WYSIWYG editor
 - Phony & Phonelib for international telephone numbers
 - Invisible Captcha
-- dotenv
-- QRCode
-- SEO optimisation - Title, Meta Description/Keywords and image taging
+- dotenv for environment
+- QRCode to generate QR codes
+- SEO optimisation - Title, Meta Description/Keywords and image tagging
 
 # 
 * TODO 
 
-- captcha 
 - subscriptions - stripe
 - charts - reporting
 - elastic search

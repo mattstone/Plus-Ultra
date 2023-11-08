@@ -8,3 +8,6 @@ import "trix"
 import "@rails/actiontext"
 // import "@rails/activestorage"
 import "activestorage"
+
+import "chartkick"
+import "Chart.bundle"

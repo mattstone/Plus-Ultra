@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   resources :orders
   resources :subscribers, :blogs
-  devise_for :users
+  # devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
   # devise_for :users, controllers: { sessions: 'users/sessions' }
   
   resources :users do 
