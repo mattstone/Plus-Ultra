@@ -29,14 +29,10 @@
     </div>
 
     <div class="field">
-      <%= f.label :last_name, class: "form-label" %><br />
-      <%#= f.text_field :stripe_customer_id, autocomplete: "Stripe Customer Id", class: "form-control" %>
-
+      <%= f.label :stripe_customer_id, class: "form-label" %><br />
       <%# Note this should never be changed by an admin user %>
       <strong><%= user.stripe_customer_id %></strong>
     </div>
-  
-  
   
     <br>
     
