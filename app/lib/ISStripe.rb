@@ -91,6 +91,99 @@ class ISStripe < ISBaseLib
   # Payments end
   #
   
+  
+
+  #
+  # Subscriptions start
+  #
+
+  def subscription_create(object)
+    Stripe::Subscription.list(object)
+  end
+  
+  def subscription_retrieve(subscription_id)
+    Stripe::Subscription.retrieve(subscription_id)
+  end
+
+  def subscription_update(subscription_id, object)
+    Stripe::Subscription.update(subscription_id, object)
+  end
+
+  def subscription_resume(subscription_id, object)
+    Stripe::Subscription.resume(subscription_id, object)
+  end
+  
+  def subscription_cancel(subscription_id)
+    Stripe::Subscription.cancel(subscription_id)
+  end
+  
+  def subscriptions_list(options = {})
+    options[:limit] ||= 20
+    Stripe::Subscription.list(options)
+  end
+  
+  def subscriptions_search(query)
+    Stripe::Subscription.search(query)
+  end
+  
+  # Subscription Items 
+  
+  def subscription_item_create(object)
+    Stripe::SubscriptionItem.create(object)
+  end
+
+  def subscription_item_retrieve(subscription_item_id)
+    Stripe::SubscriptionItem.retrieve(subscription_item_id)
+  end
+
+  def subscription_item_update(subscription_item_id, object)
+    Stripe::SubscriptionItem.update(subscription_item_id, object)
+  end
+
+  def subscription_item_delete(subscription_item_id)
+    Stripe::SubscriptionItem.delete(subscription_item_id)
+  end
+  
+  def subscription_item_list(object)
+    Stripe::SubscriptionItem.list(object)
+  end 
+  
+  # Subscription Schedules
+  
+  def subscription_schedule_create(object) 
+    Stripe::SubscriptionSchedule.create(object)
+  end
+
+  def subscription_schedule_retrieve(subscription_schedule_id) 
+    Stripe::SubscriptionSchedule.retrieve(subscription_schedule_id)
+  end
+
+  def subscription_schedule_update(subscription_schedule_id, object) 
+    Stripe::SubscriptionSchedule.update(subscription_schedule_id, object)
+  end
+
+  def subscription_schedule_cancel(subscription_schedule_id) 
+    Stripe::SubscriptionSchedule.cancel(subscription_schedule_id)
+  end
+
+  def subscription_schedule_cancel(subscription_schedule_id) 
+    Stripe::SubscriptionSchedule.cancel(subscription_schedule_id)
+  end
+
+  def subscription_schedule_release(subscription_schedule_id) 
+    Stripe::SubscriptionSchedule.release(subscription_schedule_id)
+  end
+  
+  def subscription_schedule_list(object)
+    object[:limit] ||= 20
+    Stripe::SubscriptionSchedule.list(object)
+  end
+    
+  
+  #
+  # Subscriptions end
+  #
+  
   #
   # Products start
   #
@@ -109,11 +202,58 @@ class ISStripe < ISBaseLib
   #
   
   #
+  # Prices start
+  #
+
+  def price_create(object)
+    Stripe::Price.create(object)
+  end
+
+  def price_retrieve(price_id)
+    Stripe::Price.retrieve(price_id)
+  end
+
+  def price_update(price_id, object)
+    Stripe::Price.retrieve(price_id, object)
+  end
+
+  def price_list(object)
+    object[:limit] ||= 20
+    Stripe::Price.list(object)
+  end
+
+  def price_search(query)
+    Stripe::Price.search(query)
+  end
+
+  #
+  # Prices End
+  #
+  
+  
+  
+  #
   # Webhook start
   #
   
   def handle_webhook(event)
     case event.type 
+      
+    when 'customer.created'
+      p "created: 1"
+      p "created: 1.1"
+      p event.data.object.inspect
+      p "created: 1.2"
+      
+      object = event.data.object
+      p "created: 2: #{object.email}"
+      user = User.find_by(email: object.email)
+      p "created: 3: #{object.id}"
+      user.stripe_customer_id = object.id
+      p "created: 4"
+      p "created: 5: #{user.save}"
+      user.save
+      
     when 'payment_intent.created'
       payment_intent = event.data.object 
       l "#{event.type} #{payment_intent.id} received status of: #{payment_intent.status}"

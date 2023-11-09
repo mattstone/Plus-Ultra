@@ -25,6 +25,6 @@ class WebhooksController < ApplicationController
     
     render json: { message: "ok" }, status: 200
   end 
-  
+
     
 end

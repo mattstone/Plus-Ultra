@@ -1,6 +1,7 @@
 class Transaction < ApplicationRecord
   belongs_to :order 
   belongs_to :user 
+  belongs_to :subscription, optional: true
   
   scope :recently_created, ->  { where(created_at: 1.minutes.ago..DateTime.now) }
 

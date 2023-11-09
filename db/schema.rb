@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_07_214801) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_09_075750) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,7 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_214801) do
 
   create_table "blogs", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "status", default: 0
+    t.integer "status"
     t.string "title"
     t.string "slug"
     t.datetime "datetime_to_publish"
@@ -121,6 +121,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_214801) do
     t.index ["mailing_list_id"], name: "index_subscribers_on_mailing_list_id"
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "product_id"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_subscriptions_on_product_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
+  end
+
   create_table "transactions", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "status", default: 0
@@ -133,10 +143,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_214801) do
     t.string "stripe_client_secret"
     t.string "stripe_payment_intent"
     t.integer "order_id"
+    t.integer "subscription_id"
     t.index ["order_id"], name: "index_transactions_on_order_id"
     t.index ["status"], name: "index_transactions_on_status"
     t.index ["stripe_client_secret"], name: "index_transactions_on_stripe_client_secret"
     t.index ["stripe_payment_intent"], name: "index_transactions_on_stripe_payment_intent"
+    t.index ["subscription_id"], name: "index_transactions_on_subscription_id"
     t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :subscriptions
   resources :orders
   resources :subscribers, :blogs
   # devise_for :users
@@ -53,7 +54,9 @@ Rails.application.routes.draw do
               :products,
               :transactions,
               :blogs,
-              :orders
+              :orders,
+              :subscriptions
+              
             
     resources :mailing_lists do 
       resources :subscribers, controller: 'mailing_lists/subscribers' do 

@@ -95,6 +95,8 @@ class User < ApplicationRecord
     stripe  = ISStripe.new
     t       = nil
     
+    self.stripe_customer_create! if self.stripe_customer_id.nil?
+    
     ActiveRecord::Base.transaction do
       t = self.transactions.new
       t.order          = options[:order]
