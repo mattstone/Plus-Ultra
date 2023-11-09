@@ -34,6 +34,13 @@ class ISUser < ISBaseWatir
       @browser.wait_until { @browser.text.include? 'Log Out' }
       good("User created and successfully logged in")
       
+      sleep 2
+      
+      user = test_user_record
+      case !user.stripe_customer_id.nil?
+      when true  then good("Stripe user create callback created stripe_customer_id")
+      when false then bad("Stripe user create callback did not creat stripe_customer_id")
+      end
       
       @browser.button(:id => "log_out_button").click
       @browser.wait_until { @browser.text.include? 'Signed out successfully' }

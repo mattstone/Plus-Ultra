@@ -11,6 +11,10 @@ class User < ApplicationRecord
   has_many :orders
   
   validates :first_name, :last_name, presence: true
+  
+  after_create do 
+    self.stripe_customer_create! if !self.role_admin?
+  end
 
   def admin? 
     self.role_admin?
@@ -52,6 +56,8 @@ class User < ApplicationRecord
   #
   
   def stripe_customer_create!
+    return { error: "Already exists" } if !self.stripe_customer_id.nil?
+    
     stripe   = ISStripe.new 
     response = stripe.customer_create({ email: self.email })
     
