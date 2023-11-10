@@ -44,20 +44,14 @@ export default class extends Controller {
          // If we get here all is good
         //form.requestSubmit() // submit form with hotwire        
         let button = document.getElementById('confirm_2fa_button')
-        console.log(button)
-        if (button) { 
-          console.log("about to click button..")
-          button.click() 
-        }
+        if (button) { button.click() }
       })
       
       code_inputs[0].addEventListener('paste', this.handlePaste)
       
       code_inputs.forEach(code_input => {
         code_input.addEventListener('focus', e => {
-          setTimeout(() => {
-            e.target.select()
-          }, 0)
+          setTimeout(() => { e.target.select() }, 0)
         })
 
         code_input.addEventListener('keydown', e => {
@@ -75,9 +69,7 @@ export default class extends Controller {
           }
         })
       })      
-      
     }
-    
   }
   
   handleInput(e) {
@@ -85,25 +77,21 @@ export default class extends Controller {
      
      if (!element) { return }
      
-     element.value = element.value.replace(/\D/g,'') // digits only
+     element.value = element.value.replace(/\D/g,'') // accept digits only
      if (element.value == "") { return }
 
       const code_input = e.target
       const nextInput  = code_input.nextElementSibling
       if (nextInput && code_input.value) {
         nextInput.focus()
-        if (nextInput.value) {
-          nextInput.select()
-        }
+        if (nextInput.value) { nextInput.select() }
       }
   }
     
   handlePaste(e) {
     e.preventDefault()
     const paste = e.clipboardData.getData('text')
-    code_inputs.forEach((input, i) => {
-      code_input.value = paste[i] || ''
-    })
+    code_inputs.forEach((input, i) => { code_input.value = paste[i] || '' })
   }
     
   handleBackspace(e) { 
@@ -127,6 +115,5 @@ export default class extends Controller {
     if (!nextInput) return
     nextInput.focus()
   }
-  
 
 }

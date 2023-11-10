@@ -1,4 +1,4 @@
-class ISCommon 
+class ISCommon < ISBaseLib
   
   def self.unsplash(options = {})
     width  = options[:width]  || 800 

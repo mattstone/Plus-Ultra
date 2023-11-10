@@ -50,7 +50,7 @@ class ISStripe < ISBaseLib
         metadata: { transaction_id: transaction.id },
         # receipt_email: options[:receipt_email],  # Turn on when needed
         statement_descriptor: description,
-        # confirm: true,  # Execute payment straight away!
+        # confirm: true,  # Execute payment straight away! - need customers payment details stored
         # off_session: true        
       )
     rescue Stripe::StripeError => e 
@@ -314,8 +314,7 @@ class ISStripe < ISBaseLib
     when 'price.created'
       object  = event.data.object
       # Stripe sends price.created before product created.
-      # Save to redis and expire in 60 seconds
-      ISRedis.set_ex(object["product"], object, 60)
+      ISRedis.set_ex(object["product"], object, 60) # Save to redis and expire in 60 seconds
     else 
       l "Unhandled event type: #{event.type}"
     end

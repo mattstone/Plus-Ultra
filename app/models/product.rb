@@ -33,7 +33,7 @@ class Product < ApplicationRecord
   
   def pricing_string 
     case self.purchase_type 
-    when "purchase"     then ""
+    when "purchase"      then ""
     when "subscription" 
       case self.billing_type 
       when "once_off"    then ""
@@ -64,25 +64,17 @@ class Product < ApplicationRecord
   private 
 
     def update_stripe 
-      Rails.logger.info "update_stripe: 1"
+
       # Build stripe object 
-      
-      Rails.logger.info "update_stripe: 2"
-      Rails.logger.info "update_stripe: 3"
-      
       object            = {}
       object[:name]     = self.name
       object[:active]   = self.for_sale
       object[:metadata] = { product_id: self.id }
       
-      Rails.logger.info "update_stripe: 4: self.id: #{self.id}"
-      Rails.logger.info "update_stripe: 4: self.stripe_product_id: #{self.stripe_product_id}"
-
-      # Note: Webhooks will handle callbacks
+      # Webhooks will handle callbacks
       stripe = ISStripe.new 
-      case self.stripe_product_id.blank? 
+      case self.stripe_product_id.blank? # Create new product
       when true
-        
         price_data = {}
         price_data[:unit_amount] = self.price_in_cents
         price_data[:currency]    = "aud"
@@ -99,26 +91,11 @@ class Product < ApplicationRecord
         
         object[:default_price_data] = price_data
         stripe.product_create(object)
-      when false 
-        Rails.logger.info "update_stripe: 5"
+      when false  # Update existing product
          stripe.product_update(self.stripe_product_id, object)
       end
 
-      Rails.logger.info "update_stripe: 6"
-      
     end
     
-    # create product 
-    # Stripe::Product.create({
-    #   name: 'Basic Dashboard',
-    #   default_price_data: {
-    #     unit_amount: 1000,
-    #     currency: 'usd',
-    #     recurring: {interval: 'month'},
-    #   },
-    #   expand: ['default_price'],
-    # })
-    
-      
   
 end
