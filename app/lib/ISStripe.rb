@@ -192,10 +192,21 @@ class ISStripe < ISBaseLib
     Stripe::Product.list({limit: limit})
   end
   
+  def product_create(object)
+    Stripe::Product.create(object)
+  end
+  
+  def product_update(product_id, object)
+    Stripe::Product.update(product_id, object)
+  end 
+  
   def product_retrieve(product_id)
     Stripe::Product.retrieve(product_id)
   end
   
+  def product_delete(product_id)
+    Stripe::Product.delete(product_id)
+  end
   
   #
   # Products end
@@ -217,7 +228,7 @@ class ISStripe < ISBaseLib
     Stripe::Price.retrieve(price_id, object)
   end
 
-  def price_list(object)
+  def price_list(object = {})
     object[:limit] ||= 20
     Stripe::Price.list(object)
   end
@@ -240,18 +251,9 @@ class ISStripe < ISBaseLib
     case event.type 
       
     when 'customer.created'
-      p "created: 1"
-      p "created: 1.1"
-      p event.data.object.inspect
-      p "created: 1.2"
-      
       object = event.data.object
-      p "created: 2: #{object.email}"
-      user = User.find_by(email: object.email)
-      p "created: 3: #{object.id}"
+      user   = User.find_by(email: object.email)
       user.stripe_customer_id = object.id
-      p "created: 4"
-      p "created: 5: #{user.save}"
       user.save
       
     when 'payment_intent.created'
@@ -286,7 +288,34 @@ class ISStripe < ISBaseLib
       when 'charge.succeeded' then transaction.cleared_funds!
       when 'charge.failed'    then transaction.failed!
       when 'charge.refunded'  then transaction.refunded!
-      end      
+      end
+
+    when 'product.created'
+      object = event.data.object
+      price  = ISRedis.get(object["id"])
+
+      sleep 1 # Callback comes so fast, db has not yet written record!
+
+      product = Product.find(object.metadata["product_id"])
+      product.stripe_product_id = object["id"]
+      product.stripe_price_id   = price["id"]
+      product.save
+
+    when 'product.updated'
+      object  = event.data.object
+      product = Product.find(object["metadata"]["product_id"])
+
+      # handle changes in stripe without going into a callback loop
+      # Note: update_columns was throwing error
+      product.update_column :name,     object["name"]
+      product.update_column :for_sale, object["active"]
+      product.update_column :stripe_price_id, object["default_price"]
+
+    when 'price.created'
+      object  = event.data.object
+      # Stripe sends price.created before product created.
+      # Save to redis and expire in 60 seconds
+      ISRedis.set_ex(object["product"], object, 60)
     else 
       l "Unhandled event type: #{event.type}"
     end

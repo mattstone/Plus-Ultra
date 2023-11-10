@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_09_075750) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_10_080851) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -104,9 +104,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_075750) do
     t.boolean "for_sale", default: false
     t.string "meta_description"
     t.string "meta_keywords"
+    t.string "stripe_product_id"
+    t.string "stripe_price_id"
     t.index ["for_sale"], name: "index_products_on_for_sale"
     t.index ["name"], name: "index_products_on_name"
     t.index ["sku"], name: "index_products_on_sku"
+    t.index ["stripe_product_id"], name: "index_products_on_stripe_product_id"
   end
 
   create_table "subscribers", force: :cascade do |t|

@@ -58,6 +58,7 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 - QRCode to generate QR codes
 - SEO optimisation - Title, Meta Description/Keywords and image tagging
 - Charting => https://chartkick.com/
+- Redis for key value store
 
 # 
 * TODO 

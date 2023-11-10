@@ -23,8 +23,8 @@ class ApplicationController < ActionController::Base
   
   def set_shopping_cart 
     # session[:shopping_cart] = nil
-    l "set_shopping_cart"
-    l session[:shopping_cart].inspect
+    # l "set_shopping_cart"
+    # l session[:shopping_cart].inspect
     
     session[:shopping_cart] ||= {}
     @shopping_cart = session[:shopping_cart]

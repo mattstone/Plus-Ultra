@@ -11,6 +11,9 @@ class Product < ApplicationRecord
   has_many :transactions
   has_many :product_orders
   has_many :orders, through: :product_orders
+  
+  after_create :update_stripe
+  after_save   :update_stripe
 
   # add validations 
   validates :name, :price_in_cents, :sku, presence: true
@@ -57,5 +60,65 @@ class Product < ApplicationRecord
   #
   # End fulfillment
   #
+  
+  private 
+
+    def update_stripe 
+      Rails.logger.info "update_stripe: 1"
+      # Build stripe object 
+      
+      Rails.logger.info "update_stripe: 2"
+      Rails.logger.info "update_stripe: 3"
+      
+      object            = {}
+      object[:name]     = self.name
+      object[:active]   = self.for_sale
+      object[:metadata] = { product_id: self.id }
+      
+      Rails.logger.info "update_stripe: 4: self.id: #{self.id}"
+      Rails.logger.info "update_stripe: 4: self.stripe_product_id: #{self.stripe_product_id}"
+
+      # Note: Webhooks will handle callbacks
+      stripe = ISStripe.new 
+      case self.stripe_product_id.blank? 
+      when true
+        
+        price_data = {}
+        price_data[:unit_amount] = self.price_in_cents
+        price_data[:currency]    = "aud"
+
+        if self.purchase_type_subscription? 
+          recurring = case  
+            when self.billing_type_weekly?      then { interval: 'week'}
+            when self.billing_type_fortnightly? then { interval: 'fortnight'}
+            when self.billing_type_monthly?     then { interval: 'month'}
+            when self.billing_type_annually?    then { interval: 'year'}
+            end
+          price_data[:recurring] = recurring
+        end
+        
+        object[:default_price_data] = price_data
+        stripe.product_create(object)
+      when false 
+        Rails.logger.info "update_stripe: 5"
+         stripe.product_update(self.stripe_product_id, object)
+      end
+
+      Rails.logger.info "update_stripe: 6"
+      
+    end
+    
+    # create product 
+    # Stripe::Product.create({
+    #   name: 'Basic Dashboard',
+    #   default_price_data: {
+    #     unit_amount: 1000,
+    #     currency: 'usd',
+    #     recurring: {interval: 'month'},
+    #   },
+    #   expand: ['default_price'],
+    # })
+    
+      
   
 end
