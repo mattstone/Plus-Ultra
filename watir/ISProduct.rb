@@ -63,6 +63,20 @@ class ISProduct < ISBaseWatir
     @browser.button(:id => "admin_products_update_button").click
     @browser.wait_until { @browser.text.include? 'Product was successfully created' }
     good("product created")
+    
+    sleep 2
+    
+    product = test_product_record
+    
+    case !product.stripe_product_id.blank?
+    when true  then good("stripe_product_id ok")
+    when false then bad("stripe_product_id not ok")
+    end
+
+    case !product.stripe_price_id.blank?
+    when true  then good("stripe_price_id ok")
+    when false then bad("stripe_price_id not ok")
+    end
 
   end
   
@@ -84,12 +98,9 @@ class ISProduct < ISBaseWatir
     sleep 1
 
     @browser.button(:id => "admin_products_update_button").click
-    @browser.wait_until { @browser.text.include? 'Product was successfully created' }
+    @browser.wait_until { @browser.text.include? 'Product was successfully updated' }
     good("product updated")
-
-    sleep 980
   end
-
   
 end
 
