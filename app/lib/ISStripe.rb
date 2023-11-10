@@ -40,7 +40,7 @@ class ISStripe < ISBaseLib
     
     description = "order: OR-#{order.id}"
     begin 
-      payment_intent = Stripe::PaymentIntent.create(
+      payment_intent = Stripe::PaymentIntent.create({
         amount: options[:transaction][:price_in_cents],
         currency: options[:currency],
         # payment_method_types: options[:payment_method_types],
@@ -52,7 +52,7 @@ class ISStripe < ISBaseLib
         statement_descriptor: description,
         # confirm: true,  # Execute payment straight away! - need customers payment details stored
         # off_session: true        
-      )
+      }, { idempotency_key: "#{options[:transaction].id}" })
     rescue Stripe::StripeError => e 
       return { error: e.message }
     rescue => e
@@ -97,8 +97,8 @@ class ISStripe < ISBaseLib
   # Subscriptions start
   #
 
-  def subscription_create(object)
-    Stripe::Subscription.list(object)
+  def subscription_create(object, idempotency_key)
+    Stripe::Subscription.create(object, { idempotency_key: idempotency_key })
   end
   
   def subscription_retrieve(subscription_id)
