@@ -108,14 +108,11 @@ class User < ApplicationRecord
       options[:stripe_customer_id] = self.stripe_customer_id
       options[:receipt_email]      = self.email
       
-      payment_intent = stripe.payment_intent(options)
-      
-      Rails.logger.info "payment_intent".yellow 
-      Rails.logger.info payment_intent.inspect.to_s.yellow
+      payment_intent = stripe.payment_intent_create(options)
       
       t.history << payment_intent
-      t.stripe_client_secret  = payment_intent["client_secret"]
-      t.stripe_payment_intent = payment_intent["id"]
+      t.stripe_client_secret  = payment_intent["client_secret"] if payment_intent["client_secret"]
+      t.stripe_payment_intent = payment_intent["id"]            if payment_intent["id"]
       t.save
     end
     t

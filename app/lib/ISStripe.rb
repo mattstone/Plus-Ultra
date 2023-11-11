@@ -30,7 +30,7 @@ class ISStripe < ISBaseLib
   # Payments start
   #
   
-  def payment_intent(options)
+  def payment_intent_create(options)
     payment_intent       = nil
     options[:currency] ||= "AUD"
     options[:payment_method_types] ||= ["card", "au_becs_debit"]
@@ -297,9 +297,12 @@ class ISStripe < ISBaseLib
       sleep 1 # Callback comes so fast, db has not yet written record!
 
       product = Product.find(object.metadata["product_id"])
-      product.stripe_product_id = object["id"]
-      product.stripe_price_id   = price["id"]
-      product.save
+      # product.stripe_product_id = object["id"]
+      # product.stripe_price_id   = price["id"]
+      # product.save
+      product.update_column :stripe_product_id, object["id"]
+      product.update_column :stripe_price_id,   price["od"]
+
 
     when 'product.updated'
       object  = event.data.object
@@ -310,6 +313,11 @@ class ISStripe < ISBaseLib
       product.update_column :name,     object["name"]
       product.update_column :for_sale, object["active"]
       product.update_column :stripe_price_id, object["default_price"]
+    
+    when 'product.deleted'
+      object  = event.data.object
+      product = Product.find_by(stripe_product_id: object["id"])
+      product.update_column :for_sale, false
 
     when 'price.created'
       object  = event.data.object

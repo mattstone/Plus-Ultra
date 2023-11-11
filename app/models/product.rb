@@ -12,7 +12,6 @@ class Product < ApplicationRecord
   has_many :product_orders
   has_many :orders, through: :product_orders
   
-  after_create :update_stripe
   after_save   :update_stripe
 
   # add validations 
@@ -64,7 +63,7 @@ class Product < ApplicationRecord
   private 
 
     def update_stripe 
-
+      
       # Build stripe object 
       object            = {}
       object[:name]     = self.name
