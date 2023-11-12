@@ -1,0 +1,63 @@
+<%= render 'admin/shared/header', title: "Manage Subscriptions" %>
+<br>
+
+
+<br>
+
+<div class="row"">
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Name</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Product</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Billing</strong>
+  </div>
+  <div class="col-1 <%= admin_background_class %>">
+    <strong>Status</strong>
+  </div>
+  <div class="col-1 <%= admin_background_class %>">
+    <strong>Start</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Action</strong>
+  </div>
+</div>
+
+
+<% if @subscriptions.empty? %>
+  <div class="row">
+    <div class="col-12 d-flex">
+      <p>
+        There are no Subscriptions
+      </p>
+    </div>
+  </div>
+<% else %>
+  <% @subscriptions.each do |s| %>
+    <% product = s.product %>
+    <div class="row">
+      <div class="col-2"><%= s.user.full_name %></div>
+      <div class="col-2"><%= product.name %></div>
+      <div class="col-2"><%= product_billing_string(product) %></div>
+      <div class="col-1"><%= s.status&.humanize %></div>
+      <div class="col-1"><%= short_date s.created_at %></div>
+      <div class="col-2">
+        <%= link_to "Edit", edit_admin_subscription_path(s) %>
+      </div>
+      
+    </div>
+  <% end %>
+<% end %>
+
+
+<br>
+
+<%= render 'shared/paging', resources: @subscriptions %>
+
+<%# Only customers/users can create subscriptions %>
+<%#= link_to "New Subscription", new_admin_subscriptions_path %>
+
+
+

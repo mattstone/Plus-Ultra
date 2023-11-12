@@ -1,0 +1,49 @@
+<div id="<%= dom_id(subscription) %>">
+  <% 
+    user    = subscription.user 
+    product = subscription.product
+    order   = subscription.order
+  %>
+
+  <div class="row">
+    <div class="col-2"><strong>Name</strong></div>
+    <div class="col-6"><%= user.full_name %></div>
+  </div>
+
+  <div class="row">
+    <div class="col-2"><strong>Email</strong></div>
+    <div class="col-6"><%= user.email %></div>
+  </div>
+
+  <div class="row">
+    <div class="col-2"><strong>Product</strong></div>
+    <div class="col-6"><%= product.name %></div>
+  </div>
+
+  <div class="row">
+    <div class="col-2"><strong>Subscription</strong></div>
+    <div class="col-6"><%= product_billing_string(product) %></div>
+  </div>
+
+  <div class="row">
+    <div class="col-2"><strong>Status</strong></div>
+    <div class="col-6"><%= subscription.status&.humanize %></div>
+  </div>
+
+  <div class="row">
+    <div class="col"><hr></div>
+  </div>
+
+  <div class="row">
+    <div class="col-2">
+      <% if subscription.can_cancel? %>
+      
+        <%= form_with url: cancel_admin_subscription_path(subscription), method: :post,
+              data: { turbo_confirm: "Are you sure you wish to cancel this subscription?"} do |f| %>
+          <%= render 'shared/form_results', resource: @subscription %>
+          <%= f.submit "Cancel", class: "btn btn-danger" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

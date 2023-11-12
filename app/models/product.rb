@@ -79,13 +79,12 @@ class Product < ApplicationRecord
         price_data[:currency]    = "aud"
 
         if self.purchase_type_subscription? 
-          recurring = case  
+          price_data[:recurring] = case  
             when self.billing_type_weekly?      then { interval: 'week'}
             when self.billing_type_fortnightly? then { interval: 'fortnight'}
             when self.billing_type_monthly?     then { interval: 'month'}
             when self.billing_type_annually?    then { interval: 'year'}
             end
-          price_data[:recurring] = recurring
         end
         
         object[:default_price_data] = price_data

@@ -1,10 +1,12 @@
 class Admin::SubscriptionsController < Admin::BaseController
-  before_action :set_subscription, only: %i[ show edit update destroy ]
+  before_action :set_subscription, only: %i[ show edit update destroy cancel ]
 
   # GET /subscriptions or /subscriptions.json
   def index
-    @subscriptions = Subscription.all
-  end
+    @subscriptions = Subscription
+                      .order(created_at: :desc)
+                      .page params[:page]
+end
 
   # GET /subscriptions/1 or /subscriptions/1.json
   def show
@@ -54,6 +56,16 @@ class Admin::SubscriptionsController < Admin::BaseController
     respond_to do |format|
       format.html { redirect_to subscriptions_url, notice: "Subscription was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+  
+  def cancel 
+    stripe   = ISStripe.new 
+    response = stripe.subscription_cancel(@subscription.stripe_subscription_id)
+
+    case response["status"] == "canceled"
+    when true  then @subscription.status_canceled!
+    when false then @error = "Unable to cancel subscription. Status: #{response["status"]}"
     end
   end
 

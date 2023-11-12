@@ -12,4 +12,13 @@ class Subscription < ApplicationRecord
     self.save
   end
   
+  
+  def can_cancel?
+    return true if self.status_trialing? or 
+                   self.status_active?   or 
+                   self.status_past_due? or
+                   self.status_unpaid?
+    false
+  end
+  
 end

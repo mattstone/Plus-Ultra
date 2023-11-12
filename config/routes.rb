@@ -56,9 +56,13 @@ Rails.application.routes.draw do
               :products,
               :transactions,
               :blogs,
-              :orders,
-              :subscriptions
+              :orders
               
+    resources :subscriptions do 
+      member do 
+        post 'cancel'
+      end
+    end
             
     resources :mailing_lists do 
       resources :subscribers, controller: 'mailing_lists/subscribers' do 

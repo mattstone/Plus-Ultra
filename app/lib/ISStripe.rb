@@ -383,6 +383,12 @@ class ISStripe < ISBaseLib
       object       = event.data.object
       subscription = Subscription.find_by(stripe_subscription_id: object["subscription"])
       subscription.status_active! if subscription
+      
+    when 'customer.subscription.deleted'
+      object = event.data.object 
+      
+      l object.inspect.to_s 
+      
     else 
       l "Unhandled event type: #{event.type}"
     end

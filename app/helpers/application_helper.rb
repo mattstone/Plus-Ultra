@@ -19,10 +19,18 @@ module ApplicationHelper
   def cents_to_dollars(amount_in_cents)
     number_to_currency(amount_in_cents / 100)
   end
+  
+  def short_date(date)
+    date&.strftime("%d/%m/%Y")
+  end
     
   def current_page?(options)
     params[:controller] == options[:controller] and params[:action] == options[:action]
   end 
+  
+  def product_billing_string(product)
+    "#{cents_to_dollars product.price_in_cents} #{product.pricing_string}"    
+  end
   
   def qr_magic(text)
       # only load when needed
