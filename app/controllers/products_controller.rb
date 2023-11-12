@@ -77,17 +77,13 @@ class ProductsController < ApplicationController
   # end
   
   def add_to_shopping_cart
-    if session[:shopping_cart]["#{@product.id}"]
-      session[:shopping_cart]["#{@product.id}"]["count"] += 1
-    else 
-      session[:shopping_cart]["#{@product.id}"] = { name: @product.name, count: 1 }
-    end  
+    add_product_to_shopping_cart(@product)
     set_shopping_cart
   end 
   
   def remove_from_shopping_cart
     if @shopping_cart[@product.id]
-      if @shopping_cart[@product.id]["count"] > 1
+      if @shopping_cart[@product.id]["count"] > 0
         @shopping_cart[@product.id]["count"] -= 1
       else 
         @shopping_cart.delete(@product.id)

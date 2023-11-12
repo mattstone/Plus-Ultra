@@ -72,53 +72,67 @@ class User < ApplicationRecord
       return e
     end
   end
+    
+  # current_user.stripe_create_payment_intent!({ product: product })
   
-  if Rails.env.development? 
-    def self.test 
-      
-      Transaction.destroy_all 
-      
-      options = {}
-      options[:product] = Product.find(7)
-      
-      u = User.first 
-      u.stripe_customer_charge_once!(options)
-    end
-  end
-  
-  # current_user.stripe_customer_charge_once!({ product: product })
-  
-  def stripe_customer_charge_once!(options)
-    # create transaction 
-    # product = options[:product]
-    order   = options[:order]
-    stripe  = ISStripe.new
-    t       = nil
+  def stripe_create_payment_intent!(options)
+    order       = options[:order]
+    stripe      = ISStripe.new
+    transaction = nil
     
     self.stripe_customer_create! if self.stripe_customer_id.nil?
-    
+
     ActiveRecord::Base.transaction do
-      t = self.transactions.new
-      t.order          = options[:order]
-      t.price_in_cents = options[:order].amount_in_cents
-      t.save!
+      Rails.logger.info "stripe_create_payment_intent: 4".red
+      transaction = self.transactions.new
+      transaction.order          = options[:order]
+      transaction.price_in_cents = options[:order].amount_in_cents
+      transaction.save!
 
       options[:order]              = order
-      options[:transaction]        = t
+      options[:transaction]        = transaction
       options[:stripe_customer_id] = self.stripe_customer_id
       options[:receipt_email]      = self.email
       
       payment_intent = stripe.payment_intent_create(options)
       
-      t.history << payment_intent
-      t.stripe_client_secret  = payment_intent["client_secret"] if payment_intent["client_secret"]
-      t.stripe_payment_intent = payment_intent["id"]            if payment_intent["id"]
-      t.save
+      transaction.history << payment_intent
+      transaction.stripe_client_secret  = payment_intent["client_secret"] if payment_intent["client_secret"]
+      transaction.stripe_payment_intent = payment_intent["id"]            if payment_intent["id"]
+      transaction.save
     end
-    t
+    transaction
   end
   
-  def stripe_customer_charge_subscription!(options)
+  def stripe_create_subscription!(options)
+    stripe      = ISStripe.new
+    transaction = options[:transaction]
+    order       = transaction.order
+    product     = order.products.first
+    
+    # Make payment method default for customer 
+    options = {}      
+    options[:invoice_settings] = { default_payment_method: transaction.stripe_payment_method }
+    stripe.customer_update(self.stripe_customer_id, options)
+    
+    sleep 1
+
+    # Create subscription 
+    subscription = order.subscriptions.new
+    subscription.user    = order.user
+    subscription.product = product 
+    subscription.status  = "incomplete"
+    subscription.save
+    
+    items   = []
+    items << { price: product.stripe_price_id }
+    
+    stripe_options            = {}
+    stripe_options[:customer] = self.stripe_customer_id
+    stripe_options[:items]    = items
+    stripe_options[:metadata] = { subscription_id: subscription.id }
+    idempotency_key        = "sub_#{self.id}_#{transaction.id}"
+    stripe.subscription_create(stripe_options, idempotency_key) # Webhook will handle result
   end
   
   #

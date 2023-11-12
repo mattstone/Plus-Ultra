@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_10_080851) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_12_111131) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,7 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_10_080851) do
 
   create_table "blogs", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "status", default: 0
+    t.integer "status"
     t.string "title"
     t.string "slug"
     t.datetime "datetime_to_publish"
@@ -130,7 +130,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_10_080851) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "order_id"
+    t.string "stripe_subscription_id"
     t.index ["product_id"], name: "index_subscriptions_on_product_id"
+    t.index ["stripe_subscription_id"], name: "index_subscriptions_on_stripe_subscription_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
@@ -147,6 +150,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_10_080851) do
     t.string "stripe_payment_intent"
     t.integer "order_id"
     t.integer "subscription_id"
+    t.string "stripe_payment_method"
     t.index ["order_id"], name: "index_transactions_on_order_id"
     t.index ["status"], name: "index_transactions_on_status"
     t.index ["stripe_client_secret"], name: "index_transactions_on_stripe_client_secret"
@@ -180,6 +184,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_10_080851) do
     t.integer "one_time_code"
     t.integer "role", default: 0
     t.string "stripe_customer_id"
+    t.string "stripe_payment_method"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["one_time_code"], name: "index_users_on_one_time_code"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

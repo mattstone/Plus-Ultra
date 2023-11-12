@@ -4,7 +4,10 @@ class ISBaseLib
   end 
   
   def l(string)
-    Rails.logger.info string
+    case Rails.env.test?
+    when true  then Rails.logger.debug string
+    when false then Rails.logger.info string
+    end
   end
   
 end

@@ -61,7 +61,7 @@ class TransactionsController < ApplicationController
   
   def stripe_payment_intent
     product      = Product.find(product_id)
-    @transaction = current_user.stripe_customer_charge_once!({ product: product })
+    @transaction = current_user.stripe_create_payment_intent!({ product: product })
   end
   
   def complete 
@@ -81,7 +81,13 @@ class TransactionsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction
-      @transaction = Transaction.find(params[:id])
+      
+      if params["transaction_id"]
+        @transaction = Transaction.find(params[:transaction_id])
+      else 
+        @transaction = Transaction.find(params[:id])
+      end
+      
     end
   
     # Only allow a list of trusted parameters through.

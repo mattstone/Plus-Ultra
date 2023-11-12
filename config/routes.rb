@@ -38,9 +38,11 @@ Rails.application.routes.draw do
   post 'webhooks/stripe',                  to: 'webhooks#stripe'
   
   # Checkout 
-  get 'checkout',                          to: "checkout#index"
+  get  'checkout',                         to: "checkout#index"
+  post 'checkout',                         to: "checkout#index"
   post 'checkout_create_account',          to: "checkout#checkout_create_account"
   post 'checkout_pay_now',                 to: "checkout#pay_now"
+  post 'checkout_subscribe/:product_id',   to: "checkout#checkout_subscribe"
 
   # Newsletter subscription  
   post 'subscribe_to_newsletter',          to: 'subscribers#subscribe_to_newsletter'  

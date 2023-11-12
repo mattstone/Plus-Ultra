@@ -52,13 +52,17 @@ class ISProduct < ISBaseWatir
     @browser.file_field.set(string)
 
     @browser.scroll.to :bottom
-    sleep 2
     
+    sleep 2
+
     javascript_script = "document.getElementById('product_teaser_trix_input_product').value = '<div>#{test_product[:teaser]}</div>'"
     @browser.execute_script(javascript_script)
      
     javascript_script = "document.getElementById('product_description_trix_input_product').value = '<div>#{test_product[:description]}</div>'"
     @browser.execute_script(javascript_script)
+
+    checkbox = @browser.checkbox(id: 'product_for_sale')
+    checkbox.set
 
     @browser.button(:id => "admin_products_update_button").click
     @browser.wait_until { @browser.text.include? 'Product was successfully created' }

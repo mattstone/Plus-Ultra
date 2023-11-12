@@ -4,7 +4,10 @@ class ApplicationController < ActionController::Base
   before_action :set_seo
   
   def l(string)
-    Rails.logger.info string.to_s.yellow
+    case Rails.env.test?
+    when true  then Rails.logger.debug(string.to_s.yellow)
+    when false then Rails.logger.info(string.to_s.yellow)
+    end
   end
 
   #
@@ -22,12 +25,18 @@ class ApplicationController < ActionController::Base
   protected
   
   def set_shopping_cart 
-    # session[:shopping_cart] = nil
-    # l "set_shopping_cart"
-    # l session[:shopping_cart].inspect
-    
     session[:shopping_cart] ||= {}
     @shopping_cart = session[:shopping_cart]
+  end
+  
+  def add_product_to_shopping_cart(product, subscription = false)
+    return if product.purchase_type_subscription? and !subscription # Don't add subscriptions to shopping cart
+    
+    if session[:shopping_cart]["#{product.id}"]
+      session[:shopping_cart]["#{product.id}"]["count"] += 1
+    else 
+      session[:shopping_cart]["#{product.id}"] = { name: product.name, count: 1 }
+    end
   end
   
   def clear_shopping_cart 

@@ -19,7 +19,7 @@ class Product < ApplicationRecord
   validates :name, :sku, uniqueness: true  
   
   # add enums
-  enum :purchase_type, { purchase: 0, subscription: 100}, prefix: true
+  enum :purchase_type, { purchase: 0, subscription: 100 }, prefix: true
   enum :billing_type,  { once_off: 0, weekly: 100, fortnightly: 200, monthly: 300, annually: 400 }, prefix: true
 
   def subscription? 

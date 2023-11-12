@@ -29,24 +29,12 @@
 <% accumulated_total = 0 %>
 <% @shopping_cart.each do |key, value| %>
   <%
+    value.stringify_keys!
     product = Product.find(key)
     total   = product.price_in_cents * value["count"]
     accumulated_total += total
   %>
-  <div class="row">  
-    <div class="col-3">
-      <%= product.name %>
-    </div>
-    <div class="col-1">
-      <%= value["count"] %>
-    </div>
-    <div class="col-1">
-      <%= cents_to_dollars product.price_in_cents %>
-    </div>
-    <div class="col-1">
-      <%= cents_to_dollars total %>
-    </div>
-  </div>
+  <%= render 'checkout/product_row', product: product, count: value["count"], total: total %>
 <% end %>
 
 <br>
