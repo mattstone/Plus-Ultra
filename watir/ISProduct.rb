@@ -10,8 +10,11 @@ class ISProduct < ISBaseWatir
     
     sign_in_admin
     
-    create_product
-    update_product
+    # create_product
+    # update_product
+    
+    remove_test_data!
+    create_subscription
 
     tests_complete
   end

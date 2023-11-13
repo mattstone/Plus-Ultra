@@ -391,6 +391,12 @@ class ISStripe < ISBaseLib
       
     else 
       l "Unhandled event type: #{event.type}"
+      
+      begin 
+        object = event.data.object
+        l object.inspect.to_s.gray
+      rescue => e
+      end
     end
   end
   

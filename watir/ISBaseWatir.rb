@@ -135,6 +135,19 @@ class ISBaseWatir
       for_sale: true
     }
   end 
+
+  def test_subscription
+    {
+      name: "Test subscription",
+      sku: "12345sub",
+      price_in_cents: 2000,
+      purchase_type: "subscription",
+      billing_type: "monthly",
+      teaser: "Teaser subscription",
+      description: "Description subscription",
+      for_sale: true
+    }
+  end 
   
   def create_test_product! 
     Product.create(test_product)
