@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  audited
+  
   has_rich_text :teaser 
   has_rich_text :description 
   

@@ -15,6 +15,8 @@ class CustomSubscriberValidator < ActiveModel::Validator
 end
 
 class Subscriber < ApplicationRecord
+  audited
+  
   belongs_to :mailing_list
   
   validates_with CustomSubscriberValidator

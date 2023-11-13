@@ -1,4 +1,6 @@
 class Subscription < ApplicationRecord
+  audited
+  
   belongs_to :user 
   belongs_to :product 
   belongs_to :order

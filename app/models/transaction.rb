@@ -1,4 +1,6 @@
 class Transaction < ApplicationRecord
+  audited
+  
   belongs_to :order 
   belongs_to :user 
   belongs_to :subscription, optional: true

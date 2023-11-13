@@ -1,4 +1,6 @@
 class Order < ApplicationRecord
+  audited
+  
   has_many :product_orders
   has_many :products, through: :product_orders
   has_many :transactions
