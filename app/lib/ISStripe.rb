@@ -408,52 +408,54 @@ class ISStripe < ISBaseLib
     Stripe::Price.list()
   end
 
-  def test_card 
-    {
-      expiry: Time.now + 2.years,
-      number: "4242424242424242",
-      cvv: "123"
-    }
-  end
-  
-  def test_card_declined
-    {
-      expiry: Time.now + 2.years,
-      number: "4000000000000002",
-      cvv: "123"
-    }
-  end
+  if !Rails.env.production?
+    def test_card 
+      {
+        expiry: Time.now + 2.years,
+        number: "4242424242424242",
+        cvv: "123"
+      }
+    end
+    
+    def test_card_declined
+      {
+        expiry: Time.now + 2.years,
+        number: "4000000000000002",
+        cvv: "123"
+      }
+    end
 
-  def test_card_insufficient_funds
-    {
-      expiry: Time.now + 2.years,
-      number: "4000000000009995",
-      cvv: "123"
-    }
-  end
+    def test_card_insufficient_funds
+      {
+        expiry: Time.now + 2.years,
+        number: "4000000000009995",
+        cvv: "123"
+      }
+    end
 
-  def test_card_lost
-    {
-      expiry: Time.now + 2.years,
-      number: "4000000000009987",
-      cvv: "123"
-    }
-  end
+    def test_card_lost
+      {
+        expiry: Time.now + 2.years,
+        number: "4000000000009987",
+        cvv: "123"
+      }
+    end
 
-  def test_card_stolen
-    {
-      expiry: Time.now + 2.years,
-      number: "4000000000009979",
-      cvv: "123"
-    }
-  end
+    def test_card_stolen
+      {
+        expiry: Time.now + 2.years,
+        number: "4000000000009979",
+        cvv: "123"
+      }
+    end
 
-  def test_card_expired
-    {
-      expiry: Time.now + 2.years,
-      number: "4000000000000069",
-      cvv: "123"
-    }
+    def test_card_expired
+      {
+        expiry: Time.now + 2.years,
+        number: "4000000000000069",
+        cvv: "123"
+      }
+    end
   end
   
 end
