@@ -20,7 +20,7 @@
       <% if product.subscription? %>
         <%= form_with url: checkout_path, method: :post, data: { turbo: false } do |f| %>
           <%= hidden_field_tag :product_id, product.id %>
-          <%= f.submit "Subscribe for #{cents_to_dollars product.price_in_cents} #{product.pricing_string}", class: "btn btn-success" %>
+          <%= f.submit "Subscribe for #{cents_to_dollars product.price_in_cents} #{product.pricing_string}", class: "btn btn-success", id: "subscribe_#{product.id}" %>
         <% end %>
       <% else %>
         <button type="button" class="btn btn-primary">
@@ -28,7 +28,6 @@
         </button>        
 
         <%= render 'shared/add_to_cart', product: product, show_added: false %>
-
     <% end %>
     </div>
     

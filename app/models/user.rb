@@ -11,6 +11,7 @@ class User < ApplicationRecord
   
   has_many :transactions
   has_many :orders
+  has_many :subscriptions
   
   validates :first_name, :last_name, presence: true
   

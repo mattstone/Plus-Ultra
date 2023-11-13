@@ -14,10 +14,17 @@ class ISPurchase < ISBaseWatir
     create_test_product!
     check_products_exists_to_purchase
 
-    if @total_failed == 0
-      not_logged_in 
+    # if @total_failed == 0
+    #   not_logged_in 
+    #   logged_in
+    # end
+    
+    if @total_failed == 0 
+      remove_test_data!
       
-      logged_in
+      create_test_subscription!
+      not_logged_in_subscription
+      
     end
     
     tests_complete
@@ -33,6 +40,7 @@ class ISPurchase < ISBaseWatir
     Transaction.destroy_all 
     ProductOrder.destroy_all
     Order.destroy_all
+    Product.destroy_all
     destroy_test_user!
     
     remove_session!
@@ -40,6 +48,7 @@ class ISPurchase < ISBaseWatir
 
   
   def not_logged_in 
+    header("Product - not logged in")
         
     link = @browser.link(href: '/products')
     link.click
@@ -106,6 +115,7 @@ class ISPurchase < ISBaseWatir
   end 
   
   def logged_in 
+    header("Product - logged in")
     
     link = @browser.link(href: '/products')
     link.click
@@ -145,6 +155,117 @@ class ISPurchase < ISBaseWatir
     @browser.wait_until { @browser.text.include? 'Pending' }
     good("Stripe payment request pending")
   end
+  
+  #
+  # Subscription 
+  # 
+  
+  def not_logged_in_subscription
+    header("Subscription - not logged in")
+    
+    sleep 2 
+    
+    test_subscription_product = test_subscription_product_record
+    
+    case !test_subscription_product.stripe_product_id.blank?
+    when true  then good("product.stripe_product_id has value")
+    when false then good("product.stripe_product_id has no value")
+    end
+
+    case !test_subscription_product.stripe_price_id.blank?
+    when true  then good("product.stripe_price_id has value")
+    when false then good("product.stripe_price_id has no value")
+    end
+    
+        
+    link = @browser.link(href: '/products')
+    link.click
+    sleep 3 # Wait for image to load
+    
+    good("browsed to /products")
+    @browser.scroll.to :bottom
+    sleep 2  
+
+    good("scroll_to_bottom")
+
+    product = test_subscription_product_record
+    @browser.button(:id => "subscribe_#{product.id}").click
+    good("clicked on Subscribe")
+
+    sleep 1  
+
+    @browser.scroll.to :top
+    
+    sleep 1
+    
+    @browser.button(:id => "checkout_continue").click
+    good("clicked on Add to Cart")
+
+    sleep 1
+    
+    @browser.wait_until { @browser.text.include? 'Please create an account to continue your order' }
+    good("user signup form presented")
+    
+    # Create user
+    fill_in_user_sign_up_form!
+    fill_in_user_2fa!
+    good("2fa completed")
+    sleep 1
+    
+    # @browser.wait_until { @browser.text.include? 'Pay Now' }
+    good("user signup form completed")
+    
+    sleep 1
+
+    @browser.button(:id => "pay_now").click
+    good("clicked on Pay Now")
+    
+    sleep 2
+
+    p "Manually input test credit card details!"
+    
+    
+    @browser.wait_until { @browser.text.include? 'Pending' }
+    good("Stripe payment request pending")
+    
+    # @browser.wait_until { @browser.text.include? 'Cleared funds' }
+    # good("Stripe payment request successful")
+    
+    sleep 2 
+    
+    # Check database is setup correctly and stripe integration is all good
+    user  = test_user_record
+    order = user.orders.last 
+    
+    case !order.nil?
+    when true then good("test user has order created")
+    when true then bad("test user order not created")
+    end
+    
+    case order.product_orders.count == 1
+    when true then good("product_order created")
+    when true then bad("product_order error")
+    end
+    
+    subscription = user.subscriptions.last 
+    
+    case !subscription.nil?
+    when true then good("subscription created")
+    when true then bad("subscription creation error")
+    end
+    
+    case subscription.status_active?
+    when true then good("subscription active")
+    when true then bad("subscription not active")
+    end
+
+    case !subscription.stripe_subscription_id.nil?
+    when true then good("subscription registered with Stripe")
+    when true then bad("subscription not registered with Stripe")
+    end
+    
+  end 
+  
   
 end
 

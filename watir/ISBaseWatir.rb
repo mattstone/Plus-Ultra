@@ -152,6 +152,10 @@ class ISBaseWatir
   def create_test_product! 
     Product.create(test_product)
   end
+  
+  def create_test_subscription! 
+    Product.create(test_subscription)
+  end
 
   def test_product_record 
     product = Product.find_by(name: test_product[:name])

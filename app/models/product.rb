@@ -66,7 +66,6 @@ class Product < ApplicationRecord
 
     def update_stripe 
       
-      # Build stripe object 
       object            = {}
       object[:name]     = self.name
       object[:active]   = self.for_sale
