@@ -10,8 +10,8 @@ class ISProduct < ISBaseWatir
     
     sign_in_admin
     
-    # create_product
-    # update_product
+    create_product
+    update_product
     
     remove_test_data!
     create_subscription
@@ -23,6 +23,7 @@ class ISProduct < ISBaseWatir
   def remove_test_data!
     Product.where(name: test_product[:name]).destroy_all
     Product.where(name: "Changed").destroy_all
+    Product.where(name: test_subscription[:name]).destroy_all
   end   
   
   def create_product 
@@ -108,6 +109,67 @@ class ISProduct < ISBaseWatir
     @browser.wait_until { @browser.text.include? 'Product was successfully updated' }
     good("product updated")
   end
+  
+  
+  def create_subscription 
+    
+    link = @browser.link(href: "/admin/products")
+    link.click
+    
+    @browser.wait_until { @browser.text.include? 'Manage Products' }
+    good("browsed to manage products")
+    
+    link = @browser.link(href: "/admin/products/new")
+    link.click
+    
+    @browser.wait_until { @browser.text.include? 'New Product' }
+    good("browsed to admin/products/new")
+    
+    sleep 2 # Give javascript time to set the page up..
+    
+    
+    text_field = @browser.text_field(id: 'product_name')
+    text_field.value = test_subscription[:name]
+
+    text_field = @browser.text_field(id: 'product_sku')
+    text_field.value = test_subscription[:sku]
+
+    text_field = @browser.text_field(id: 'product_price_in_cents')
+    text_field.value = test_subscription[:price_in_cents]
+    
+    @browser.scroll.to :bottom
+    
+    sleep 1
+    
+    dropdown = @browser.select(id: 'product_purchase_type')
+    dropdown.select(value: 'subscription')
+    #     
+    dropdown = @browser.select(id: 'product_billing_type')
+    dropdown.select(value: 'monthly')
+    
+    checkbox = @browser.checkbox(id: 'product_for_sale')
+    checkbox.set
+
+    @browser.button(:id => "admin_products_update_button").click
+    @browser.wait_until { @browser.text.include? 'Product was successfully created' }
+    good("product created")
+    
+    sleep 2 
+    
+    test_subscription_product = test_subscription_product_record
+    
+    case !test_subscription_product.stripe_product_id.blank?
+    when true  then good("product.stripe_product_id has value")
+    when false then good("product.stripe_product_id has no value")
+    end
+
+    case !test_subscription_product.stripe_price_id.blank?
+    when true  then good("product.stripe_price_id has value")
+    when false then good("product.stripe_price_id has no value")
+    end
+        
+  end
+  
   
 end
 

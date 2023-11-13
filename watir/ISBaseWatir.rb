@@ -158,6 +158,12 @@ class ISBaseWatir
     product = Product.find_by(name: "Changed") if product.nil?
     product
   end
+
+  def test_subscription_product_record 
+    product = Product.find_by(name: test_subscription[:name])
+    product = Product.find_by(name: "Changed") if product.nil?
+    product
+  end
   
   def get_test_user
     User.find_by(email: test_user[:email])

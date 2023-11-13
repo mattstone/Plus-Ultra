@@ -48,17 +48,18 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 - Trigger test api calls 
 -- stripe trigger checkout.session.completed to test responses will be received
 
-### Notes
+## Application Notes
 
 - Active Storage for file uploads
 - ActionText Trix WYSIWYG editor
 - Phony & Phonelib for international telephone numbers
-- Invisible Captcha
+- Invisible Captcha for anti-spam form catching
 - dotenv for environment
 - QRCode to generate QR codes
 - SEO optimisation - Title, Meta Description/Keywords and image tagging
 - Charting => https://chartkick.com/
 - Redis for key value store
+- Auditing for recording model changes and user who made them - https://github.com/collectiveidea/audited
 
 # 
 * TODO 
@@ -88,7 +89,6 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 * Deployment instructions
 gem install watir
 gem install mailcatcher 
-
 
 ```
 * ...
