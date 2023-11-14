@@ -1,6 +1,20 @@
 <%= render 'dashboard/shared/header', title: "My Orders" %>
 
 
+<%= form_with url: admin_products_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |f| %>
+    <div class="col">
+      <div class="input-group">
+        <%= f.text_field :order_id, value: params[:order_id], class: "form-control", placeholder: "Order Id", id: "filter_order_id" %>
+      </div>
+    </div>
+
+    <div class="col">
+      <%= f.submit "Filter", class: admin_button_class, id: "dashboard_orders_filter_button" %>
+    </div>
+
+<% end %>
+
+
 <div class="row">
   <div class="col-2"><strong>Date</strong></div>
   <div class="col-1"><strong>No.</strong></div>
