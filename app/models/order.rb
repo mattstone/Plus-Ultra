@@ -14,17 +14,17 @@ class Order < ApplicationRecord
   # Note: subscriptions.. must use different process.
   def self.create_from_shopping_cart(current_user, shopping_cart)
 
-    order = current_user.orders.new
+    ActiveRecord::Base.transaction(isolation: :serializable) do
+      order = current_user.orders.new
+      
+      order.amount_in_cents = 0
+      shopping_cart.each do |key, value|
+        product = Product.find(key)
+        order.amount_in_cents   += product.price_in_cents * value["count"]
+        shopping_cart[key]["amount_in_cents"] = order.amount_in_cents
+        shopping_cart[key]["price_in_cents"]  = product.price_in_cents
+      end
     
-    order.amount_in_cents = 0
-    shopping_cart.each do |key, value|
-      product = Product.find(key)
-      order.amount_in_cents   += product.price_in_cents * value["count"]
-      shopping_cart[key]["amount_in_cents"] = order.amount_in_cents
-      shopping_cart[key]["price_in_cents"]  = product.price_in_cents
-    end
-    
-    ActiveRecord::Base.transaction do
       order.save
       
       shopping_cart.each do |key, value| # create product_orders
@@ -43,7 +43,8 @@ class Order < ApplicationRecord
   end
   
   def self.create_for_subscription!(current_user, options)
-    ActiveRecord::Base.transaction do
+    order = nil
+    ActiveRecord::Base.transaction(isolation: :serializable) do
       
       order = current_user.orders.new
       order.amount_in_cents = options[:product].price_in_cents 
@@ -53,14 +54,18 @@ class Order < ApplicationRecord
       po.product_id = options[:product].id
 
       current_user.stripe_create_payment_intent!({ order: order }) # Create transaction
-      order
     end
+    order
   end
   
   def status 
     transaction = self.transactions.first 
     return "Not placed" if transaction == nil
     transaction.status.to_s.humanize
+  end
+  
+  def order_number
+    "or-#{self.id}"
   end
   
   def subscription?

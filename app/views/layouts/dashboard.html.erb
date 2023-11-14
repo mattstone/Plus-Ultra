@@ -1,0 +1,57 @@
+<%= render 'layouts/shared/header' %>
+
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="<%= dashboard_dashboard_path %>" title="Admin"><%= ENV['APP_NAME'] %></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Account
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="<%= edit_dashboard_user_path(current_user) %>">Update</a></li>
+              <li><a class="dropdown-item" href="<%= dashboard_orders_path %>">Orders</a></li>
+              <!-- <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+            </ul>
+          </li>
+          
+          
+          <% if current_user %>
+          <li class="nav-item">
+            <%= button_to(
+                    "Log Out",
+                    destroy_user_session_path,
+                    method: :delete,
+                    class: "nav-button btn btn-sm btn-primary",
+                    id: "log_out_button"
+                  ) %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>      
+  
+  <div class="d-flex">
+
+   <!-- Page Content -->
+    <div class="w-100" id="page-content-wrapper" style="padding: 8px 0px 0px 32px;">
+
+      <div class="container-fluid small_padding_fix" >      
+        <%= render 'layouts/shared/notices' %>      
+        <%= yield %>      
+      </div>
+
+    </div>
+  
+  </div>
+
+
+<%= render 'layouts/shared/footer' %>

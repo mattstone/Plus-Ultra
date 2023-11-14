@@ -82,11 +82,9 @@ class User < ApplicationRecord
     order       = options[:order]
     stripe      = ISStripe.new
     transaction = nil
-    
     self.stripe_customer_create! if self.stripe_customer_id.nil?
 
-    ActiveRecord::Base.transaction do
-      Rails.logger.info "stripe_create_payment_intent: 4".red
+    ActiveRecord::Base.transaction(isolation: :serializable) do
       transaction = self.transactions.new
       transaction.order          = options[:order]
       transaction.price_in_cents = options[:order].amount_in_cents
@@ -118,7 +116,7 @@ class User < ApplicationRecord
     options[:invoice_settings] = { default_payment_method: transaction.stripe_payment_method }
     stripe.customer_update(self.stripe_customer_id, options)
     
-    sleep 1
+    sleep 1 # Need a sec..
 
     # Create subscription 
     subscription = order.subscriptions.new

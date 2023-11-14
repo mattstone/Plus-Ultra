@@ -1,0 +1,39 @@
+<div id="my_account_<%= current_user.id %>">
+  <%= form_with url: dashboard_user_path(current_user), model: current_user, method: :put do |f| %>
+    <%= render 'shared/form_results', resource: current_user %>
+    
+    <div class="row">
+      <div class="col-2">
+        <%= f.label :email %>
+      </div>
+      <div class="col-6">
+        <%= user.email %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-2">
+        <%= f.label :first_name %>
+      </div>
+      <div class="col-6">
+        <%= f.text_field :first_name, placeholder: "First name", class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-2">
+        <%= f.label :last_name %>
+      </div>
+      <div class="col-6">
+        <%= f.text_field :last_name, placeholder: "Last name", class: "form-control" %>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col">
+        <%= f.submit "Update", class: dashboard_button_class %>
+      </div>
+    </div>
+
+  <% end %>
+</div>

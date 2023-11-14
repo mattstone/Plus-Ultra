@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     if resource.class.to_s == "User"
       return admin_dashboard_path if resource.admin?
     end
-    root_url
+    dashboard_dashboard_path
   end
 
 
@@ -64,9 +64,9 @@ class ApplicationController < ActionController::Base
   end
   
   def set_seo
-    @title = "Starter - #{params[:controller]}  #{params[:action]}"
+    @title = "#{ENV['APP_NAME']} - #{params[:controller]}  #{params[:action]}"
     @meta_description = "#{params[:controller]}  #{params[:action]}"
-    @meta_keywords    = "Starter, #{params[:controller]}, #{params[:action]}}"
+    @meta_keywords    = "#{ENV['APP_NAME']}, #{params[:controller]}, #{params[:action]}}"
   end
   
 end

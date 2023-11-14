@@ -1,0 +1,46 @@
+<%= render 'dashboard/shared/header', title: "My Order" %>
+
+<div class="row">
+  <div class="col-2"><strong>Order No.</strong></div>
+  <div class="col-6"><%= @order.order_number %></div>
+</div>
+
+<div class="row">
+  <div class="col-2"><strong>Date</strong></div>
+  <div class="col-6"><%= short_date_and_time @order.created_at %></div>
+</div>
+
+<div class="row">
+  <div class="col-2"><strong>Amount</strong></div>
+  <div class="col-6"><%= cents_to_dollars @order.amount_in_cents %></div>
+</div>
+
+<div class="row">
+  <div class="col-2"><strong>Status</strong></div>
+  <div class="col-6"><%= @order.status.humanize %></div>
+</div>
+
+<div class="row">
+  <div class="col"><hr></div>
+</div>
+
+<div class="row">
+  <div class="col-2">Name</div>
+  <div class="col-1">Quantity</div>
+  <div class="col-1">Cost</div>
+  <div class="col-1">Total</div>
+</div>
+
+<% @order.product_orders.each do |po| %>
+  <% product = po.product %>
+  <div class="row">
+    <div class="col-3"><%= product.name %></div>
+    <div class="col-1"><%= po.quantity %></div>
+    <div class="col-1"><%= cents_to_dollars po.price_in_cents %></div>
+    <div class="col-1"><%= cents_to_dollars po.amount_in_cents %></div>
+    
+    <% if product.subscription? %>
+      <div class="col-3"><%= product.pricing_string.humanize %></div>
+    <% end %>
+  </div>
+<% end %>

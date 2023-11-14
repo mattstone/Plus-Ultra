@@ -16,12 +16,21 @@ module ApplicationHelper
     "p-3 mb-2 bg-primary text-white"
   end
   
+  def dashboard_button_class 
+    "btn btn-sm btn-primary"
+  end
+  
+  
   def cents_to_dollars(amount_in_cents)
     number_to_currency(amount_in_cents / 100)
   end
   
   def short_date(date)
     date&.strftime("%d/%m/%Y")
+  end
+
+  def short_date_and_time(datetime)
+    datetime&.strftime("%d/%m/%Y %H:%M %P %Z")
   end
     
   def current_page?(options)

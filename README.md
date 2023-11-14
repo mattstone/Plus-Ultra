@@ -60,6 +60,9 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 - Charting => https://chartkick.com/
 - Redis for key value store
 - Auditing for recording model changes and user who made them - https://github.com/collectiveidea/audited
+- Stripe purchase and subscriptions (weekly, fortnightly, monthly, annual) with idempotence.
+- Admin Dashboard 
+- Customer Dashboard
 
 # 
 * TODO 

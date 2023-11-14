@@ -48,6 +48,15 @@ Rails.application.routes.draw do
   post 'subscribe_to_newsletter',          to: 'subscribers#subscribe_to_newsletter'  
   get ' confirm_news_letter_subscription', to: 'subscribers#confirm_news_letter_subscription'  
   
+  namespace :dashboard do 
+    get 'dashboard', to: 'dashboard#index'
+
+    resources :users, 
+              :orders, 
+              :products,
+              :subscriptions
+  end
+  
   namespace :admin do
     get 'dashboard', to: 'dashboard#index'
     get 'logout',    to: 'dashboard#logout'
