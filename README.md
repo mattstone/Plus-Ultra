@@ -1,3 +1,5 @@
+![Alt text](app/assets/images/plus_ultra.png?raw=true "Plus Ultra")
+
 # README
 
 Aim:
