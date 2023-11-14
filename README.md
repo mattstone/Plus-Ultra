@@ -95,9 +95,6 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 gem install watir
 gem install mailcatcher 
 
-```
-* ...
-
 ## License
 
 Plus Ultra is released under the [MIT License](https://opensource.org/licenses/MIT).
