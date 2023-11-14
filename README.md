@@ -98,4 +98,7 @@ gem install mailcatcher
 ```
 * ...
 
+## License
+
+Plus Ultra is released under the [MIT License](https://opensource.org/licenses/MIT).
 
