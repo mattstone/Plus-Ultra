@@ -1,9 +1,42 @@
 <%= render 'dashboard/shared/header', title: "My Products" %>
 
+<br>
+<%= form_with url: dashboard_products_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |f| %>
+  <div class="row">
 
+    <div class="col">
+      <div class="input-group">
+        <%= f.text_field :name, value: params[:name], class: "form-control", placeholder: "Product name", id: "filter_product_name" %>
+      </div>
+    </div>
 
+    <div class="col">
+      <%= f.submit "Filter", class: admin_button_class, id: "dashboard_products_filter_button" %>
+    </div>
+  </div>
+<% end %>
+<br>
 
+<div class="row">
+  <div class="col-3"><strong>Name</strong></div>
+  <div class="col-2"><strong>Actions</strong></div>
+</div>
 
+<% if @products.empty? %>
+  <div class="row">
+    <div class="col">
+      <p>
+        There are no products
+      </p>
+    </div>
+  </div>
+<% else %>
+  <% @products.each do |product| %>
+  <div class="col-3">
+    <%= product.name.humanize %>
+  </div>
+  <% end %>
+<% end %>
 
 <br>
 

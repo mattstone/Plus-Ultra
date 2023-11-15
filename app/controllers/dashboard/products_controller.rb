@@ -4,7 +4,8 @@ class Dashboard::ProductsController < Dashboard::BaseController
   # GET /products or /products.json
   def index
     
-    set_start_end_date
+    # set_start_and_end_date
+
     # where = ""
     # args  = []
     # 
@@ -28,11 +29,25 @@ class Dashboard::ProductsController < Dashboard::BaseController
     #              .order(created_at: :desc)
     #              .page params[:page]
     
-    @products = Order 
-                  .joins(:products)
-                  .where(user_id: current_user.id)
-                  .order(created_at: :desc)
-                  .page params[:page]
+    @products = if !params[:name].blank?
+                  Product 
+                   .joins(:orders)
+                   .joins("left join transactions on transactions.order_id = orders.id")
+                   .where(purchase_type: "purchase")
+                   .where({ orders: { user_id: current_user.id }})
+                   .where({ transactions: { status: "cleared_funds" }})
+                   .order(created_at: :desc)
+                   .page params[:page]
+                else 
+                  Product 
+                   .joins(:orders)
+                   .joins("left join transactions on transactions.order_id = orders.id")
+                   .where(purchase_type: "purchase")
+                   .where({ orders: { user_id: current_user.id }})
+                   .where({ transactions: { status: "cleared_funds" }})
+                   .order(created_at: :desc)
+                   .page params[:page]
+                end
                   
   end
 
