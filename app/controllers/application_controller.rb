@@ -69,4 +69,10 @@ class ApplicationController < ActionController::Base
     @meta_keywords    = "#{ENV['APP_NAME']}, #{params[:controller]}, #{params[:action]}}"
   end
   
+  def set_start_and_end_date
+    @start_date = params[:start_date].blank? ? Time.now.beginning_of_day - 1.year : Date.parse(params[:start_date]).beginning_of_day
+    @end_date   = params[:end_date].blank?   ? Time.now.end_of_day                : Date.parse(params[:end_date]).end_of_day
+  end
+
+  
 end

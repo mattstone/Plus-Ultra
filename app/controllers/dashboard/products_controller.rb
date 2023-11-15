@@ -3,6 +3,8 @@ class Dashboard::ProductsController < Dashboard::BaseController
 
   # GET /products or /products.json
   def index
+    
+    set_start_end_date
     # where = ""
     # args  = []
     # 
@@ -22,9 +24,16 @@ class Dashboard::ProductsController < Dashboard::BaseController
     #           .order(created_at: :desc)
     #           .page params[:page]
 
-    @products = current_user.orders.products
-                 .order(created_at: :desc)
-                 .page params[:page]
+    # @products = current_user.orders.products
+    #              .order(created_at: :desc)
+    #              .page params[:page]
+    
+    @products = Order 
+                  .joins(:products)
+                  .where(user_id: current_user.id)
+                  .order(created_at: :desc)
+                  .page params[:page]
+                  
   end
 
   # GET /products/1 or /products/1.json

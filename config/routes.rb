@@ -55,6 +55,9 @@ Rails.application.routes.draw do
               :orders, 
               :products,
               :subscriptions
+              
+    resources :orders do 
+    end
   end
   
   namespace :admin do

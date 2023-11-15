@@ -3,10 +3,23 @@ class Dashboard::OrdersController < Dashboard::BaseController
 
   # GET /orders or /orders.json
   def index
-    @orders = Order
-               .where(user_id: current_user.id)
-               .order(created_at: :desc)
-               .page params[:page]
+    
+    set_start_and_end_date
+    
+      @orders = if !params[:order_id].blank?
+                   Order
+                     .where(user_id: current_user.id)
+                     .where(id: params[:order_id].to_s.gsub(/(?<=\d),\d+|\D/, ''))
+                     .where(created_at: @start_date..@end_date)
+                     .order(created_at: :desc)
+                     .page params[:page]
+                else 
+                   Order
+                     .where(user_id: current_user.id)
+                     .where(created_at: @start_date..@end_date)
+                     .order(created_at: :desc)
+                     .page params[:page]
+                end
 
   end
 

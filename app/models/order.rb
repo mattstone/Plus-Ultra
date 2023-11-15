@@ -65,7 +65,7 @@ class Order < ApplicationRecord
   end
   
   def order_number
-    "or-#{self.id}"
+    "OR-#{self.id}"
   end
   
   def subscription?
