@@ -1,11 +1,15 @@
+<%= render 'shared/mailer/header_operations', preheader: @preheader %>
+
 <p>
   Hello,
 </p>
+
+<br>
 
 <p>
   This is your verification code: <%= @user.one_time_code %>
 </p>
 
-<p>
-  Thanks 
-</p>
+<br>
+
+<%= render 'shared/mailer/footer_operations' %>

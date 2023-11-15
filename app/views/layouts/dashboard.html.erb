@@ -3,7 +3,7 @@
 <div class="container">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="<%= dashboard_dashboard_path %>" title="Admin"><%= ENV['APP_NAME'] %></a>
+      <a class="navbar-brand" href="<%= dashboard_dashboard_path %>" alt="<%= ENV['MOTTO'] %>" title="<%= ENV['MOTTO'] %> Admin"><%= ENV['APP_NAME'] %></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -22,21 +22,22 @@
             </ul>
           </li>
           
+          <!-- <li class="nav-item">
+            <%#= params[:controller] %> : <%#= params[:action] %>
+          </li> -->
           <li class="nav-item">
-            <%= params[:controller]%>
-          </li>
-          <li class="nav-item">
-            <%= params[:action]%>
-          </li>
-          <li class="nav-item">
-            <% current_page = current_page?({ controller: "devise/registrations", action: "new"}) %>
+            <% current_page = current_page?({ controller: "dashboard/products", action: "index"}) %>
             <a class="nav-link <%= current_page ? "active" : "" %>" aria-current="<%= current_page ? "page" : "" %>" href="<%= dashboard_products_path %>">Products</a>
+          </li>
+          <li class="nav-item">
+            <% current_page = current_page?({ controller: "dashboard/subscriptions", action: "index"}) %>
+            <a class="nav-link <%= current_page ? "active" : "" %>" aria-current="<%= current_page ? "page" : "" %>" href="<%= dashboard_subscriptions_path %>">Subscriptions</a>
           </li>
           
           
           
           <% if current_user %>
-          <li class="nav-item">
+          <li class="nav-item float-end">
             <%= button_to(
                     "Log Out",
                     destroy_user_session_path,

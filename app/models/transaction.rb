@@ -19,6 +19,10 @@ class Transaction < ApplicationRecord
     self.status_cleared_funds!
     # send invoice, etc..
   end
+  
+  def cleared_funds?
+    self.status_cleared_funds?
+  end
 
    def refunded!
      self.status_refunded!

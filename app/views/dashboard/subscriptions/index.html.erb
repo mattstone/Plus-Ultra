@@ -1,8 +1,34 @@
 <%= render 'dashboard/shared/header', title: "My Subscriptions" %>
 
+<br>
 
+<div class="row">
+  <div class="col-3"><strong>Name</strong></div>
+  <div class="col-2"><strong>Start Date</strong></div>
+  <div class="col-2"><strong>Price</strong></div>
+  <div class="col-2"><strong>Status</strong></div>
+  <div class="col-2"><strong>Actions</strong></div>
+</div>
 
-
+<% if @subscriptions.empty? %>
+  <div class="row">
+    <div class="col d-flex">
+      <p>
+        There are no subscriptions
+      </p>
+    </div>
+  </div>
+<% else %>
+  <% @subscriptions.each do |sub| %>
+    <% product = sub.product %>
+    <div class="row">
+      <div class="col-3"><%= product.name %></div>
+      <div class="col-2"><%= short_date sub.created_at %></div>
+      <div class="col-2"><%= "#{cents_to_dollars product.price_in_cents} #{product.pricing_string}" %></div>
+      <div class="col-2"><%= sub.status.humanize %></div>
+    </div>
+  <% end %>
+<% end %>
 
 
 <br>
