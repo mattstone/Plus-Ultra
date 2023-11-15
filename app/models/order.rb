@@ -13,6 +13,7 @@ class Order < ApplicationRecord
   
   # Note: subscriptions.. must use different process.
   def self.create_from_shopping_cart(current_user, shopping_cart)
+    order = nil
 
     ActiveRecord::Base.transaction(isolation: :serializable) do
       order = current_user.orders.new

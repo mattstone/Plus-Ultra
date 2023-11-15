@@ -65,6 +65,7 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 - Stripe purchase and subscriptions (weekly, fortnightly, monthly, annual) with idempotence.
 - Admin Dashboard 
 - Customer Dashboard
+- Responsive HTML Email templates (Outlook compatible)
 
 # 
 * TODO 
