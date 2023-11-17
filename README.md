@@ -33,7 +33,7 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 
 ## 5. Testing 
 
-- Watir & Chrome
+- Watir & Chrome. Need to install Chrome and compatible version of chromedriver
 
 ## Development Environment
 
@@ -52,20 +52,32 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 
 ## Application Notes
 
+### Rails 
 - Active Storage for file uploads
 - ActionText Trix WYSIWYG editor
-- Phony & Phonelib for international telephone numbers
-- Invisible Captcha for anti-spam form catching
 - dotenv for environment
-- QRCode to generate QR codes
-- SEO optimisation - Title, Meta Description/Keywords and image tagging
-- Charting => https://chartkick.com/
 - Redis for key value store
-- Auditing for recording model changes and user who made them - https://github.com/collectiveidea/audited
-- Stripe purchase and subscriptions (weekly, fortnightly, monthly, annual) with idempotence.
+- Boostrap SCSS
+- Sanitize for cleaning up text input by user
+
+### Operations
 - Admin Dashboard 
 - Customer Dashboard
 - Responsive HTML Email templates (Outlook compatible)
+- Auditing for recording model changes and user who made them - https://github.com/collectiveidea/audited
+
+### Useful Web stuff
+- Phony & Phonelib for international telephone numbers
+- Invisible Captcha for anti-spam form catching
+- QRCode to generate QR codes
+- SEO optimisation - Title, Meta Description/Keywords and image tagging
+- Charting Chartkick https://chartkick.com/ & ApexCharts https://github.com/styd/apexcharts.rb
+- Font awesome free
+
+### Make money with Stripe
+- Once off Purchase
+- Subscriptions (weekly, fortnightly, monthly, annual) with idempotence.
+- Webhooks
 
 # 
 * TODO 
@@ -74,20 +86,26 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 - Outbound campaigns and inbound tracking
 - subscriptions history
 - upgrade to Ruby 3.3 & YJIT
+- campaign management
 
 * Ruby version
 
 * System dependencies
 - See Gem file 
+- Mailcatcher for development and test environments 
+- chromedriver 
+- postgres
 
 * Configuration
 
 * Database creation
+- rails db:create 
 
 * Database initialization
 
 * How to run the test suite
-- Watir
+- cd watir 
+- ./go.sh TestFile.rb
 
 * Services (job queues, cache servers, search engines, etc.)
 

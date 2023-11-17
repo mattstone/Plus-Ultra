@@ -83,8 +83,9 @@ gem 'country_select', '~> 8.0'
 gem 'invisible_captcha'
 
 # Stuplidy simple charts
-gem "chartkick"
+gem "chartkick" # simple charts - https://chartkick.com/
 gem 'groupdate'
+gem 'apexcharts', require: 'apex_charts/prefix_with_apex' # complex charts - https://github.com/styd/apexcharts.rb#candlestick-chart
 
 # Environment variables
 gem 'dotenv-rails', groups: [:development, :test]
@@ -93,6 +94,9 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem 'stripe'
 gem 'stripe_event'
 gem 'receipts'  # https://github.com/excid3/receipts
+
+# Font Awesom 
+gem "font-awesome-sass", "~> 6.4.2"
 
 # Networking API
 gem 'httparty'
@@ -107,6 +111,9 @@ gem 'barby',  '~> 0.6.2'
 gem 'rqrcode','~> 0.4.2'
 gem 'chunky_png'
 
+# Screen HTML User input 
+gem 'sanitize' # https://github.com/rgrove/sanitize
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -118,11 +125,12 @@ group :development do
   gem "web-console"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  # gem "rack-mini-profiler"
+  gem "rack-mini-profiler"
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
   gem 'watir'
+  gem 'faker'
 end
 
 group :test do
@@ -130,4 +138,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem 'watir'
+  gem 'faker'
 end
