@@ -60,13 +60,7 @@ end
   end
   
   def cancel 
-    stripe   = ISStripe.new 
-    response = stripe.subscription_cancel(@subscription.stripe_subscription_id)
-
-    case response["status"] == "canceled"
-    when true  then @subscription.status_canceled!
-    when false then @error = "Unable to cancel subscription. Status: #{response["status"]}"
-    end
+    cancel_subscription
   end
 
   private

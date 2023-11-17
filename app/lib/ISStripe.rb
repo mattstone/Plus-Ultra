@@ -387,6 +387,13 @@ class ISStripe < ISBaseLib
     when 'customer.subscription.deleted'
       object = event.data.object 
       
+      if object["metadata"]
+        subscription = Subscription.find(object["metadata"["subscription_id"]])
+        if subscription 
+          subscription.status_canceled!
+        end
+      end
+      
       l object.inspect.to_s 
       
     else 

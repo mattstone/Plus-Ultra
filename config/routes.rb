@@ -53,8 +53,13 @@ Rails.application.routes.draw do
 
     resources :users, 
               :orders, 
-              :products,
-              :subscriptions
+              :products
+              
+    resources :subscriptions do 
+      member do 
+        post 'cancel'
+      end
+    end
               
     resources :orders do 
     end

@@ -63,6 +63,8 @@ class ApplicationController < ActionController::Base
     )
   end
   
+  private 
+  
   def set_seo
     @title = "#{ENV['APP_NAME']} - #{params[:controller]}  #{params[:action]}"
     @meta_description = "#{params[:controller]}  #{params[:action]}"
@@ -72,6 +74,16 @@ class ApplicationController < ActionController::Base
   def set_start_and_end_date
     @start_date = params[:start_date].blank? ? Time.now.beginning_of_day - 1.year : Date.parse(params[:start_date]).beginning_of_day
     @end_date   = params[:end_date].blank?   ? Time.now.end_of_day                : Date.parse(params[:end_date]).end_of_day
+  end
+  
+  def cancel_subscription 
+    stripe   = ISStripe.new 
+    response = stripe.subscription_cancel(@subscription.stripe_subscription_id)
+
+    case response["status"] == "canceled"
+    when true  then @subscription.status_canceled!
+    when false then @error = "Unable to cancel subscription. Status: #{response["status"]}"
+    end
   end
 
   

@@ -1,0 +1,16 @@
+<div class="row" id="<%= dom_id(sub) %>">
+  <% product = sub.product %>
+  <div class="col-3"><%= product.name %></div>
+  <div class="col-2"><%= short_date sub.created_at %></div>
+  <div class="col-2"><%= "#{cents_to_dollars product.price_in_cents} #{product.pricing_string}" %></div>
+  <div class="col-2"><%= sub.status.humanize %></div>
+  
+  <% if sub.can_cancel? %>
+    <div class="col-2">
+      <% confirm = "Are you sure want to cancel this subscription?" %>
+      <%= form_with url: cancel_dashboard_subscription_path(sub), method: :post do |f| %>
+        <%= f.submit 'Cancel', id: "#{dom_id(sub)}_cancel", class: "btn btn-sm btn-danger", data: { confirm: confirm, turbo_confirm: confirm } %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

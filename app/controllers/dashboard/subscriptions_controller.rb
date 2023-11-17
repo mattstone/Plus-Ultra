@@ -1,5 +1,5 @@
 class Dashboard::SubscriptionsController < Dashboard::BaseController
-  before_action :set_subscription, only: %i[ show edit update destroy ]
+  before_action :set_subscription, only: %i[ show edit update destroy cancel ]
 
   # GET /subscriptions or /subscriptions.json
   def index
@@ -60,6 +60,10 @@ class Dashboard::SubscriptionsController < Dashboard::BaseController
   #     format.json { head :no_content }
   #   end
   # end
+  
+  def cancel 
+    cancel_subscription if current_user.id == @subscription.user_id 
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

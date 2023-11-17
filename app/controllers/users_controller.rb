@@ -38,7 +38,7 @@ class UsersController < ApplicationController
               
               if @shopping_cart.count == 0
                 respond_to do |format|
-                  format.turbo_stream { redirect_to root_url and return }
+                  format.turbo_stream { redirect_to dashboard_dashboard_path and return }
                 end
               else 
                 respond_to do |format|

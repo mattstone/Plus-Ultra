@@ -70,11 +70,10 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 # 
 * TODO 
 
-- subscriptions - stripe
 - elastic search
 - Outbound campaigns and inbound tracking
-- Auditing
-
+- subscriptions history
+- upgrade to Ruby 3.3 & YJIT
 
 * Ruby version
 

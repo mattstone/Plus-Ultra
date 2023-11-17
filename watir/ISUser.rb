@@ -49,26 +49,7 @@ class ISUser < ISBaseWatir
     
     def sign_in 
       
-      go_home 
-      header("User sign in")
-      link = @browser.link(href: '/users/sign_in')
-      link.click
-      
-      @browser.wait_until { @browser.h2.text == 'Log in' }
-      
-      text_field = @browser.text_field(id: 'user_email')
-      text_field.value = test_user[:email]
-      
-      text_field = @browser.text_field(id: 'user_password')
-      text_field.value = test_user[:password]
-      
-      @browser.button(:id => "log_in_button").click
-      
-      @browser.wait_until { @browser.text.include? 'Signed in successfully' }
-
-      good("Signed in successfully")
-
-      sleep 1
+      sign_in_test_user
       
       @browser.button(:id => "log_out_button").click
 

@@ -10,22 +10,29 @@ class ISPurchase < ISBaseWatir
 
   def initialize
     super
-    remove_test_data!
+    
+    destroy_test_data!
     create_test_product!
     check_products_exists_to_purchase
 
     # if @total_failed == 0
     #   not_logged_in 
     #   logged_in
+    # 
+    #   manage_product
     # end
     
+
     if @total_failed == 0 
-      remove_test_data!
-      
+      destroy_test_data!
       create_test_subscription!
       not_logged_in_subscription
       
+      manage_subscriptions
     end
+    
+    
+    
     
     tests_complete
   end 
@@ -36,11 +43,14 @@ class ISPurchase < ISBaseWatir
     end
   end
   
-  def remove_test_data!
+  def destroy_test_data!
+    super 
+    
     Transaction.destroy_all 
     ProductOrder.destroy_all
     Order.destroy_all
     Product.destroy_all
+    Subscription.destroy_all
     destroy_test_user!
     
     remove_session!
@@ -156,6 +166,22 @@ class ISPurchase < ISBaseWatir
     good("Stripe payment request pending")
   end
   
+  def manage_product 
+    header("Manage Product")
+    
+    go_dashboard
+    @browser.wait_until { @browser.text.include? 'Account' }
+    good("Browsed to user dashboard")
+    
+    link = @browser.link(href: '/dashboard/products')
+    link.click
+    @browser.wait_until { @browser.text.include? 'My Products' }
+    good("Products clicked")
+
+    @browser.wait_until { @browser.text.include? test_product[:name] }
+    good("#{test_product[:name]} visible")
+  end
+  
   #
   # Subscription 
   # 
@@ -165,14 +191,14 @@ class ISPurchase < ISBaseWatir
     
     sleep 2 
     
-    test_subscription_product = test_subscription_product_record
+    test_product_subscription = test_product_subscription_record
     
-    case !test_subscription_product.stripe_product_id.blank?
+    case !test_product_subscription.stripe_product_id.blank?
     when true  then good("product.stripe_product_id has value")
     when false then good("product.stripe_product_id has no value")
     end
 
-    case !test_subscription_product.stripe_price_id.blank?
+    case !test_product_subscription.stripe_price_id.blank?
     when true  then good("product.stripe_price_id has value")
     when false then good("product.stripe_price_id has no value")
     end
@@ -188,8 +214,7 @@ class ISPurchase < ISBaseWatir
 
     good("scroll_to_bottom")
 
-    product = test_subscription_product_record
-    @browser.button(:id => "subscribe_#{product.id}").click
+    @browser.button(:id => "subscribe_#{test_product_subscription.id}").click
     good("clicked on Subscribe")
 
     sleep 1  
@@ -250,22 +275,67 @@ class ISPurchase < ISBaseWatir
     subscription = user.subscriptions.last 
     
     case !subscription.nil?
-    when true then good("subscription created")
-    when true then bad("subscription creation error")
+    when true  then good("subscription created")
+    when false then bad("subscription creation error")
     end
     
     case subscription.status_active?
-    when true then good("subscription active")
-    when true then bad("subscription not active")
+    when true  then good("subscription active")
+    when false then bad("subscription not active")
     end
 
     case !subscription.stripe_subscription_id.nil?
-    when true then good("subscription registered with Stripe")
-    when true then bad("subscription not registered with Stripe")
+    when true  then good("subscription registered with Stripe")
+    when false then bad("subscription not registered with Stripe")
     end
     
   end 
   
+  def manage_subscriptions
+    header("Manage Subscriptions")
+    
+    go_dashboard
+    @browser.wait_until { @browser.text.include? 'Account' }
+    good("Browsed to user dashboard")
+    
+    link = @browser.link(href: '/dashboard/subscriptions')
+    link.click
+    @browser.wait_until { @browser.text.include? 'My Subscriptions' }
+    good("Subscriptions clicked")
+
+    @browser.wait_until { @browser.text.include? test_subscription[:name] }
+    good("#{test_subscription[:name]} visible")
+    
+    sleep 4
+    
+    link = @browser.link(href: '/dashboard/subscriptions')
+    link.click
+    @browser.wait_until { @browser.text.include? 'My Subscriptions' }
+    good("Subscriptions clicked")
+    
+    @browser.wait_until { @browser.text.include? 'My Subscriptions' }
+    @browser.wait_until { @browser.text.include? 'Active' }
+    good("Subscription active")
+    
+    subscription = test_subscription_record
+
+    @browser.button(:id => "subscription_#{subscription.id}_cancel").click
+    good("clicked cancel subscription")
+    
+    sleep 2
+    
+    alert_ok
+    @browser.wait_until { @browser.text.include? 'Canceled' }
+    
+    good("subscription canceled")
+    
+    subscription.reload 
+    
+    case subscription.status_canceled?
+    when true  then good("subscription confirmed canceled")
+    when false then bad("subscription not confirmed canceled") 
+    end
+  end
   
 end
 

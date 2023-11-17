@@ -20,13 +20,7 @@
   </div>
 <% else %>
   <% @subscriptions.each do |sub| %>
-    <% product = sub.product %>
-    <div class="row">
-      <div class="col-3"><%= product.name %></div>
-      <div class="col-2"><%= short_date sub.created_at %></div>
-      <div class="col-2"><%= "#{cents_to_dollars product.price_in_cents} #{product.pricing_string}" %></div>
-      <div class="col-2"><%= sub.status.humanize %></div>
-    </div>
+    <%= render 'dashboard/subscriptions/row', sub: sub %>
   <% end %>
 <% end %>
 

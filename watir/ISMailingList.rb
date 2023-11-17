@@ -184,7 +184,7 @@ class ISMailingList < ISBaseWatir
       when false then bad("no delete prompt")
       end
 
-      @browser.alert.ok
+      alert_ok
       
       @browser.wait_until { @browser.text.include? "Subscriber was successfully destroyed" }
       good("subscriber deleted")
@@ -209,7 +209,7 @@ class ISMailingList < ISBaseWatir
       when false then bad("no delete prompt")
       end
       
-      @browser.alert.ok
+      alert_ok
       
       @browser.wait_until { @browser.text.include? "Mailing list was successfully destroyed" }
       good("mailing list deleted")

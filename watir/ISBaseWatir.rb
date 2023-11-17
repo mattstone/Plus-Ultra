@@ -163,10 +163,17 @@ class ISBaseWatir
     product
   end
 
-  def test_subscription_product_record 
+
+  def test_product_subscription_record 
     product = Product.find_by(name: test_subscription[:name])
-    product = Product.find_by(name: "Changed") if product.nil?
+    product = Product.find_by(name: "Changed", purchase_type: "subscription") if product.nil?
     product
+  end
+
+
+  def test_subscription_record 
+    # Subscription.find_by(name: test_subscription[:name])
+    Subscription.last
   end
   
   def get_test_user
@@ -183,16 +190,20 @@ class ISBaseWatir
   
   def remove_session!
     header("Remove Session")
+    return if @browser.nil? 
+    
     @browser.goto "#{@base_url}/set_for_testing"
     @browser.wait_until { @browser.text.include? 'Empty' }
     good("Empty Shopping Cart")
   end 
   
-
-  
   
   def go_home
     @browser.goto @base_url
+  end
+
+  def go_dashboard
+    @browser.goto "#{@base_url}/dashboard/dashboard"
   end
   
   def good(message) 
@@ -203,6 +214,14 @@ class ISBaseWatir
   def bad(message)
     @total_failed += 1
     p "  🍄: #{message}"
+  end
+  
+  def alert_ok
+    @browser.alert.ok
+  end
+
+  def alert_cancel
+    @browser.alert.cancel
   end
   
   def header(message)
@@ -253,6 +272,30 @@ class ISBaseWatir
     good("Signed in successfully")
   end
   
+  def sign_in_test_user 
+    go_home 
+    
+    header("Sign in test user")
+    
+    link = @browser.link(href: '/users/sign_in')
+    link.click
+    
+    @browser.wait_until { @browser.h2.text == 'Log in' }
+    
+    text_field = @browser.text_field(id: 'user_email')
+    text_field.value = test_user[:email]
+    
+    text_field = @browser.text_field(id: 'user_password')
+    text_field.value = test_user[:password]
+    
+    @browser.button(:id => "log_in_button").click
+    
+    @browser.wait_until { @browser.text.include? 'Signed in successfully' }
+
+    good("Signed in successfully")
+
+    sleep 1
+  end
   
   def screenshot!
     @browser.screenshot.save "#{Time.now}.png"
