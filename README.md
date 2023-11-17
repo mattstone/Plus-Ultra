@@ -60,6 +60,20 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 - Boostrap SCSS
 - Sanitize for cleaning up text input by user
 
+#### Sample .env 
+
+- APP_NAME           = "Plus Ultra"
+- MOTTO             = "Go Beyond"
+- WHO_AM_I          = "http://localhost:3000"
+- STRIPE_PUBLIC_KEY = "will start with pk_..."
+- STRIPE_SECRET_KEY = "will start with sk_..."
+- DATABASE_NAME_DEV  = "development db name"
+- DATABASE_NAME_TEST = "test db name"
+- DATABASE_NAME_PROD = "production db name"
+- DATABASE_MAX_POOL  = 5
+- DATABASE_TIMEOUT   = 5000
+
+
 ### Operations
 - Admin Dashboard 
 - Customer Dashboard

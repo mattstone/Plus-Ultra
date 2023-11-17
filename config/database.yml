@@ -6,22 +6,22 @@
 #
 default: &default
   adapter: postgresql
-  pool: 5 # Specifies the maximum number of connections that can be opened
-  timeout: 5000 # in milliseconds. This is how long the app will wait for a database response
+  pool: <%= ENV.fetch("DATABASE_MAX_POOL") %> { 5 } # Specifies the maximum number of connections that can be opened
+  timeout: <%= ENV.fetch("DATABASE_TIMEOUT") %> # in milliseconds. This is how long the app will wait for a database response
   encoding: unicode
+
 
 development:
   <<: *default # inherits from default
-  database: starter_development
+  database: <%= ENV.fetch("DATABASE_NAME_DEV") %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: starter_test
-  
+  database: <%= ENV.fetch("DATABASE_NAME_TEST") %>
   
 production:
   <<: *default
-  database: starter
+  database: <%= ENV.fetch("DATABASE_NAME_PROD") %>
