@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.0"
+ruby "3.1.4"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.8"
@@ -63,10 +63,6 @@ gem 'bootstrap', '~> 5.2.2'
 
 # paging
 gem 'kaminari'
-
-# Sanitze user input
-# https://www.ruby-toolbox.com/projects/sanitize
-gem 'sanitize'
 
 # Pretty logs 
 gem 'colorize'
@@ -131,6 +127,7 @@ group :development do
   # gem "spring"
   gem 'watir'
   gem 'faker'
+  gem 'mailcatcher'
 end
 
 group :test do
@@ -139,4 +136,5 @@ group :test do
   gem "selenium-webdriver"
   gem 'watir'
   gem 'faker'
+  gem 'mailcatcher'
 end
