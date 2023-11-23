@@ -8,6 +8,8 @@ Starter app with everything needed to launch and run a business. Just add an ide
 
 Modern Rails 7 Hotwire app with no Javascript build complexity.
 
+Note: Not production ready. Still work in progress.
+
 ## 1. Marketing
 
 - Blog 
