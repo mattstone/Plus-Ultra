@@ -1,0 +1,46 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render 'admin/shared/header', title: "Manage Campaigns" %>
+<br>
+
+<%= form_with url: admin_channel_campaigns_path(@channel), method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |f| %>
+    <div class="col">
+      <div class="input-group">
+        <%= f.text_field :name, value: params[:name], class: "form-control", placeholder: "Name", id: "filter_name" %>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="input-group">
+        <%= f.text_field :tag, value: params[:tag], class: "form-control", placeholder: "Tag", id: "filter_tag" %>
+      </div>
+    </div>
+
+    <div class="col">
+      <%= f.submit "Filter", class: admin_button_class, id: "users_filter_button" %>
+    </div>
+<% end %>
+
+<br>
+<div id="campaigns">
+  
+  <div class="row">
+    <div class="col-3"><strong>Name</strong></div>
+    <div class="col-2"><strong>Communication</strong></div>
+    <div class="col-1"><strong>Tag</strong></div>
+    <div class="col-1"><strong>Users</strong></div>
+    <div class="col-1"><strong>Sales</strong></div>
+    <div class="col-3"><strong>Link</strong></div>
+    <div class="col-1"><strong>Action</strong></div>
+  </div>
+
+  <% @campaigns.each do |campaign| %>
+    <%= render campaign, channel: @channel %>
+  <% end %>
+</div>
+
+<br>
+
+<%= render 'shared/paging', resources: @campaigns %>
+
+<%= link_to "New Campaign", new_admin_channel_campaign_path(@channel) %>

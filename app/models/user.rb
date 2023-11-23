@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :orders
   has_many :subscriptions
   
+  belongs_to :campaigns, optional: true
+  
   validates :first_name, :last_name, presence: true
   
   after_create do 

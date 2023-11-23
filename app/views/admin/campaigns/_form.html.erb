@@ -1,0 +1,13 @@
+<%= form_with model: [:admin, channel, campaign] do |f| %>
+
+  <div class="field">
+    <%= f.label :name, class: "form-label" %><br />
+    <%= f.text_field :name, placeholder: "Campaign name", class: "form-control", required: true %>
+  </div>
+
+  <div>
+    <br>
+    <%= f.submit class: admin_button_class %>
+  </div>
+
+<% end %>

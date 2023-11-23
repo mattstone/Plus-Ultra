@@ -1,6 +1,35 @@
 class WebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token # disable CSRF token checking
   
+  def twilio 
+    case params[:SmsStatus]
+    when "delivered"
+      user = User.find_by(mobile: params[:To].gsub("+", ""))
+      
+      case user.nil?
+      when true # TODO: handle uknown user
+      when false 
+        if params[:SmsMessageSid] or params[:MessageSid]
+          sid = !params[:SmsMessageSid].blank? ? params[:SmsMessageSid] : params[:MessageSid]
+          # TODO: find campaign_sent by sid and flag delivered
+        end
+      end
+      
+    when "received"
+      case params["To"]
+      when ENV['TWILIO_MOBILE_NUMBER']
+        user = User.find_by(mobile: params[:From].gsub("+", "").gsub("whatsapp:", ""))
+        
+        case user.nil?
+        when true  # TODO: handle message received from unknown user 
+        when false # TODO: handle message received from known user
+        end
+      end
+
+    end
+
+  end
+  
   def stripe 
     payload   = request.body.read 
     signature = request.env['HTTP_STRIPE_SIGNATURE']

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_13_055524) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_23_010638) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -76,7 +76,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_13_055524) do
 
   create_table "blogs", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "status", default: 0
+    t.integer "status"
     t.string "title"
     t.string "slug"
     t.datetime "datetime_to_publish"
@@ -86,6 +86,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_13_055524) do
     t.string "meta_keywords"
     t.index ["title"], name: "index_blogs_on_title"
     t.index ["user_id"], name: "index_blogs_on_user_id"
+  end
+
+  create_table "campaigns", force: :cascade do |t|
+    t.bigint "channel_id"
+    t.string "name"
+    t.string "tag"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "communication_type", default: 0
+    t.index ["channel_id"], name: "index_campaigns_on_channel_id"
+  end
+
+  create_table "channels", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "mailing_lists", force: :cascade do |t|
@@ -173,6 +189,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_13_055524) do
     t.integer "order_id"
     t.integer "subscription_id"
     t.string "stripe_payment_method"
+    t.integer "campaign_id"
+    t.index ["campaign_id"], name: "index_transactions_on_campaign_id"
     t.index ["order_id"], name: "index_transactions_on_order_id"
     t.index ["status"], name: "index_transactions_on_status"
     t.index ["stripe_client_secret"], name: "index_transactions_on_stripe_client_secret"
@@ -207,6 +225,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_13_055524) do
     t.integer "role", default: 0
     t.string "stripe_customer_id"
     t.string "stripe_payment_method"
+    t.integer "campaign_id"
+    t.index ["campaign_id"], name: "index_users_on_campaign_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["one_time_code"], name: "index_users_on_one_time_code"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

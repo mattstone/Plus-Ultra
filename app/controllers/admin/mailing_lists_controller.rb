@@ -12,7 +12,6 @@ class Admin::MailingListsController < Admin::BaseController
       args  << "%#{params[:name]}%"
     end
 
-    
     @mailing_lists = MailingList
                       .where(where, *args)
                       .order(created_at: :desc)

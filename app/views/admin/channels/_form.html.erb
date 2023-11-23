@@ -1,0 +1,14 @@
+<%= form_with(model: [:admin, channel]) do |f| %>
+  <%= render 'shared/form_results', resource: channel %>
+
+  <div class="field">
+    <%= f.label :name, class: "form-label" %><br />
+    <%= f.text_field :name, placeholder: "Channel name", class: "form-control", required: true %>
+  </div>
+
+
+  <div>
+    <br>
+    <%= f.submit class: admin_button_class %>
+  </div>
+<% end %>

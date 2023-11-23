@@ -1,0 +1,18 @@
+<% host = request.host.to_s %>
+
+<% 
+  if host.include?("localhost")   or 
+     host.include?("development") or 
+     host.include?("staging") 
+     # Do nothing
+  else %>
+    <%# open graph - https://developers.facebook.com/docs/sharing/webmasters %>
+    <meta name="facebook-domain-verification" content="<%= ENV['FACEBOOK_DOMAIN_VERIFICATION'] %>" />
+    <meta property="og:url"                content="<%= url_for(only_path: false) %>" />
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="<%= @title %>" />
+    <meta property="og:description"        content="<%= @meta_description %>" />
+    <meta property="og:image"              content="<%= ENV['FACEBOOK_OPENGRAPH_IMAGE'] %>" />
+  <% end %>
+
+

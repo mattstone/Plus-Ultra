@@ -21,5 +21,8 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     
+    <%= render 'layouts/shared/facebook_meta_tags' %>
+    <%= render 'layouts/shared/google_tag_manager_head' %>
   </head>
   <body>
+    <%= render 'layouts/shared/google_tag_manager_body' %>

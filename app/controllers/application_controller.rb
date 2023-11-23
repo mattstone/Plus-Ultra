@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_shopping_cart
   before_action :set_seo
+  before_action :set_referrer
   
   def l(string)
     case Rails.env.test?
@@ -59,8 +60,15 @@ class ApplicationController < ActionController::Base
       :role,
       :stripe_customer_id,
       :password,
-      :password_confirmation
+      :password_confirmation,
+      :campaign_id
     )
+  end
+  
+  def set_referrer
+    # TODO: handle seach engine referrers 
+    return if params[:tag].blank?
+    session[:tag] = params[:tag]  # Overwrite any previous with latest
   end
   
   private 

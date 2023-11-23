@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   end
   
   # webhooks 
+  post 'webhooks/twilio',                  to: 'webhooks#stripe'
   post 'webhooks/stripe',                  to: 'webhooks#stripe'
   
   # Checkout 
@@ -79,6 +80,10 @@ Rails.application.routes.draw do
       member do 
         post 'cancel'
       end
+    end
+    
+    resources :channels do 
+      resources :campaigns
     end
             
     resources :mailing_lists do 

@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.4"
+ruby "3.1.3"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.8"
@@ -90,6 +90,10 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem 'stripe'
 gem 'stripe_event'
 gem 'receipts'  # https://github.com/excid3/receipts
+
+# Texting
+gem 'twilio-ruby'
+
 
 # Font Awesom 
 gem "font-awesome-sass", "~> 6.4.2"

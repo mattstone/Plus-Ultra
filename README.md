@@ -33,7 +33,8 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 
 ## 5. Testing 
 
-- Watir & Chrome. Need to install Chrome and compatible version of chromedriver
+- Watir & Chrome
+- install Chrome and compatible version of chromedriver
 
 ## Development Environment
 
@@ -60,6 +61,12 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 - Boostrap SCSS
 - Sanitize for cleaning up text input by user
 
+### Third parties 
+- Google Tag Manager 
+- Facebook Open Graph Pixel tracking
+- Twilio for SMS - outbound and inbound
+- Stripe for purchased and subscriptions
+
 #### Sample .env 
 
 - APP_NAME           = "Plus Ultra"
@@ -72,6 +79,14 @@ Modern Rails 7 Hotwire app with no Javascript build complexity.
 - DATABASE_NAME_PROD = "production db name"
 - DATABASE_MAX_POOL  = 5
 - DATABASE_TIMEOUT   = 5000
+- FACEBOOK_DOMAIN_VERIFICATION = "YOUR FACEBOOK VERIFICATION CODE"
+- FACEBOOK_OPENGRAPH_IMAGE = "https://www.my-domain.com/images/my-facebook-opengraph.jpg"
+- GOOGLE_TAG_MANAGER_ID = ""
+- TWILIO_ACCOUNT_SID = ""
+- TWILIO_AUTH_TOKEN  = ""
+- TWILIO_CALLBACK_URL = "https://www.my-domain.com/webhooks/twilio"
+- TWILIO_MOBILE_NUMBER_SID = ""
+- TWILIO_MOBILE_NUMBER = "+61400000000"
 
 
 ### Operations

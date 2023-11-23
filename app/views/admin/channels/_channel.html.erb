@@ -1,0 +1,13 @@
+<div class="row" id="<%= dom_id channel %>">
+  <div class="col-3">
+    <%= channel.name %>
+  </div>
+  <div class="col-3">
+    <%= link_to channel.campaigns.count, admin_channel_campaigns_path(channel) %>
+  </div>
+  
+  <div class="col-3">
+    <%= link_to "Edit", edit_admin_channel_path(channel), class: admin_button_class %>
+  </div>
+  
+</div>

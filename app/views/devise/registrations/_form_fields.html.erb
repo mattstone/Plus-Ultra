@@ -1,5 +1,9 @@
 <%= render "shared/form_results", resource: resource %>
 
+<% if resource.new_record? and !session[:tag].blank? %>
+  <%= f.hidden_field :campaign_id, session[:tag] %>
+<% end %>
+
 <div class="field">
   <%= f.label :email %><br />
   <%= f.email_field :email, autofocus: true, autocomplete: "email" %>

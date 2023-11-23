@@ -1,0 +1,39 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render 'admin/shared/header', title: "Manage Channels" %>
+<br>
+
+<%= form_with url: admin_channels_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |f| %>
+    <div class="col">
+      <div class="input-group">
+        <%= f.text_field :name, value: params[:name], class: "form-control", placeholder: "Name", id: "filter_name" %>
+      </div>
+    </div>
+
+    <div class="col">
+      <%= f.submit "Filter", class: admin_button_class, id: "users_filter_button" %>
+    </div>
+<% end %>
+
+<br>
+
+<div id="channels">
+  <div class="row">
+    <div class="col-3"><strong>Name</strong></div>
+    <div class="col-3"><strong>Campaigns</strong></div>
+    <div class="col-3"><strong>Action</strong></div>
+  </div>
+
+  <% @channels.each do |channel| %>
+    <%= render channel %>
+    <p>
+      <%#= link_to "Show this channel", channel %>
+    </p>
+  <% end %>
+</div>
+
+<br>
+
+<%= render 'shared/paging', resources: @channels %>
+
+<%= link_to "New channel", new_admin_channel_path %>

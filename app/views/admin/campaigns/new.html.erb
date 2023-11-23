@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render 'admin/shared/header', title: "New Campaign" %>
+<br>
+
+<%= render "form", channel: @channel, campaign: @campaign %>
+
+<br>
+
+<div>
+  <%#= link_to "Show this channel", @channel %> |
+  <%= link_to "Back to Campaigns", admin_channel_campaigns_path(@channel) %>
+</div>
