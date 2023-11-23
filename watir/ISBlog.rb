@@ -34,7 +34,7 @@ class ISBlog < ISBaseWatir
   
   def test_blog_record 
     blog = Blog.find_by(title: test_blog[:title])
-    blog = Blog.find_by(title: "Changed") if blog.nil?
+    blog = Blog.find_by(title: changed) if blog.nil?
     blog
   end
 
@@ -142,7 +142,7 @@ class ISBlog < ISBaseWatir
     when false then bad("no delete prompt")
     end
 
-    @browser.alert.ok
+    alert_ok
     
     @browser.wait_until { @browser.text.include? 'Blog was successfully destroyed' }
     good("blog delete successfull")

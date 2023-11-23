@@ -40,7 +40,7 @@ class Admin::CampaignsController < Admin::BaseController
 
   # POST /Campaigns or /Campaigns.json
   def create
-    @campaign = @channel.campaign.new(campaign_params)
+    @campaign = @channel.campaigns.new(campaign_params)
 
     respond_to do |format|
       if @campaign.save
@@ -89,7 +89,7 @@ class Admin::CampaignsController < Admin::BaseController
 
     # Only allow a list of trusted parameters through.
     def campaign_params
-      params.fetch(:Campaign, {}).permit(
+      params.fetch(:campaign, {}).permit(
         :name,
         :tag
       )      

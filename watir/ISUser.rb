@@ -102,7 +102,7 @@ class ISUser < ISBaseWatir
       good("Editing test user")
 
       text_field = @browser.text_field(id: 'user_first_name')
-      text_field.value = "Changed"
+      text_field.value = changed
 
       @browser.button(:id => "admin_users_update_button").click
 
@@ -117,7 +117,7 @@ class ISUser < ISBaseWatir
       @browser.wait_until { @browser.text.include? "Manage Users" }
       good("Back button worked")
 
-      @browser.wait_until { @browser.text.include? "Changed" }
+      @browser.wait_until { @browser.text.include? changed }
       good("Edit was successful")
     end
   

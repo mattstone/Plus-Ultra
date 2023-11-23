@@ -76,7 +76,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_23_010638) do
 
   create_table "blogs", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "status"
+    t.integer "status", default: 0
     t.string "title"
     t.string "slug"
     t.datetime "datetime_to_publish"

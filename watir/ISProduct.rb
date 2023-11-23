@@ -22,7 +22,7 @@ class ISProduct < ISBaseWatir
   
   def remove_test_data!
     Product.where(name: test_product[:name]).destroy_all
-    Product.where(name: "Changed").destroy_all
+    Product.where(name: changed).destroy_all
     Product.where(name: test_subscription[:name]).destroy_all
   end   
   
@@ -100,7 +100,7 @@ class ISProduct < ISBaseWatir
     good("browsed to admin/products")
     
     text_field = @browser.text_field(id: 'product_name')
-    text_field.value = "Changed"
+    text_field.value = changed
 
     @browser.scroll.to :bottom
     sleep 1

@@ -4,6 +4,9 @@ class Campaign < ApplicationRecord
   has_many :users 
   has_many :transactions
   
+  validates :name, presence: true
+  validates :name, uniqueness: true
+  
   after_save :set_tag_and_name
   
   enum :communication_type, { none: 0, email: 1, sms: 2, outbound_telephone: 3, inbound_telephone: 4 }, prefix: true
@@ -17,8 +20,10 @@ class Campaign < ApplicationRecord
   def set_tag_and_name 
     return if !self.tag.nil?
     
+    temp_name = "#{Time.now.strftime("%Y%m%d")} #{self.name}"
+    self.update_column :name, temp_name
+    
     self.update_column :tag, "#{self.id}"
-    self.update_column :name, "#{Time.now.strftime("%Y%m%d")} #{self.name}"
   end 
   
 end

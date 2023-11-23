@@ -159,22 +159,51 @@ class ISBaseWatir
 
   def test_product_record 
     product = Product.find_by(name: test_product[:name])
-    product = Product.find_by(name: "Changed") if product.nil?
+    product = Product.find_by(name: changed) if product.nil?
     product
   end
 
 
   def test_product_subscription_record 
     product = Product.find_by(name: test_subscription[:name])
-    product = Product.find_by(name: "Changed", purchase_type: "subscription") if product.nil?
+    product = Product.find_by(name: changed, purchase_type: "subscription") if product.nil?
     product
   end
-
 
   def test_subscription_record 
     # Subscription.find_by(name: test_subscription[:name])
     Subscription.last
   end
+
+  def test_channel 
+    { name: "test_channel" }
+  end
+  
+  def test_channel_record 
+    channel = Channel.find_by(name: test_channel[:name])
+    channel = Channel.find_by(name: changed) if channel.nil?
+    channel
+  end
+  
+  def test_campaign 
+    { name: "test_campaign" }
+  end
+  
+  def test_campaign_record 
+    # campaign = Campaign.find_by(name: test_campaign[:name])
+    # campaign = Campaign.find_by(name: changed) if campaign.nil?
+    # campaign
+    Campaign.last
+  end
+  
+  
+  def changed 
+    "changed"
+  end
+
+  #
+  #
+  # 
   
   def get_test_user
     User.find_by(email: test_user[:email])

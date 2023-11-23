@@ -1,4 +1,5 @@
 <%= form_with model: [:admin, channel, campaign] do |f| %>
+  <%= render 'shared/form_results', resource: campaign %>
 
   <div class="field">
     <%= f.label :name, class: "form-label" %><br />
@@ -7,7 +8,7 @@
 
   <div>
     <br>
-    <%= f.submit class: admin_button_class %>
+    <%= f.submit class: admin_button_class, id: "channel_campaign_button" %>
   </div>
 
 <% end %>
