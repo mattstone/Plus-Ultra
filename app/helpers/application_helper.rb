@@ -7,6 +7,10 @@ module ApplicationHelper
   def admin_button_class
     "btn btn-sm btn-primary"
   end
+
+  def admin_button_class_warning
+    "btn btn-sm btn-warning"
+  end
   
   def admin_header_class 
     "text-primary"

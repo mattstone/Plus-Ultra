@@ -81,6 +81,12 @@ Rails.application.routes.draw do
               :orders,
               :communications
               
+    resource :communications do 
+      member do 
+        post ':id/test', to: 'communications#test', as: 'test'
+      end
+    end 
+                  
     resources :subscriptions do 
       member do 
         post 'cancel'

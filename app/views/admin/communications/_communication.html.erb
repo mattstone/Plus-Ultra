@@ -12,8 +12,13 @@
     <%= communication.layout.humanize %>
   </div>
   
-  <div class="col-2">
+  <div class="col-2 d-flex">
     <%= link_to "Edit", edit_admin_communication_path(communication), class: admin_button_class %>
+    &nbsp;
+    <%= form_with url: test_admin_communications_path(communication), method: :post do |f| %>
+      <%= f.submit "Test", class: admin_button_class_warning, onclick: "return confirm('Are you sure?')" %>
+    <% end %>
+    
   </div>
   
 </div>

@@ -1,5 +1,5 @@
 class Admin::CommunicationsController < Admin::BaseController
-  before_action :set_communication, only: %i[ show edit update destroy ]
+  before_action :set_communication, only: %i[ show edit update destroy, test ]
 
   # GET /Communications or /Communications.json
   def index
@@ -73,6 +73,10 @@ class Admin::CommunicationsController < Admin::BaseController
       format.html { redirect_to admin_communications_url, notice: "Communication was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def test 
+    UserMailer.communication({ user: current_user, communication: @communication, test: true}).deliver_now!
   end
 
   private

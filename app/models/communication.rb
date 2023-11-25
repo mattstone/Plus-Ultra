@@ -51,9 +51,9 @@ class Communication < ApplicationRecord
   
   def transpose(options)
     string = case options[:transpose]
-      when "subject" then self.subject.to_s 
-      when "preview" then self.preview.to_s
-      when "content" then self.content.to_s 
+      when "subject" then self.subject.to_s.dup
+      when "preview" then self.preview.to_s.dup
+      when "content" then self.content.to_s.dup
       end
         
     if options[:user]
