@@ -49,6 +49,10 @@ Rails.application.routes.draw do
   post 'subscribe_to_newsletter',          to: 'subscribers#subscribe_to_newsletter'  
   get ' confirm_news_letter_subscription', to: 'subscribers#confirm_news_letter_subscription'  
   
+  # Imager serving and marketing 
+  get 'bitly/:bitly', to: "home#bitly", as: "bitly"
+  get 'image/:image', to: "home#image", as: "image"
+  
   namespace :dashboard do 
     get 'dashboard', to: 'dashboard#index'
 

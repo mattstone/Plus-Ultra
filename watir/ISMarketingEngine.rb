@@ -16,11 +16,40 @@ class ISMarketingEngine < ISBaseWatir
     
     communications
     
+    setup_for_marketing_engine!
+    
+    test_redirect
+    
+    test_newsletter_email 
+    
+    test_operational_email 
+    
+    test_marketing_emaail
+    
   end 
   
   def remove_test_data!
     Channel.destroy_all
     Communication.destroy_all
+  end
+  
+  def setup_for_marketing_engine! 
+    channel = Channel.find_by(name: "Newsletters")
+    channel.destroy if channel
+    
+    channel  = Channel.create({name: "Newletters"})
+    campaign = channel.campaigns.create({ name: "Monthly", communication_type: "email" })
+    
+    communication = campaign.communications.new 
+    communication.communication_type = "email"
+    communication.layout             = "marketing"
+    communication.lifecycle          = "newsletter"
+    communication.name               = "Monthly Newsletter"
+    communication.subject            = "#{ENV['APP_NAME']} Monthly Newsletter"
+    communication.save
+
+    channel  = Channel.create({name: "Third Party Redirects"})
+    @redirect_campaign = channel.campaigns.create({ name: "Example", communication_type: "redirect", redirect_url: ENV['WHO_AM_I'] })
   end
   
   def channels 
@@ -36,6 +65,7 @@ class ISMarketingEngine < ISBaseWatir
 
     link = @browser.link(href: '/admin/channels/new')
     link.click
+    
     @browser.wait_until { @browser.text.include? 'New channel' }
     good("browsed to admin/channels/new")
 
@@ -178,6 +208,29 @@ class ISMarketingEngine < ISBaseWatir
     @browser.wait_until { @browser.text.include? "changed" }
     good("Communication was successfully updated")
   end
+  
+  def test_redirect 
+    header("test_redirect")
+    
+    @browser.goto @redirect_campaign.redirection_url
+    @browser.wait_until { @browser.text.include? "Launching soon!" }
+    good("Redirection to #{@redirect_campaign.redirection_url} successfull")
+    
+  end
+  
+  def test_newsletter_email 
+    header("test_newsletter_email")
+    
+  end
+  
+  def test_operational_email 
+    header("test_operational_email")
+  end
+  
+  def test_marketing_emaail
+    header("test_marketing_emaail")
+  end
+
   
 end
 

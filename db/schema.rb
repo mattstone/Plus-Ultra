@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_23_211444) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_25_061426) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -95,6 +95,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_23_211444) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "communication_type", default: 0
+    t.string "redirect_url"
+    t.bigint "clicks", default: 0
     t.index ["channel_id"], name: "index_campaigns_on_channel_id"
   end
 

@@ -145,4 +145,15 @@ class User < ApplicationRecord
   def admin!
     self.role_admin!
   end
+  
+  if Rails.env.development?
+    def self.email_test 
+      u    = User.last
+      comm = Communication.find(4)
+      
+      UserMailer.communication({ user: u, communication: comm }).deliver_now!
+    end
+  end
+  
+  
 end

@@ -71,6 +71,11 @@ class ApplicationController < ActionController::Base
     session[:tag] = params[:tag]  # Overwrite any previous with latest
   end
   
+  def request_ip_address
+    request.env['HTTP_X_FORWARDED_FOR'].blank? ? request.remote_ip : request.env['HTTP_X_FORWARDED_FOR']
+  end
+
+  
   private 
   
   def set_seo

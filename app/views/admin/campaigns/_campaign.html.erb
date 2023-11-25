@@ -5,7 +5,9 @@
     <div class="col-1"><%= campaign.tag %></div>
     <div class="col-1"><%= campaign.users.count %></div>
     <div class="col-1"><%= campaign.transactions.count %></div>
-    <div class="col-3"><%= campaign.link %></div>
+    <div class="col-3">
+      <%= campaign.redirect? ? campaign.redirection_url : campaign.link %>
+    </div>
     <div class="col-1"><%= link_to "Edit", edit_admin_channel_campaign_path(channel, campaign), class: admin_button_class %></div>
   </div>
 </div>

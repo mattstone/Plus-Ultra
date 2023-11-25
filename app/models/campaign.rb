@@ -10,10 +10,24 @@ class Campaign < ApplicationRecord
   
   after_save :set_tag_and_name
   
-  enum :communication_type, { none: 0, email: 1, sms: 2, outbound_telephone: 3, inbound_telephone: 4 }, prefix: true
+  enum :communication_type, { none: 0, email: 1, sms: 2, outbound_telephone: 3, inbound_telephone: 4, redirect: 5 }, prefix: true
   
   def link 
     "#{ENV['WHO_AM_I']}?tag=#{self.tag}"
+  end
+  
+  def redirect?
+    self.communication_type_redirect?
+  end
+  
+  def redirection_url
+    return "" if self.redirect_url.blank?
+    "#{Rails.application.routes.url_helpers.bitly_url(bitly: self.id, host: ENV['DOMAIN'])}"
+  end
+  
+  def add_one_to_clicks!
+    self.clicks += 1
+    self.save
   end
   
   private 
