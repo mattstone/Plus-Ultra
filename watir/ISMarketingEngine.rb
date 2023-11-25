@@ -14,10 +14,13 @@ class ISMarketingEngine < ISBaseWatir
     
     campaigns
     
+    communications
+    
   end 
   
   def remove_test_data!
     Channel.destroy_all
+    Communication.destroy_all
   end
   
   def channels 
@@ -76,8 +79,6 @@ class ISMarketingEngine < ISBaseWatir
     
     sleep 1
     
-    good("foo: 1")
-    
     text_field = @browser.text_field(id: 'campaign_name')
     text_field.value = test_campaign[:name]
     
@@ -104,6 +105,78 @@ class ISMarketingEngine < ISBaseWatir
 
     @browser.wait_until { @browser.text.include? changed }
     good("Campaign was successfully changed")
+  end
+  
+  def communications
+    header("Communications")
+    
+    link = @browser.link(href: '/admin/communications')
+    link.click
+    @browser.wait_until { @browser.text.include? "Manage communications" }
+    good("Browsed to /admin/communications")
+
+     # Create communication    
+    link = @browser.link(href: '/admin/communications/new')
+    link.click
+    
+    @browser.wait_until { @browser.text.include? "New Communication" }
+    good("Browsed to /admin/communications/new")
+
+    text_field = @browser.text_field(id: 'communication_name')
+    text_field.value = test_communication[:name]
+
+    dropdown = @browser.select(id: 'communication_lifecycle')
+    dropdown.focus
+    dropdown.select(value: test_communication[:lifecycle])
+    
+    dropdown = @browser.select(id: 'communication_communication_type')
+    dropdown.focus
+    dropdown.select(value: test_communication[:communication_type])
+
+    dropdown = @browser.select(id: 'communication_layout')
+    dropdown.focus
+    dropdown.select(value: test_communication[:layout])
+    
+    text_field = @browser.text_field(id: 'communication_subject')
+    text_field.focus
+    text_field.value = test_communication[:subject]
+
+    javascript_script = "document.getElementById('communication_preview_trix_input_communication').value = '<div>#{test_communication[:preview]}</div>'"
+    @browser.execute_script(javascript_script)
+
+    javascript_script = "document.getElementById('communication_content_trix_input_communication').value = '<div>#{test_communication[:content]}</div>'"
+    @browser.execute_script(javascript_script)
+
+    @browser.scroll.to :bottom
+    sleep 1
+    
+    @browser.button(:id => "channel_form_button").click
+
+    @browser.wait_until { @browser.text.include? "Communication was successfully created" }
+    good("Communication was successfully created")
+    
+    sleep 1 
+    
+    # Edit communication
+    communication = test_communication_record
+    
+    link = @browser.link(href: "/admin/communications/#{communication.id}/edit")
+    link.click
+
+    @browser.wait_until { @browser.text.include? "Edit Communication" }
+    good("Browsed to /admin/communications/#{communication.id}/edit")
+
+    text_field = @browser.text_field(id: 'communication_name')
+    text_field.value = changed
+
+    @browser.scroll.to :bottom
+    sleep 2
+    
+    @browser.button(:id => "channel_form_button").click
+
+    @browser.wait_until { @browser.text.include? "Communication was successfully updated" }
+    @browser.wait_until { @browser.text.include? "changed" }
+    good("Communication was successfully updated")
   end
   
 end

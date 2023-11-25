@@ -196,6 +196,23 @@ class ISBaseWatir
     Campaign.last
   end
   
+  def test_communication 
+    {
+      name: "Test communication",
+      communication_type: "email",
+      layout: "marketing",
+      lifecycle: "pre_sales",
+      subject: "Test subject",
+      preview: "Test preview",
+      content: "Test content"
+    }
+  end
+  
+  def test_communication_record 
+    communication = Communication.find_by(name: test_communication[:name])
+    communication = Communication.find_by(name: changed) if communication.nil?
+    communication
+  end
   
   def changed 
     "changed"

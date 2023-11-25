@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   end
   
   # webhooks 
-  post 'webhooks/twilio',                  to: 'webhooks#stripe'
+  post 'webhooks/twilio',                  to: 'webhooks#twilio'
   post 'webhooks/stripe',                  to: 'webhooks#stripe'
   
   # Checkout 
@@ -74,7 +74,8 @@ Rails.application.routes.draw do
               :products,
               :transactions,
               :blogs,
-              :orders
+              :orders,
+              :communications
               
     resources :subscriptions do 
       member do 

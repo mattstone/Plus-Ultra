@@ -3,6 +3,7 @@ class Campaign < ApplicationRecord
   
   has_many :users 
   has_many :transactions
+  has_many :communications
   
   validates :name, presence: true
   validates :name, uniqueness: true

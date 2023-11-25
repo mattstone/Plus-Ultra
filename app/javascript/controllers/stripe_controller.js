@@ -13,7 +13,8 @@ export default class extends Controller {
       messages.classList.add("d-none")
 
       setTimeout(async () => {
-        const stripe   = await loadStripe('pk_test_7F237gcfmL4Ue68h03fsRMM800gOed7xlg')
+        // const stripe   = await loadStripe('pk_test_7F237gcfmL4Ue68h03fsRMM800gOed7xlg')
+        const stripe   = await loadStripe(document.getElementById('spk').innerHTML)
         const elements = stripe.elements({ clientSecret: client_secret })
         const paymentElement = elements.create('payment')
         paymentElement.mount('#payment-element')

@@ -72,7 +72,7 @@ Note: Not production ready. Still work in progress.
 #### Sample .env 
 
 - APP_NAME           = "Plus Ultra"
-- MOTTO             = "Go Beyond"
+- MOTTO             = "Go Beyond!"
 - WHO_AM_I          = "http://localhost:3000"
 - STRIPE_PUBLIC_KEY = "will start with pk_..."
 - STRIPE_SECRET_KEY = "will start with sk_..."
@@ -89,7 +89,7 @@ Note: Not production ready. Still work in progress.
 - TWILIO_CALLBACK_URL = "https://www.my-domain.com/webhooks/twilio"
 - TWILIO_MOBILE_NUMBER_SID = ""
 - TWILIO_MOBILE_NUMBER = "+61400000000"
-
+- FROM_EMAIL           = "role@domain.com"
 
 ### Operations
 - Admin Dashboard 
