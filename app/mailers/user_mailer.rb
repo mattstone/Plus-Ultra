@@ -19,6 +19,10 @@ class UserMailer < ApplicationMailer
     
     # TODO: create campaign_sent record
     
+    if options[:test] == true 
+      # setup for test
+    end
+    
     case 
     when communication.email? 
 
@@ -42,6 +46,11 @@ class UserMailer < ApplicationMailer
       
       # build the message
       @html = header + content + footer
+      
+      if options[:preview] == true
+        ISRedis.set_ex("communication_#{communication.id}", { html: @html }, 60) # Save to redis and expire in 60 seconds
+        return
+      end
 
       # Handle attachments
       

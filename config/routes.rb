@@ -84,6 +84,7 @@ Rails.application.routes.draw do
     resource :communications do 
       member do 
         post ':id/test', to: 'communications#test', as: 'test'
+        post ':id/preview', to: 'communications#preview', as: "preview"
       end
     end 
                   
@@ -101,6 +102,10 @@ Rails.application.routes.draw do
       resources :subscribers, controller: 'mailing_lists/subscribers' do 
       end
     end
+    
+    resources :bulk_emails do 
+    end
+    
   end  
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

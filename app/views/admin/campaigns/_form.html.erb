@@ -7,6 +7,7 @@
     <%= f.select :communication_type, Campaign.communication_types.keys.map { |key| [key.titleize, key]}, {}, { class: "form-control", "data-communications-target": "communication_type", "data-action": "communications#change_communication_type" } %>
   </div>
 
+  <br>
 
   <div class="field">
     <%= f.label :name, class: "form-label" %><br />
@@ -18,9 +19,6 @@
     <%= f.label :redirect_url, class: "form-label" %><br />
     <%= f.text_field :redirect_url, placeholder: "Campaign name", class: "form-control" %>
   </div>
-
-
-
 
   <div>
     <br>

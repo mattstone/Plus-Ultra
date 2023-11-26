@@ -41,7 +41,7 @@ class ISMarketingEngine < ISBaseWatir
     campaign = channel.campaigns.create({ name: "Monthly", communication_type: "email" })
     
     communication = campaign.communications.new 
-    communication.communication_type = "email"
+    communication.communication_type = "bulk_email"
     communication.layout             = "marketing"
     communication.lifecycle          = "newsletter"
     communication.name               = "Monthly Newsletter"

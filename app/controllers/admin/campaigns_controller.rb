@@ -91,6 +91,7 @@ class Admin::CampaignsController < Admin::BaseController
     def campaign_params
       params.fetch(:campaign, {}).permit(
         :name,
+        :communication_type,
         :tag,
         :redirect_url
       )      

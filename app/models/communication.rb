@@ -3,6 +3,7 @@ class Communication < ApplicationRecord
   has_rich_text :content 
   
   belongs_to :campaign
+  has_many   :bulk_emails
 
   enum :communication_type, { email: 0, sms: 1, outbound_telephone: 2, inbound_telephone: 3 }, prefix: true
   enum :layout,             { operations: 0, marketing: 1 }, prefix: true

@@ -1,5 +1,5 @@
 class Admin::CommunicationsController < Admin::BaseController
-  before_action :set_communication, only: %i[ show edit update destroy, test ]
+  before_action :set_communication, only: %i[ show edit update destroy, test, preview ]
 
   # GET /Communications or /Communications.json
   def index
@@ -77,6 +77,19 @@ class Admin::CommunicationsController < Admin::BaseController
 
   def test 
     UserMailer.communication({ user: current_user, communication: @communication, test: true}).deliver_now!
+  end
+  
+  def preview 
+
+    # content will be written to redis - as UserMailer does not return string
+    UserMailer.communication({ user: current_user, communication: @communication, test: true, preview: true})
+    
+    sleep 0.1 # Needs a little bit of time to ensure has been written to Redis
+    
+    # Read json from Redis
+    respond_to do |format|
+      format.json { render json: ISRedis.get("communication_#{@communication.id}") }
+    end
   end
 
   private

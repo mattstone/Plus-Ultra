@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_25_061426) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_25_235243) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -76,7 +76,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_061426) do
 
   create_table "blogs", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "status", default: 0
+    t.integer "status"
     t.string "title"
     t.string "slug"
     t.datetime "datetime_to_publish"
@@ -86,6 +86,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_061426) do
     t.string "meta_keywords"
     t.index ["title"], name: "index_blogs_on_title"
     t.index ["user_id"], name: "index_blogs_on_user_id"
+  end
+
+  create_table "bulk_emails", force: :cascade do |t|
+    t.bigint "mailing_list_id"
+    t.bigint "communication_id"
+    t.integer "sent", default: 0
+    t.integer "opens", default: 0
+    t.datetime "datetime_sent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["communication_id"], name: "index_bulk_emails_on_communication_id"
+    t.index ["mailing_list_id"], name: "index_bulk_emails_on_mailing_list_id"
   end
 
   create_table "campaigns", force: :cascade do |t|

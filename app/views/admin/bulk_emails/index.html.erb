@@ -1,0 +1,26 @@
+<%= render 'admin/shared/header', title: "Manage Bulk Emails" %>
+<br>
+
+<div id="bulk_emails">
+  <div class="row">
+    <div class="col-2 <%= admin_background_class %>"><strong>Mailing List</strong></div>
+    <div class="col-2 <%= admin_background_class %>"><strong>Campaign</strong></div>
+    <div class="col-2 <%= admin_background_class %>"><strong>Date Sent</strong></div>
+    <div class="col-1 <%= admin_background_class %>"><strong>Sent</strong></div>
+    <div class="col-1 <%= admin_background_class %>"><strong>Opens</strong></div>
+    <div class="col-2 <%= admin_background_class %>"><strong>Actions</strong></div>
+  </div>
+  
+  <% @bulk_emails.each do |bulk_email| %>
+    <%= render bulk_email %>
+    <p>
+      <%= link_to "Show this bulk email", bulk_email %>
+    </p>
+  <% end %>
+</div>
+
+<br>
+
+<%= render 'shared/paging', resources: @bulk_emails %>
+
+<%= link_to "New bulk email", new_admin_bulk_email_path %>
