@@ -1,4 +1,4 @@
-<div data-controller="bulkemail">
+<div data-controller="emailpreview">
   <%= form_with(model: [:admin, bulk_email]) do |f| %>
     <%= render 'shared/form_results', resource: bulk_email %>
 
@@ -16,7 +16,7 @@
 
     <br>
     <%= f.label  :campaign, class: "form-label" %><br />
-    <select name="bulk_email[campaign_id]" id="bulk_email_campaign_id" class="form-control" data-bulkemail-target="campaign" data-action="click->bulkemail#preview">
+    <select name="bulk_email[campaign_id]" id="bulk_email_campaign_id" class="form-control" data-emailpreview-target="campaign" data-action="click->emailpreview#preview">
       <% BulkEmail::communications_for_select.each do |comm| %>
         <% selected = bulk_email.communication_id == comm.id ? "selected" : "" %>
         <option value="<%= comm.id %>" <%= selected %>><%= comm.name.humanize %></option>
@@ -29,29 +29,6 @@
     </div>
   <% end %>
 
-  <hr>
-  
-  <div class="d-none" data-bulkemail-target="url"><%= preview_admin_communications_url("ID") %></div>
-
-  <br>
-  <div class="d-none" data-bulkemail-target="heightInputRow">
-    <h3>Email Preview</h3>
-    <div class="row" >
-      <div class="col-3">
-        Adjust email preview height in px
-      </div>
-      <div class="col-2">
-        <%#= number_field_tag :height, value: 150, min: 150, max: 8000, step: 1, class: "form-control", "data-bulkemail-target": "height", "data-action": "keyup->bulkemail#adjust_iframe_height" %>
-        <input type="number"
-               value=150
-               class="form-control"
-               min=150 
-               max=8000
-               data-bulkemail-target="height"
-               data-action="keyup->bulkemail#adjust_iframe_height">
-      </div>
-    </div>
-  </div>
-
-  <iframe data-bulkemail-target="iframe" frameborder="0" width="600" scrolling="auto"></iframe>
+  <%= render 'shared/mailer/email_preview' %>
 </div>
+  
