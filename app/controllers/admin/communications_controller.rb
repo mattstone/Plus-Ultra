@@ -91,6 +91,25 @@ class Admin::CommunicationsController < Admin::BaseController
       format.json { render json: ISRedis.get("communication_#{@communication.id}") }
     end
   end
+  
+  def preview_new
+    communication = Communication.new
+    communication.communication_type = "email"
+    communication.layout  = params[:layout]
+    communication.preview = params[:preview]
+    communication.content = params[:content]
+
+     UserMailer::communication({ user: current_user, communication: communication, test: true, preview_new: true }).to_s
+
+     sleep 0.1 # Needs a little bit of time to ensure has been written to Redis
+     
+     # Read json from Redis
+     respond_to do |format|
+       format.json { render json: ISRedis.get("communication_#{current_user.id}") }
+     end
+    
+  end
+    
 
   private
     # Use callbacks to share common setup or constraints between actions.

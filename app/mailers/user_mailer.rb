@@ -47,8 +47,12 @@ class UserMailer < ApplicationMailer
       # build the message
       @html = header + content + footer
       
-      if options[:preview] == true
+      case
+      when options[:preview] == true
         ISRedis.set_ex("communication_#{communication.id}", { html: @html }, 60) # Save to redis and expire in 60 seconds
+        return
+      when options[:preview_new] == true
+        ISRedis.set_ex("communication_#{user.id}", { html: @html }, 60) # Save to redis and expire in 60 seconds
         return
       end
 

@@ -83,8 +83,9 @@ Rails.application.routes.draw do
               
     resource :communications do 
       member do 
-        post ':id/test', to: 'communications#test', as: 'test'
-        post ':id/preview', to: 'communications#preview', as: "preview"
+        post ':id/test', to: 'communications#test',           as: 'test'
+        post ':id/preview', to: 'communications#preview',     as: "preview"
+        post 'preview_new', to: 'communications#preview_new', as: "preview_new"
       end
     end 
                   

@@ -15,8 +15,8 @@
     </div>
 
     <br>
-    <%= f.label  :campaign, class: "form-label" %><br />
-    <select name="bulk_email[campaign_id]" id="bulk_email_campaign_id" class="form-control" data-emailpreview-target="campaign" data-action="click->emailpreview#preview">
+    <%= f.label  :communication, class: "form-label" %><br />
+    <select name="bulk_email[communication_d]" id="bulk_email_communication_id" class="form-control" data-emailpreview-target="communication" data-action="click->emailpreview#bulk_preview">
       <% BulkEmail::communications_for_select.each do |comm| %>
         <% selected = bulk_email.communication_id == comm.id ? "selected" : "" %>
         <option value="<%= comm.id %>" <%= selected %>><%= comm.name.humanize %></option>
