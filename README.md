@@ -8,7 +8,7 @@ Starter app with everything needed to launch and run a business. Just add an ide
 
 Modern Rails 7 Hotwire app with no Javascript build complexity.
 
-Note: Not production ready. Still work in progress.
+Note: Not production ready. Still work in progress. Aim is to be completed in Feb 2024.
 
 ## 1. Marketing
 
@@ -18,24 +18,24 @@ Note: Not production ready. Still work in progress.
 
 ## 2. Sales
 
-- Products 
-- Once off & subscription payments via Stripe
 - Shopping Cart
+- Stripe sales & subscriptions
 
 ## 3. Operations
 
 - User/Customer management with 2FA
+- Admin Dashboard
 - Receipts
 
 ## 4. Reporting
 
 - Customer signup 
+- Campaign tracking - open, clicks, signups & purchases
 - Sales performance 
-- Campaign tracking
 
 ## 5. Testing 
 
-- Watir & Chrome
+- Watir & Chromedrive
 - install Chrome and compatible version of chromedriver
 
 ## Development Environment
@@ -146,11 +146,11 @@ gem install mailcatcher
 
 ## Setup server 
 
-- setup rails server in /var/apps/site_name 
+- setup rails app    in /var/apps/site_name 
 - setup puma  server in /var/apps/shared/site_name
 
 ## Let's Encrypt Free SSL / Certbot
-
+- Instructions for Ubuntu Linux
 - First setup NGINX (see below) and enure http is visible on web.
 - Verify NGINX setup is good: sudo nginx -t
 - enable HTTPS through firewall 

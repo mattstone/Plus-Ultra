@@ -38,8 +38,6 @@ export default class extends Controller {
   }
   
   single_email_preview() {
-    console.log("single_email_preview")
-    
     let data = {
        layout:  this.layoutTarget.value,
        preview: this.emailPreviewTarget.value,
@@ -47,13 +45,11 @@ export default class extends Controller {
     }
 
     // Add new content to body
-    let options = this.options_for_post()
+    let options  = this.options_for_post()
     options.body = JSON.stringify(data)
     
     // Build url
-    let url = this.urlTarget.innerHTML
-    url     = url.replace("ID/", "")
-    url     = url + "_new"
+    let url = this.urlTarget.innerHTML.replace("ID/", "") + "_new"
 
     fetch(url, options)
       .then(response => response.json())   // if the response is a JSON object
