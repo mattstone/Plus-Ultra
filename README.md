@@ -1,4 +1,4 @@
-![Alt text](app/assets/images/plus_ultra.png?raw=true "Plus Ultra")
+![Alt text](app/assets/images/logo.png?raw=true "Plus Ultra")
 
 # README
 
@@ -81,15 +81,15 @@ Note: Not production ready. Still work in progress.
 - DATABASE_NAME_PROD = "production db name"
 - DATABASE_MAX_POOL  = 5
 - DATABASE_TIMEOUT   = 5000
-- FACEBOOK_DOMAIN_VERIFICATION = "YOUR FACEBOOK VERIFICATION CODE"
-- FACEBOOK_OPENGRAPH_IMAGE = "https://www.my-domain.com/images/my-facebook-opengraph.jpg"
+- FACEBOOK_DOMAIN_VERIFICATION = "FACEBOOK VERIFICATION CODE"
+- FACEBOOK_OPENGRAPH_IMAGE = "https://www.mydomain.com/images/my-facebook-opengraph.jpg"
 - GOOGLE_TAG_MANAGER_ID = ""
 - TWILIO_ACCOUNT_SID = ""
 - TWILIO_AUTH_TOKEN  = ""
-- TWILIO_CALLBACK_URL = "https://www.my-domain.com/webhooks/twilio"
+- TWILIO_CALLBACK_URL = "https://www.mydomain.com/webhooks/twilio"
 - TWILIO_MOBILE_NUMBER_SID = ""
 - TWILIO_MOBILE_NUMBER = "+61400000000"
-- FROM_EMAIL           = "role@domain.com"
+- FROM_EMAIL           = "role@mydomain.com"
 
 ### Operations
 - Admin Dashboard 

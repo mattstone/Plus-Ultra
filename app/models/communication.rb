@@ -9,6 +9,8 @@ class Communication < ApplicationRecord
   enum :layout,             { operations: 0, marketing: 1 }, prefix: true
   enum :lifecycle,          { customer_aquisition: 0, pre_sales: 1, post_sales: 2, end_of_relationship: 3, newsletter: 4, blog: 5 }, prefix: true
   
+  validates :name, presence: true
+  validates :name, uniqueness: true
   validates :campaign_id, presence: true
   
   def email?
