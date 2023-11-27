@@ -1,9 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "iframe", "communication", "url", "height", "heightInputRow", "emailPreview", "emailContent", "layout" ]
+  static targets = [ "iframe", "communication", "url", "height", "heightInputRow", "emailPreview", "emailContent", "layout", "subscribers", "mailing_list", "subscribers_count_url" ]
 
   connect() {
+    this.subscribers()
+    this.bulk_preview()
   }
   
   adjust_iframe_height() {
@@ -60,5 +62,19 @@ export default class extends Controller {
         this.heightInputRowTarget.classList.remove("d-none")
       })
       .catch(error   => console.log(error)); // Handle the error response object
+  }
+  
+  subscribers() {
+    
+    let url     = this.subscribers_count_urlTarget.innerHTML.replace("ID", this.mailing_listTarget.value) 
+    let options = this.options_for_post()
+
+    fetch(url, options)
+      .then(response => response.json())   // if the response is a JSON object
+      .then(json     => {
+        this.subscribersTarget.innerHTML = json.subscribers
+      })
+      .catch(error   => console.log(error)); // Handle the error response object
+
   }
 }

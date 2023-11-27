@@ -1,5 +1,5 @@
 class Admin::MailingListsController < Admin::BaseController
-  before_action :set_mailing_list, only: %i[ show edit update destroy ]
+  before_action :set_mailing_list, only: %i[ show edit update destroy subscribers_count ]
 
   # GET /mailing_lists or /mailing_lists.json
   def index
@@ -67,6 +67,14 @@ class Admin::MailingListsController < Admin::BaseController
       format.html { redirect_to admin_mailing_lists_url, notice: "Mailing list was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def subscribers_count
+
+    respond_to do |format|
+     format.json { render json: { subscribers: @mailing_list.subscribers.count} }
+    end
+
   end
 
   private

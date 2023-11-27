@@ -3,6 +3,7 @@ class BulkEmail < ApplicationRecord
   validates :mailing_list_id,  presence: true
   validates :communication_id, presence: true
 
+  belongs_to :mailing_list
   belongs_to :communication
 
 

@@ -6,17 +6,25 @@
     <div class="field">
       <%= f.label  :mailing_list, class: "form-label" %><br />
       
-      <select name="bulk_email[mailing_list_id]" id="bulk_email_mailing_list_id" class="form-control">
+      <select name="bulk_email[mailing_list_id]" id="bulk_email_mailing_list_id" class="form-control" data-emailpreview-target="mailing_list" data-action="change->emailpreview#subscribers">
         <% MailingList.all.each do |ml| %>
           <% selected = bulk_email.mailing_list_id == ml.id ? "selected" : "" %>
           <option value="<%= ml.id %>" <%= selected %>><%= ml.name.humanize %></option>
         <% end %>
       </select>
     </div>
+    
+    <br>
+    <div class="field">
+      <p>
+        <strong>Subscribers</strong> 
+        <span data-emailpreview-target="subscribers">0</span>
+      </p>
+    </div>
 
     <br>
     <%= f.label  :communication, class: "form-label" %><br />
-    <select name="bulk_email[communication_id]" id="bulk_email_communication_id" class="form-control" data-emailpreview-target="communication" data-action="click->emailpreview#bulk_preview">
+    <select name="bulk_email[communication_id]" id="bulk_email_communication_id" class="form-control" data-emailpreview-target="communication" data-action="change->emailpreview#bulk_preview">
       <% BulkEmail::communications_for_select.each do |comm| %>
         <% selected = bulk_email.communication_id == comm.id ? "selected" : "" %>
         <option value="<%= comm.id %>" <%= selected %>><%= comm.name.humanize %></option>
@@ -29,6 +37,8 @@
     </div>
   <% end %>
 
+  <div class="d-none" data-emailpreview-target="subscribers_count_url"><%= subscribers_count_admin_mailing_list_url("ID") %></div>
+    
   <%= render 'shared/mailer/email_preview' %>
 </div>
   

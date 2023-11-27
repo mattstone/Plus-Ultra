@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_25_235243) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_27_195906) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -96,6 +96,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_235243) do
     t.datetime "datetime_sent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
     t.index ["communication_id"], name: "index_bulk_emails_on_communication_id"
     t.index ["mailing_list_id"], name: "index_bulk_emails_on_mailing_list_id"
   end
