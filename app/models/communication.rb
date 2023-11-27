@@ -5,8 +5,9 @@ class CustomCommunicationValidator < ActiveModel::Validator
     when "email"
       record.errors.add(:subject, "required") if record.subject.blank?
       record.errors.add(:preview, "required") if record.preview.blank?
-      record.errors.add(:content, "required") if record.content.blank?
     end
+
+    record.errors.add(:content, "required") if record.content.blank?
         
   end
 end

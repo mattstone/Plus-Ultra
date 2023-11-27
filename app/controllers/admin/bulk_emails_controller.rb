@@ -43,7 +43,7 @@ class Admin::BulkEmailsController < Admin::BaseController
 
     respond_to do |format|
       if @bulk_email.save
-        format.html { redirect_to admin_bulk_emails, notice: "Bulk email was successfully created." }
+        format.html { redirect_to admin_bulk_emails_path, notice: "Bulk email was successfully created." }
         format.json { render :show, status: :created, location: @bulk_email }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -56,7 +56,7 @@ class Admin::BulkEmailsController < Admin::BaseController
   def update
     respond_to do |format|
       if @bulk_email.update(bulk_email_params)
-        format.html { redirect_to admin_bulk_emails, notice: "Bulk email was successfully updated." }
+        format.html { redirect_to admin_bulk_emails_path, notice: "Bulk email was successfully updated." }
         format.json { render :show, status: :ok, location: @bulk_email }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -70,7 +70,7 @@ class Admin::BulkEmailsController < Admin::BaseController
     @bulk_email.destroy
 
     respond_to do |format|
-      format.html { redirect_to admin_bulk_emails, notice: "Bulk email was successfully destroyed." }
+      format.html { redirect_to admin_bulk_emails_path, notice: "Bulk email was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -85,7 +85,7 @@ class Admin::BulkEmailsController < Admin::BaseController
     def bulk_email_params
       params.fetch(:bulk_email, {}).permit(
         :mailing_list_id,
-        :campaign_id
+        :communication_id
       )
     end
     
