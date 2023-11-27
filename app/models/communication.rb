@@ -1,3 +1,16 @@
+class CustomCommunicationValidator < ActiveModel::Validator
+  def validate(record)
+    
+    case record.communication_type 
+    when "email"
+      record.errors.add(:subject, "required") if record.subject.blank?
+      record.errors.add(:preview, "required") if record.preview.blank?
+      record.errors.add(:content, "required") if record.content.blank?
+    end
+        
+  end
+end
+
 class Communication < ApplicationRecord
   has_rich_text :preview 
   has_rich_text :content 
@@ -13,6 +26,8 @@ class Communication < ApplicationRecord
   validates :name, uniqueness: true
   validates :campaign_id, presence: true
   
+  validates_with CustomCommunicationValidator
+
   def email?
     self.communication_type_email?
   end
