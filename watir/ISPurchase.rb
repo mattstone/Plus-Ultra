@@ -60,8 +60,8 @@ class ISPurchase < ISBaseWatir
   def not_logged_in 
     header("Product - not logged in")
         
-    link = @browser.link(href: '/products')
-    link.click
+    click '/products'
+    
     sleep 3 # Wait for image to load
     
     good("browsed to /products")
@@ -71,21 +71,22 @@ class ISPurchase < ISBaseWatir
     good("scroll_to_bottom")
     
     product = test_product_record
-    @browser.button(:id => "add_to_cart_#{product.id}").click
+    
+    click_button "add_to_cart_#{product.id}"
     good("clicked on Add to Cart")
 
     scroll_to_top
     
     wait_for_text 'Checkout'
     
-    link = @browser.link(href: '/checkout')
-    link.click
+    click '/checkout'
     
     wait_for_text 'Order Summary'
 
     sleep 1
     
-    @browser.button(:id => "checkout_continue").click
+    click_button "checkout_continue"
+    
     good("clicked on Add to Cart")
 
     sleep 1
@@ -103,8 +104,8 @@ class ISPurchase < ISBaseWatir
     good("user signup form completed")
     
     # sleep 1
-
-    @browser.button(:id => "pay_now").click
+    click_button "pay_now"
+    
     good("clicked on Pay Now")
     
     sleep 2
@@ -121,28 +122,29 @@ class ISPurchase < ISBaseWatir
   def logged_in 
     header("Product - logged in")
     
-    link = @browser.link(href: '/products')
-    link.click
+    click '/products'
 
     scroll_to_bottom
     good("scroll_to_bottom")
     
     product = test_product_record
-    @browser.button(:id => "add_to_cart_#{product.id}").click
+    
+    click_button "add_to_cart_#{product.id}"
+    
     good("clicked on Add to Cart")
 
     scroll_to_top
     
     wait_for_text 'Checkout'
     
-    link = @browser.link(href: '/checkout')
-    link.click
+    click '/checkout'
     
     wait_for_text 'Order Summary'
 
     sleep 1
     
-    @browser.button(:id => "pay_now").click
+    click_button "pay_now"
+    
     good("clicked on Pay Now")
 
     sleep 2
@@ -156,11 +158,10 @@ class ISPurchase < ISBaseWatir
     header("Manage Product")
     
     go_dashboard
-    @browser.wait_until { @browser.text.include? 'Account' }
-    good("Browsed to user dashboard")
     
-    link = @browser.link(href: '/dashboard/products')
-    link.click
+    wait_for_text 'Account'
+    
+    click '/dashboard/products'
 
     wait_for_text 'My Products'
     wait_for_text test_product[:name]
@@ -187,8 +188,8 @@ class ISPurchase < ISBaseWatir
     when false then good("product.stripe_price_id has no value")
     end
     
-    link = @browser.link(href: '/products')
-    link.click
+    click '/products'
+    
     sleep 3 # Wait for image to load
     
     good("browsed to /products")
@@ -197,14 +198,16 @@ class ISPurchase < ISBaseWatir
 
     good("scroll_to_bottom")
 
-    @browser.button(:id => "subscribe_#{test_product_subscription.id}").click
+    click_button "subscribe_#{test_product_subscription.id}"
+    
     good("clicked on Subscribe")
 
     sleep 1  
 
     scroll_to_top    
     
-    @browser.button(:id => "checkout_continue").click
+    click_button "checkout_continue"
+    
     good("clicked on Add to Cart")
 
     sleep 1
@@ -222,7 +225,8 @@ class ISPurchase < ISBaseWatir
     
     sleep 1
 
-    @browser.button(:id => "pay_now").click
+    button_click "pay_now"
+    
     good("clicked on Pay Now")
     
     sleep 2
@@ -277,17 +281,15 @@ class ISPurchase < ISBaseWatir
     
     wait_for_text 'Account'
 
-    link = @browser.link(href: '/dashboard/subscriptions')
-    link.click
+    click '/dashboard/subscriptions'
     
     wait_for_text 'My Subscriptions'
 
     wait_for_text test_subscription[:name]
     
-    sleep 4
+    sleep 4 # Wait for stripe callback
     
-    link = @browser.link(href: '/dashboard/subscriptions')
-    link.click
+    click '/dashboard/subscriptions'
     
     wait_for_text 'My Subscriptions'
     wait_for_text 'Active'
@@ -296,7 +298,8 @@ class ISPurchase < ISBaseWatir
     
     subscription = test_subscription_record
 
-    @browser.button(:id => "subscription_#{subscription.id}_cancel").click
+    click_button "subscription_#{subscription.id}_cancel"
+    
     good("clicked cancel subscription")
     
     sleep 2

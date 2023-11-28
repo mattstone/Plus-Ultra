@@ -60,18 +60,15 @@ class ISMailingList < ISBaseWatir
     def create_mailing_list 
       header("Create Mailing List")
 
-      link = @browser.link(href: '/admin/mailing_lists')
-      link.click
-      
+      click '/admin/mailing_lists'
+
       wait_for_text 'Manage Mailing Lists'
       
-      link = @browser.link(href: '/admin/mailing_lists/new')
-      link.click
+      click '/admin/mailing_lists/new'
 
       wait_for_text 'New mailing list'
       
-      text_field = @browser.text_field(id: 'mailing_list_name')
-      text_field.value = test_data[:name]
+      set_text_field('mailing_list_name', test_data[:name])
       
       @browser.button(:id => "mailing_list_save_button").click
       
@@ -82,33 +79,31 @@ class ISMailingList < ISBaseWatir
       header("Edit Mailing List")
       
       ml   = test_mailing_list
-      link = @browser.link(href: "/admin/mailing_lists/#{ml.id}/edit")
-      link.click
 
-      text_field = @browser.text_field(id: 'mailing_list_name')
-      text_field.value = "Changed"
+      click "/admin/mailing_lists/#{ml.id}/edit"
+
+      set_text_field('mailing_list_name', changed)
 
       @browser.button(:id => "mailing_list_save_button").click
       
       wait_for_text 'Mailing list was successfully updated'
 
-      wait_for_text "Changed"
+      wait_for_text changed
     end 
     
     def search_mailing_list 
       header("Search Mailing List")
       
-      text_field = @browser.text_field(id: 'filter_name')
-      text_field.value = "zz"
+      set_text_field('filter_name', "zz")
       
       @browser.button(:id => "mailing_lists_filter_button").click
       wait_for_text "There are no Mailing Lists"
 
-      text_field = @browser.text_field(id: 'filter_name')
-      text_field.value = ""
+      set_text_field('filter_name', "")
 
       @browser.button(:id => "mailing_lists_filter_button").click
-      wait_for_text "Changed"
+      
+      wait_for_text changed
     end 
     
     def add_subscriber
@@ -116,28 +111,25 @@ class ISMailingList < ISBaseWatir
       
       ml   = test_mailing_list
       
-      link = @browser.link(href: "/admin/mailing_lists/#{ml.id}/subscribers")
-      link.click
+      click "/admin/mailing_lists/#{ml.id}/subscribers"
       
       wait_for_text "Manage Subscribers for Changed"
 
-      link = @browser.link(href: "/admin/mailing_lists/#{ml.id}/subscribers/new")
-      link.click
+      click "/admin/mailing_lists/#{ml.id}/subscribers/new"
 
       wait_for_text "New Subscriber"
 
-      @browser.button(:id => "mailing_list_subscriber_save_button").click
+      click_button "mailing_list_subscriber_save_button"
       
       wait_for_text "1 error prohibited"
       
       sleep 1
       
-      text_field = @browser.text_field(id: 'subscriber_email')
-      text_field.value = test_subscriber[:email]
+      set_text_field('subscriber_email', test_subscriber[:email])
       
       scroll_to_bottom
 
-      @browser.button(id: "mailing_list_subscriber_save_button").click
+      click_button "mailing_list_subscriber_save_button"
 
       wait_for_text "Subscriber was successfully created"
       
@@ -159,7 +151,8 @@ class ISMailingList < ISBaseWatir
       ml         = test_mailing_list
       subscriber = test_subscriber_record
       
-      @browser.button(:id => "admin_mailing_list_subscriber_delete_subscriber_#{subscriber.id}").click
+      click_button "admin_mailing_list_subscriber_delete_subscriber_#{subscriber.id}"
+      
       sleep 1 
       
       case @browser.alert.exists?
@@ -175,14 +168,13 @@ class ISMailingList < ISBaseWatir
     def delete_mailing_list
       header("Delete Mailing List")
       
-      link = @browser.link(href: '/admin/mailing_lists')
-      link.click
+      click '/admin/mailing_lists'
 
       wait_for_text 'Manage Mailing Lists'
       
       ml = test_mailing_list
 
-      @browser.button(:id => "admin_mailing_list_delete_mailing_list_#{ml.id}").click
+      click_button "admin_mailing_list_delete_mailing_list_#{ml.id}"
       sleep 1 
       
       case @browser.alert.exists?
@@ -194,17 +186,15 @@ class ISMailingList < ISBaseWatir
       
       wait_for_text "Mailing list was successfully destroyed"
 
-      text_field = @browser.text_field(id: 'filter_name')
-      text_field.value = "Changed"
+      set_text_field('filter_name', changed)
       
-      @browser.button(:id => "mailing_lists_filter_button").click
+      click_button "mailing_lists_filter_button"
 
       wait_for_text "There are no Mailing Lists"
 
-      text_field = @browser.text_field(id: 'filter_name')
-      text_field.value = ""
+      set_text_field('filter_name', "")
       
-      @browser.button(:id => "mailing_lists_filter_button").click
+      click_button "mailing_lists_filter_button"
     end
     
     def newsletter_signup
@@ -212,18 +202,19 @@ class ISMailingList < ISBaseWatir
       
       subscriber = newsletter_subscriber
 
-      @browser.button(:id => "admin_sign_out").click
+      click_button "admin_sign_out"
+      
       sleep 1 
       
       wait_for_text "You have been successfully signed out"
 
       # Valid signup
-      text_field = @browser.text_field(id: 'newsletter_email')
-      text_field.value = subscriber[:email]
+      set_text_field('newsletter_email', subscriber[:email])
 
       sleep 3 # Stop capatch from killing request
       
-      @browser.button(:id => "newsletter_email_button").click
+      click_button "newsletter_email_button"
+      
       wait_for_text "Thanks for your interest!"
 
       # Already signed up
@@ -231,12 +222,12 @@ class ISMailingList < ISBaseWatir
       sleep 2
       
       # Valid signup
-      text_field = @browser.text_field(id: 'newsletter_email')
-      text_field.value = subscriber[:email]
+      set_text_field('newsletter_email', subscriber[:email])
 
       sleep 2 # Stop capatch from killing request
 
-      @browser.button(:id => "newsletter_email_button").click
+      click_button "newsletter_email_button"
+      
       wait_for_text "Email already subscribed"
     end
     

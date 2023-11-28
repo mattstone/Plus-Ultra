@@ -69,13 +69,11 @@ class ISOrder < ISBaseWatir
     header("Create Product")
     sign_in_admin
     
-    link = @browser.link(href: '/admin/orders')
-    link.click
+    click '/admin/orders'
     
     wait_for_text 'Orders'
 
-    link = @browser.link(href: "/admin/orders/#{@order.id}")
-    link.click
+    click "/admin/orders/#{@order.id}"
     
     wait_for_text 'Order Summary'
   end

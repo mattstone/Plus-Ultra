@@ -62,15 +62,13 @@ class ISMarketingEngine < ISBaseWatir
 
     wait_for_text 'Manage Channels'
 
-    link = @browser.link(href: '/admin/channels/new')
-    link.click
+    click '/admin/channels/new'
     
     wait_for_text 'New channel'
 
-    text_field = @browser.text_field(id: 'channel_name')
-    text_field.value = test_channel[:name]
+    set_text_field('channel_name', test_channel[:name])
 
-    @browser.button(:id => "channel_form_button").click
+    click_button "channel_form_button"
 
     wait_for_text 'Channel was successfully created'
     
@@ -78,14 +76,13 @@ class ISMarketingEngine < ISBaseWatir
     
     channel = test_channel_record
 
-    link = @browser.link(href: "/admin/channels/#{channel.id}/edit")
-    link.click
+    click "/admin/channels/#{channel.id}/edit"
     
     wait_for_text 'Edit Channel'
     
-    text_field = @browser.text_field(id: 'channel_name')
-    text_field.value = changed
-    @browser.button(:id => "channel_form_button").click
+    set_text_field('channel_name', changed)
+
+    click_button "channel_form_button"
     
     wait_for_text 'Channel was successfully updated'
   end 
@@ -95,22 +92,19 @@ class ISMarketingEngine < ISBaseWatir
     
     channel = test_channel_record
 
-    link = @browser.link(href: "/admin/channels/#{channel.id}/campaigns")
-    link.click
+    click "/admin/channels/#{channel.id}/campaigns"
     
     wait_for_text 'Manage Campaigns'
     
-    link = @browser.link(href: "/admin/channels/#{channel.id}/campaigns/new")
-    link.click
+    click "/admin/channels/#{channel.id}/campaigns/new"
 
     wait_for_text 'New Campaign'
     
     sleep 1
     
-    text_field = @browser.text_field(id: 'campaign_name')
-    text_field.value = test_campaign[:name]
+    set_text_field('campaign_name', test_campaign[:name])
     
-    @browser.button(:id => "channel_campaign_button").click
+    click_button "channel_campaign_button"
     
     wait_for_text 'Campaign was successfully created'
 
@@ -120,14 +114,13 @@ class ISMarketingEngine < ISBaseWatir
     
     sleep 1
     
-    link = @browser.link(href: "/admin/channels/#{channel.id}/campaigns/#{campaign.id}/edit")
-    link.click
+    click "/admin/channels/#{channel.id}/campaigns/#{campaign.id}/edit"
 
     wait_for_text 'Edit Campaign'
     
-    text_field = @browser.text_field(id: 'campaign_name')
-    text_field.value = changed
-    @browser.button(:id => "channel_campaign_button").click
+    set_text_field('campaign_name', changed)
+    
+    click_button "channel_campaign_button"
 
     wait_for_text 'Campaign was successfully updated'
 
@@ -137,45 +130,32 @@ class ISMarketingEngine < ISBaseWatir
   def communications
     header("Communications")
     
-    link = @browser.link(href: '/admin/communications')
-    link.click
+    click '/admin/communications'
 
     wait_for_text "Manage communications"
 
      # Create communication    
-    link = @browser.link(href: '/admin/communications/new')
-    link.click
+    click '/admin/communications/new'
     
     wait_for_text "New Communication"
 
-    text_field = @browser.text_field(id: 'communication_name')
-    text_field.value = test_communication[:name]
+    set_text_field('communication_name', test_communication[:name])
 
-    dropdown = @browser.select(id: 'communication_lifecycle')
-    dropdown.focus
-    dropdown.select(value: test_communication[:lifecycle])
+    set_select('communication_lifecycle', test_communication[:lifecycle])
     
-    dropdown = @browser.select(id: 'communication_communication_type')
-    dropdown.focus
-    dropdown.select(value: test_communication[:communication_type])
+    set_select('communication_communication_type', test_communication[:communication_type])
 
-    dropdown = @browser.select(id: 'communication_layout')
-    dropdown.focus
-    dropdown.select(value: test_communication[:layout])
+    set_select('communication_layout', test_communication[:layout])
     
-    text_field = @browser.text_field(id: 'communication_subject')
-    text_field.focus
-    text_field.value = test_communication[:subject]
+    set_text_field('communication_subject',  test_communication[:subject])
+    
+    execute_javascript("document.getElementById('communication_preview_trix_input_communication').value = '<div>#{test_communication[:preview]}</div>'")
 
-    javascript_script = "document.getElementById('communication_preview_trix_input_communication').value = '<div>#{test_communication[:preview]}</div>'"
-    @browser.execute_script(javascript_script)
-
-    javascript_script = "document.getElementById('communication_content_trix_input_communication').value = '<div>#{test_communication[:content]}</div>'"
-    @browser.execute_script(javascript_script)
+    execute_javascript("document.getElementById('communication_content_trix_input_communication').value = '<div>#{test_communication[:content]}</div>'")
 
     scroll_to_bottom
     
-    @browser.button(:id => "channel_form_button").click
+    click_button "channel_form_button"
 
     wait_for_text "Communication was successfully created"
     
@@ -184,8 +164,7 @@ class ISMarketingEngine < ISBaseWatir
     # Edit communication
     communication = test_communication_record
     
-    link = @browser.link(href: "/admin/communications/#{communication.id}/edit")
-    link.click
+    click "/admin/communications/#{communication.id}/edit"
 
     wait_for_text "Edit Communication"
 
@@ -194,7 +173,7 @@ class ISMarketingEngine < ISBaseWatir
 
     scroll_to_bottom(2)
     
-    @browser.button(:id => "channel_form_button").click
+    click_button "channel_form_button"
 
     wait_for_text "Communication was successfully updated"
     wait_for_text changed
@@ -204,6 +183,7 @@ class ISMarketingEngine < ISBaseWatir
     header("test_redirect")
     
     @browser.goto @redirect_campaign.redirection_url
+    
     wait_for_text "Launching soon!"
     good("Redirection to #{@redirect_campaign.redirection_url} successfull")
   end
@@ -221,7 +201,6 @@ class ISMarketingEngine < ISBaseWatir
     header("test_marketing_emaail")
   end
 
-  
 end
 
 ISMarketingEngine.new

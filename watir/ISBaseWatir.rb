@@ -243,10 +243,8 @@ class ISBaseWatir
     return if @browser.nil? 
     
     @browser.goto "#{@base_url}/set_for_testing"
-    @browser.wait_until { @browser.text.include? 'Empty' }
-    good("Empty Shopping Cart")
+    wait_for_text 'Empty'
   end 
-  
   
   def go_home
     @browser.goto @base_url
@@ -269,6 +267,32 @@ class ISBaseWatir
   def wait_for_text(text)
     @browser.wait_until { @browser.text.include? text }
     good("Found in browser: #{text}")
+  end
+  
+  def click(link)
+    link = @browser.link(href: link)
+    link.click
+  end
+  
+  def click_button(id)
+    @browser.button(id: id).click
+  end
+  
+  def set_text_field(id, value)
+    # @browser.text_field(id: id).value = value
+    text_field = @browser.text_field(id: id)
+    text_field.focus
+    text_field.value = value
+  end
+  
+  def set_select(id, value)
+    select = @browser.select(id: id)
+    select.focus()
+    select.select(value:value)
+  end
+  
+  def execute_javascript(script)
+    @browser.execute_script(script)
   end
   
   def good(message) 

@@ -20,8 +20,8 @@ class ISUser < ISBaseWatir
     
     def sign_up 
       header("User sign up")
-      link = @browser.link(href: '/users/sign_up')
-      link.click
+      
+      click '/users/sign_up'
       
       # DO NOT USER HELPER FOR THIS H2 wait
       @browser.wait_until { @browser.h2.text == 'Sign up' }
@@ -41,7 +41,7 @@ class ISUser < ISBaseWatir
       when false then bad("Stripe user create callback did not creat stripe_customer_id")
       end
       
-      @browser.button(:id => "log_out_button").click
+      click_button "log_out_button"
       
       wait_for_text 'Signed out successfully'
     end
@@ -50,7 +50,7 @@ class ISUser < ISBaseWatir
       
       sign_in_test_user
       
-      @browser.button(:id => "log_out_button").click
+      click_button "log_out_button"
 
       wait_for_text 'Signed out successfully'
     end 
@@ -66,54 +66,47 @@ class ISUser < ISBaseWatir
     def admin_users_crud
       header("Admin user CRUD")
 
-      link = @browser.link(href: '/admin/users')
-      link.click
+      click '/admin/users'
 
       wait_for_text 'Manage Users'
 
       wait_for_text test_user[:email]
 
-      text_field = @browser.text_field(id: 'filter_email')
-      text_field.value = "zz"
+      set_text_field('filter_email', "zz")
 
-      @browser.button(:id => "users_filter_button").click
+      click_button "users_filter_button"
       
       wait_for_text "There are no users"
 
-      text_field = @browser.text_field(id: 'filter_email')
-      text_field.value = ""
+      set_text_field('filter_email', "")
 
-      @browser.button(:id => "users_filter_button").click
+      click_button "users_filter_button"
       
       wait_for_text test_user[:email]
       
       user = get_test_user
-      link = @browser.link(href: "/admin/users/#{user.id}/edit")
-      link.click
+      
+      click "/admin/users/#{user.id}/edit"
       
       wait_for_text "Edit User"
 
       scroll_to_bottom
 
-      text_field = @browser.text_field(id: 'user_first_name')
-      text_field.value = changed
+      set_text_field('user_first_name', changed)
 
-      dropdown = @browser.select(id: 'user_time_zone')
-      dropdown.select(value: test_time_zone)
+      set_select('user_time_zone', test_time_zone)
 
-      @browser.button(:id => "admin_users_update_button").click
+      click_button "admin_users_update_button"
 
       wait_for_text "successfully updated"
       
-      link = @browser.link(href: "/admin/users")
-      link.click
+      click "/admin/users"
 
       wait_for_text "Manage Users"
       
       wait_for_text changed.capitalize
       
-      link = @browser.link(href: "/admin/users/#{user.id}/edit")
-      link.click
+      click "/admin/users/#{user.id}/edit"
       
       wait_for_text "Edit User"
       

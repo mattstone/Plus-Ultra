@@ -29,13 +29,11 @@ class ISProduct < ISBaseWatir
   def create_product 
     header("Create Product")
 
-    link = @browser.link(href: '/admin/products')
-    link.click
+    click '/admin/products'
     
     wait_for_text 'Products'
     
-    link = @browser.link(href: '/admin/products/new')
-    link.click
+    click '/admin/products/new'
 
     wait_for_text 'New Product'
     
@@ -57,16 +55,14 @@ class ISProduct < ISBaseWatir
 
     scroll_to_bottom(2)
     
-    javascript_script = "document.getElementById('product_teaser_trix_input_product').value = '<div>#{test_product[:teaser]}</div>'"
-    @browser.execute_script(javascript_script)
-     
-    javascript_script = "document.getElementById('product_description_trix_input_product').value = '<div>#{test_product[:description]}</div>'"
-    @browser.execute_script(javascript_script)
+    execute_javascript("document.getElementById('product_teaser_trix_input_product').value = '<div>#{test_product[:teaser]}</div>'")
 
+    execute_javascript("document.getElementById('product_description_trix_input_product').value = '<div>#{test_product[:description]}</div>'")
+     
     checkbox = @browser.checkbox(id: 'product_for_sale')
     checkbox.set
 
-    @browser.button(:id => "admin_products_update_button").click
+    click_button "admin_products_update_button"
     
     wait_for_text 'Product was successfully created'
     
@@ -91,39 +87,32 @@ class ISProduct < ISBaseWatir
     
     product = test_product_record
     
-    link = @browser.link(href: "/admin/products/#{product.id}/edit")
-    link.click
+    click "/admin/products/#{product.id}/edit"
     
-    @browser.wait_until { @browser.text.include? 'Edit Product' }
-    good("browsed to admin/products")
+    wait_for_text 'Edit Product'
     
     text_field = @browser.text_field(id: 'product_name')
     text_field.value = changed
 
     scroll_to_bottom
 
-    @browser.button(:id => "admin_products_update_button").click
-    @browser.wait_until { @browser.text.include? 'Product was successfully updated' }
-    good("product updated")
+    click_button "admin_products_update_button"
+    
+    wait_for_text 'Product was successfully updated'
   end
   
   
   def create_subscription 
     
-    link = @browser.link(href: "/admin/products")
-    link.click
+    click "/admin/products"
     
-    @browser.wait_until { @browser.text.include? 'Manage Products' }
-    good("browsed to manage products")
+    wait_for_text 'Manage Products'
     
-    link = @browser.link(href: "/admin/products/new")
-    link.click
+    click "/admin/products/new"
     
-    @browser.wait_until { @browser.text.include? 'New Product' }
-    good("browsed to admin/products/new")
+    wait_for_text 'New Product'
     
     sleep 2 # Give javascript time to set the page up..
-    
     
     text_field = @browser.text_field(id: 'product_name')
     text_field.value = test_subscription[:name]
@@ -136,18 +125,16 @@ class ISProduct < ISBaseWatir
 
     scroll_to_bottom
     
-    dropdown = @browser.select(id: 'product_purchase_type')
-    dropdown.select(value: 'subscription')
-    #     
-    dropdown = @browser.select(id: 'product_billing_type')
-    dropdown.select(value: 'monthly')
+    set_select('product_purchase_type', 'subscription')
+
+    set_select('product_billing_type', 'monthly')
     
     checkbox = @browser.checkbox(id: 'product_for_sale')
     checkbox.set
 
-    @browser.button(:id => "admin_products_update_button").click
-    @browser.wait_until { @browser.text.include? 'Product was successfully created' }
-    good("product created")
+    click_button "admin_products_update_button"
+    
+    wait_for_text 'Product was successfully created'
     
     sleep 2 
     

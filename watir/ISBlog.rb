@@ -46,37 +46,33 @@ class ISBlog < ISBaseWatir
   def create_blog 
     header("Create Blog")
 
-    link = @browser.link(href: '/admin/blogs')
-    link.click
+    click '/admin/blogs'
     
     scroll_to_bottom
     
     wait_for_text 'Blogs'
 
-    link = @browser.link(href: '/admin/blogs/new')
-    link.click
+    click '/admin/blogs/new'
 
     wait_for_text 'New Blog'
     
     sleep 2 # Give javascript time to set the page up..
 
-    text_field = @browser.text_field(id: 'blog_title')
-    text_field.value = test_blog[:title]
+    set_text_field('blog_title', test_blog[:title])
 
     string = File.join(__dir__,'./images/')
     string += "Test_pattern.png"
 
     @browser.file_field.set(string)
 
-    javascript_script = "document.getElementById('blog_teaser_trix_input_blog').value = '<div>#{test_blog[:teaser]}</div>'"
-    @browser.execute_script(javascript_script)
-     
-    javascript_script = "document.getElementById('blog_content_trix_input_blog').value = '<div>#{test_blog[:content]}</div>'"
-    @browser.execute_script(javascript_script)
+    execute_javascript("document.getElementById('blog_teaser_trix_input_blog').value = '<div>#{test_blog[:teaser]}</div>'")
 
+    execute_javascript("document.getElementById('blog_content_trix_input_blog').value = '<div>#{test_blog[:content]}</div>'")    
+     
     scroll_to_bottom(2)
 
-    @browser.button(:id => "blog_save_button").click
+    click_button "blog_save_button"
+
     wait_for_text 'Blog was successfully created'
   end
   
@@ -85,17 +81,16 @@ class ISBlog < ISBaseWatir
 
     blog = test_blog_record
     
-    link = @browser.link(href: "/admin/blogs/#{blog.id}/edit")
-    link.click
+    click "/admin/blogs/#{blog.id}/edit"
 
     wait_for_text 'Edit Blog'
     
-    text_field = @browser.text_field(id: 'blog_title')
-    text_field.value = test_blog[:title]
+    set_text_field('blog_title', test_blog[:title])
 
     scroll_to_bottom
     
-    @browser.button(:id => "blog_save_button").click
+    click_button "blog_save_button"
+    
     wait_for_text 'Blog was successfully updated'
   end
   
@@ -106,20 +101,19 @@ class ISBlog < ISBaseWatir
   def search_blogs
     header("Search Blogs")
     
-    link = @browser.link(href: "/admin/blogs")
-    link.click
+    click "/admin/blogs"
 
     wait_for_text 'Blogs'
     
-    text_field = @browser.text_field(id: 'filter_title')
-    text_field.value = "zz"
-    @browser.button(:id => "blogs_filter_button").click
+    set_text_field('filter_title', "zz")
+    
+    click_button "blogs_filter_button"
 
     wait_for_text 'There are no Blogs'
 
-    text_field = @browser.text_field(id: 'filter_title')
-    text_field.value = ""
-    @browser.button(:id => "blogs_filter_button").click
+    set_text_field('filter_title', "")
+    
+    click_button "blogs_filter_button"
   end
   
   def delete_blog
@@ -128,7 +122,8 @@ class ISBlog < ISBaseWatir
     @browser.goto "#{@base_url}/admin/blogs"
     
     blog = test_blog_record
-    @browser.button(:id => "admin_blog_delete_blog_#{blog.id}").click
+
+    click_button "admin_blog_delete_blog_#{blog.id}"
 
     case @browser.alert.exists?
     when true  then good("delete prompt")
@@ -144,9 +139,8 @@ class ISBlog < ISBaseWatir
     header("Browse Blog")
     go_home 
     
-    link = @browser.link(href: "/blogs")
-    link.click
-    
+    click "/blogs"
+
     wait_for_text 'Sidebar'
   end
   
