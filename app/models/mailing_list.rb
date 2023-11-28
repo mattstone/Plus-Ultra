@@ -9,4 +9,5 @@ class MailingList < ApplicationRecord
     MailingList.find_by(name: "Newsletter")
   end 
   
+  
 end

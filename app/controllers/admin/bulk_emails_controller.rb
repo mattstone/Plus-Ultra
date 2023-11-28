@@ -1,5 +1,5 @@
 class Admin::BulkEmailsController < Admin::BaseController
-  before_action :set_bulk_email, only: %i[ show edit update destroy ]
+  before_action :set_bulk_email, only: %i[ show edit update destroy send_bulk_email ]
 
   # GET /bulk_emails or /bulk_emails.json
   def index
@@ -73,6 +73,11 @@ class Admin::BulkEmailsController < Admin::BaseController
       format.html { redirect_to admin_bulk_emails_path, notice: "Bulk email was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+  
+  def send_bulk_email 
+    
+    @bulk_email.send!
   end
 
   private

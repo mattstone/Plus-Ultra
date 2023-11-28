@@ -17,6 +17,8 @@ class UserMailer < ApplicationMailer
     campaign      = communication.campaign
     user          = options[:user]
     
+    to_email      = user.nil? ? options[:to] : user.email
+    
     # TODO: create campaign_sent record
     
     if options[:test] == true 
@@ -71,7 +73,21 @@ class UserMailer < ApplicationMailer
 
 
       # TODO: Bulk email sender for marketing campaigns
-      mail(to: user.email, from: ENV['FROM_EMAIL'], bcc: options[:bcc], subject: subject)
+
+      case communication.layout
+      when "operations"
+        mail(to: user.email, from: ENV['FROM_EMAIL'], bcc: options[:bcc], subject: subject)
+      when "marketing"
+        mailgun_options = {
+          from:    ENV['FROM_EMAIL_MARKETING'],
+          to:      to_email,
+          subject: communication.subject,
+          html:    @html
+        }
+        
+        mg = ISMailgun.new
+        mg.send_mail!(mailgun_options)
+      end
       
     when communication.sms
       ISTwilio.sms_send!({ to: user.mobile, message: communication.transpose_content(options).html_safe })

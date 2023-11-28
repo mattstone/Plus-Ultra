@@ -36,6 +36,12 @@
       <%= f.submit class: admin_button_class %>
     </div>
   <% end %>
+  
+  <br>
+  <div>
+    <%= link_to "Back to bulk emails", admin_bulk_emails_path %>
+  </div>
+  
 
   <div class="d-none" data-emailpreview-target="subscribers_count_url"><%= subscribers_count_admin_mailing_list_url("ID") %></div>
     

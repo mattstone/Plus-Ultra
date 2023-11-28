@@ -103,11 +103,14 @@ Rails.application.routes.draw do
       resources :subscribers, controller: 'mailing_lists/subscribers' do 
       end
       member do 
-         post "subscribers_count"
+         post 'subscribers_count'
       end
     end
     
     resources :bulk_emails do 
+      member do 
+        post 'send_bulk_email'
+      end
     end
     
   end  

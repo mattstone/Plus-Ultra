@@ -23,6 +23,10 @@ module ApplicationHelper
   def dashboard_button_class 
     "btn btn-sm btn-primary"
   end
+
+  def dashboard_button_class_warning
+    "btn btn-sm btn-warning"
+  end
   
   
   def cents_to_dollars(amount_in_cents)

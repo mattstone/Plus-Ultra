@@ -13,7 +13,7 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 ## 1. Marketing
 
 - Blog 
-- Email lists
+- Email lists (https://www.mailgun.com/ to send marketing emails )
 - Campaign management
 
 ## 2. Sales
@@ -63,6 +63,12 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - Boostrap SCSS
 - Sanitize for cleaning up text input by user
 
+### Sending Emails - not flagged as spam
+- Setup SPF, DKIM and DMARK records for your email sending domain 
+- Ensure reverse DNS responds with the domain name used for sending email
+- setup and monitor abuse@mydomain.com
+- Blacklists for any of your IP addresses and domains 
+
 ### Third parties 
 - Google Tag Manager 
 - Facebook Open Graph Pixel tracking
@@ -90,6 +96,9 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - TWILIO_MOBILE_NUMBER_SID = ""
 - TWILIO_MOBILE_NUMBER = "+61400000000"
 - FROM_EMAIL           = "role@mydomain.com"
+- FROM_EMAIL_MARKETING = 'mydomain <noreply@mydomain.com>'
+
+- MAILGUN_API_KEY      = ""
 
 ### Operations
 - Admin Dashboard 

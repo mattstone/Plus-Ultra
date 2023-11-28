@@ -4,6 +4,14 @@
   <div class="col-2"><%= bulk_email.datetime_sent.nil? ? "" : short_date_and_time(bulk_email.datetime_sent) %></div>
   <div class="col-1"><%= bulk_email.sent %></div>
   <div class="col-1"><%= bulk_email.opens %></div>
-  <div>
+  <div class="col-2 d-flex">
+    <%= link_to "Edit", edit_admin_bulk_email_path(bulk_email), class: dashboard_button_class %>
+    
+    <% if bulk_email.datetime_sent.nil? %>
+    &nbsp;
+      <%= form_with url: send_bulk_email_admin_bulk_email_path(bulk_email), method: :post do |f| %>
+        <%= f.submit "Send", class: dashboard_button_class_warning, data: { turbo_confirm: "Are you sure you want to send #{bulk_email.communication.name} to #{bulk_email.mailing_list.subscribers.count} subscribers?"} %>
+      <% end %>
+    <% end %>
   </div>
 </div>

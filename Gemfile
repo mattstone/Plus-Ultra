@@ -114,6 +114,8 @@ gem 'chunky_png'
 # Screen HTML User input 
 gem 'sanitize' # https://github.com/rgrove/sanitize
 
+# Mailgun - bulk email
+gem 'mailgun-ruby', '~>1.2.5'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
