@@ -76,8 +76,7 @@ class Admin::BulkEmailsController < Admin::BaseController
   end
   
   def send_bulk_email 
-    
-    @bulk_email.send!
+    @bulk_email.send!(current_user)
   end
 
   private

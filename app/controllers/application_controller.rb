@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    attributes = [:first_name, :last_name, :email, :avatar]
+    attributes = [:first_name, :last_name, :email, :avatar, :time_zone]
     devise_parameter_sanitizer.permit(:sign_up, keys: attributes)
     #devise_parameter_sanitizer.permit(:account_update, keys: attributes)
   end  
@@ -61,7 +61,8 @@ class ApplicationController < ActionController::Base
       :stripe_customer_id,
       :password,
       :password_confirmation,
-      :campaign_id
+      :campaign_id,
+      :time_zone
     )
   end
   

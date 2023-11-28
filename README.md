@@ -40,6 +40,9 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 
 ## Development Environment
 
+### Sidekiq for background task 
+- bundle exec sidekiq
+
 ### Mailcatcher
 
 * Mailcatcher url: http://127.0.0.1:1080/
@@ -63,11 +66,14 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - Boostrap SCSS
 - Sanitize for cleaning up text input by user
 
-### Sending Emails - not flagged as spam
+### Ensure your marketing do not end up in spam bin
+- Email sending is seperated into operational and marketing. So if your marketing emails are flagged as spam, operational emails will not be affected. Aggressive marketing tactics may see your email domain added to Spam Blacklists and it's time consuming to get these removed.
+-- operational emails use SMTP 
+-- marketing emails use Mailgun (or it's easy to add a different 3rd Party Mailer)
 - Setup SPF, DKIM and DMARK records for your email sending domain 
 - Ensure reverse DNS responds with the domain name used for sending email
-- setup and monitor abuse@mydomain.com
-- Blacklists for any of your IP addresses and domains 
+- Detup and monitor abuse@mydomain.com
+- Review Spam Blacklists for any of your IP addresses and domains 
 
 ### Third parties 
 - Google Tag Manager 
@@ -108,6 +114,7 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 
 ### Useful Web stuff
 - Phony & Phonelib for international telephone numbers
+- International Time Zones
 - Invisible Captcha for anti-spam form catching
 - QRCode to generate QR codes
 - SEO optimisation - Title, Meta Description/Keywords and image tagging
@@ -126,7 +133,8 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - Outbound campaigns and inbound tracking
 - subscriptions history
 - upgrade to Ruby 3.3 & YJIT
-- campaign management
+- campaign management - move sending of bulk emails to background task
+
 
 * Ruby version
 

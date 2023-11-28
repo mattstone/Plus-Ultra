@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_27_195906) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_28_064219) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -253,6 +253,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_195906) do
     t.string "stripe_customer_id"
     t.string "stripe_payment_method"
     t.integer "campaign_id"
+    t.string "time_zone", default: "(GMT+10:00) Australia/Sydney"
     t.index ["campaign_id"], name: "index_users_on_campaign_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["one_time_code"], name: "index_users_on_one_time_code"

@@ -14,29 +14,41 @@ class BulkEmail < ApplicationRecord
       .all
   end
 
+  def send!(current_user = nil)
+    # Could be long running tasks, so run on background thread
+    BulkEmailJob.perform_async(self.id, current_user.id)
+  end
+  
+  def send_from_sidekiq!(user_id = nil)
+    @user = User.find(user_id) if !user_id.nil?
+    
+    count   = 0
+    options = { communication: self.communication }
 
-  def send!
-    # TODO - use Mailgun bult emails sending (was causing problems)
-    
-    count = 0
-    
-    options = {
-      communication: self.communication
-    }
-    
     self.mailing_list.subscribers
-    .find_in_batches(batch_size: 20).each do |subscribers|
-      subscribers.each do |sub|
-        options[:to] = sub.email
-        # TODO: send emails
-        # TODO: write campaign_sent record
-        count += 1
-      end
+      .find_in_batches(batch_size: 20).each do |subscribers|
+        subscribers.each do |sub|
+          options[:to] = sub.email
+          UserMailer::communication(options).deliver_now!
+          count += 1
+        end
     end
     
     self.datetime_sent = Time.now 
     self.sent          = count
     self.save
+    
+    # Let user know message has been sent
+    if @user
+      options = {
+        user: @user,
+        message: "Bulk email: #{communication.name} has been sent to #{count} subscribers"
+      }
+      
+      Rails.logger.info "send_from_sidekiq: #{options.inspect}".red
+      
+      UserMailer::admin(options).deliver_now!
+    end
   end
   
 end

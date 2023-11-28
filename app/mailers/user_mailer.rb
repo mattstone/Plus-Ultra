@@ -9,15 +9,26 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: "Your verification code")  
   end
   
+  def admin(options)
+    @user   = options[:user]
+    @messge = options[:message]
+    mail(to: @user.email, subject: options[:subject])  
+  end
+  
   def communication(options)
     return if options[:communication].blank?
-    return if options[:user].blank?
+    # return if options[:user].blank?
     
     communication = options[:communication]
     campaign      = communication.campaign
-    user          = options[:user]
+    # user          = options[:user]
     
-    to_email      = user.nil? ? options[:to] : user.email
+    if options[:user]
+      @user    = options[:user]
+      to_email = user.email 
+    else 
+      to_email = options[:to]
+    end
     
     # TODO: create campaign_sent record
     
@@ -49,13 +60,16 @@ class UserMailer < ApplicationMailer
       # build the message
       @html = header + content + footer
       
-      case
-      when options[:preview] == true
-        ISRedis.set_ex("communication_#{communication.id}", { html: @html }, 60) # Save to redis and expire in 60 seconds
-        return
-      when options[:preview_new] == true
-        ISRedis.set_ex("communication_#{user.id}", { html: @html }, 60) # Save to redis and expire in 60 seconds
-        return
+      if options[:preview] or options[:preview_new]
+        # write email content to redis for previewing - ie: do not send
+        case
+        when options[:preview] == true
+          ISRedis.set_ex("communication_#{communication.id}", { html: @html }, 60) # Save to redis and expire in 60 seconds
+          return
+        when options[:preview_new] == true
+          ISRedis.set_ex("communication_#{@user.id}", { html: @html }, 60) # Save to redis and expire in 60 seconds
+          return
+        end
       end
 
       # Handle attachments
@@ -71,13 +85,11 @@ class UserMailer < ApplicationMailer
         end
       end
 
-
-      # TODO: Bulk email sender for marketing campaigns
-
       case communication.layout
       when "operations"
-        mail(to: user.email, from: ENV['FROM_EMAIL'], bcc: options[:bcc], subject: subject)
+        mail(to: to_email, from: ENV['FROM_EMAIL'], bcc: options[:bcc], subject: subject)
       when "marketing"
+        # Send through mailgun - we don't want to polute our operations IP address with marketing emails
         mailgun_options = {
           from:    ENV['FROM_EMAIL_MARKETING'],
           to:      to_email,

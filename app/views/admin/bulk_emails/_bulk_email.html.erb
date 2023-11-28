@@ -1,7 +1,7 @@
 <div class="row" id="<%= dom_id bulk_email %>">
   <div class="col-2"><%= bulk_email.mailing_list.name %></div>
   <div class="col-2"><%= bulk_email.communication.name %></div>
-  <div class="col-2"><%= bulk_email.datetime_sent.nil? ? "" : short_date_and_time(bulk_email.datetime_sent) %></div>
+  <div class="col-3"><%= bulk_email.datetime_sent.nil? ? "" : short_date_and_time(bulk_email.datetime_sent) %></div>
   <div class="col-1"><%= bulk_email.sent %></div>
   <div class="col-1"><%= bulk_email.opens %></div>
   <div class="col-2 d-flex">
