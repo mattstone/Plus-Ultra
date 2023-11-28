@@ -65,17 +65,16 @@ class ISPurchase < ISBaseWatir
     sleep 3 # Wait for image to load
     
     good("browsed to /products")
-    @browser.scroll.to :bottom
-    sleep 1  
 
+    scroll_to_bottom
+    
     good("scroll_to_bottom")
     
     product = test_product_record
     @browser.button(:id => "add_to_cart_#{product.id}").click
     good("clicked on Add to Cart")
 
-    @browser.scroll.to :top
-    sleep 1  
+    scroll_to_top
     
     @browser.wait_until { @browser.text.include? 'Checkout' }
     good("product #{product.name} added to cart")
@@ -130,17 +129,14 @@ class ISPurchase < ISBaseWatir
     link = @browser.link(href: '/products')
     link.click
 
-    @browser.scroll.to :bottom
-    sleep 1  
-
+    scroll_to_bottom
     good("scroll_to_bottom")
     
     product = test_product_record
     @browser.button(:id => "add_to_cart_#{product.id}").click
     good("clicked on Add to Cart")
 
-    @browser.scroll.to :top
-    sleep 1  
+    scroll_to_top
     
     @browser.wait_until { @browser.text.include? 'Checkout' }
     good("product #{product.name} added to cart")
@@ -156,8 +152,6 @@ class ISPurchase < ISBaseWatir
     @browser.button(:id => "pay_now").click
     good("clicked on Pay Now")
 
-    good("clicked on Pay Now")
-    
     sleep 2
 
     p "Manually input test credit card details!"
@@ -209,8 +203,8 @@ class ISPurchase < ISBaseWatir
     sleep 3 # Wait for image to load
     
     good("browsed to /products")
-    @browser.scroll.to :bottom
-    sleep 2  
+
+    scroll_to_bottom
 
     good("scroll_to_bottom")
 
@@ -219,9 +213,7 @@ class ISPurchase < ISBaseWatir
 
     sleep 1  
 
-    @browser.scroll.to :top
-    
-    sleep 1
+    scroll_to_top    
     
     @browser.button(:id => "checkout_continue").click
     good("clicked on Add to Cart")

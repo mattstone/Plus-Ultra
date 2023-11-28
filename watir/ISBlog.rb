@@ -49,8 +49,7 @@ class ISBlog < ISBaseWatir
     link = @browser.link(href: '/admin/blogs')
     link.click
     
-    @browser.scroll.to :bottom
-    sleep 1
+    scroll_to_bottom
     
     @browser.wait_until { @browser.text.include? 'Blogs' }
     good("browsed to admin/blogs")
@@ -77,8 +76,7 @@ class ISBlog < ISBaseWatir
     javascript_script = "document.getElementById('blog_content_trix_input_blog').value = '<div>#{test_blog[:content]}</div>'"
     @browser.execute_script(javascript_script)
 
-    @browser.scroll.to :bottom
-    sleep 2
+    scroll_to_bottom(2)
 
     @browser.button(:id => "blog_save_button").click
     @browser.wait_until { @browser.text.include? 'Blog was successfully created' }
@@ -98,8 +96,7 @@ class ISBlog < ISBaseWatir
     text_field = @browser.text_field(id: 'blog_title')
     text_field.value = test_blog[:title]
 
-    @browser.scroll.to :bottom
-    sleep 1
+    scroll_to_bottom
     
     @browser.button(:id => "blog_save_button").click
     @browser.wait_until { @browser.text.include? 'Blog was successfully updated.' }

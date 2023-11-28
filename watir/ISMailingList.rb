@@ -149,9 +149,7 @@ class ISMailingList < ISBaseWatir
       text_field = @browser.text_field(id: 'subscriber_email')
       text_field.value = test_subscriber[:email]
       
-      @browser.scroll.to :bottom
-
-      sleep 1
+      scroll_to_bottom
 
       @browser.button(id: "mailing_list_subscriber_save_button").click
 

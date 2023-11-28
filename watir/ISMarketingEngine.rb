@@ -177,8 +177,7 @@ class ISMarketingEngine < ISBaseWatir
     javascript_script = "document.getElementById('communication_content_trix_input_communication').value = '<div>#{test_communication[:content]}</div>'"
     @browser.execute_script(javascript_script)
 
-    @browser.scroll.to :bottom
-    sleep 1
+    scroll_to_bottom
     
     @browser.button(:id => "channel_form_button").click
 
@@ -199,8 +198,7 @@ class ISMarketingEngine < ISBaseWatir
     text_field = @browser.text_field(id: 'communication_name')
     text_field.value = changed
 
-    @browser.scroll.to :bottom
-    sleep 2
+    scroll_to_bottom(2)
     
     @browser.button(:id => "channel_form_button").click
 

@@ -101,12 +101,15 @@ class ISUser < ISBaseWatir
       @browser.wait_until { @browser.text.include? "Edit User" }
       good("Editing test user")
 
+      scroll_to_bottom
+
       text_field = @browser.text_field(id: 'user_first_name')
       text_field.value = changed
 
-      @browser.button(:id => "admin_users_update_button").click
+      dropdown = @browser.select(id: 'user_time_zone')
+      dropdown.select(value: test_time_zone)
 
-# sleep 844
+      @browser.button(:id => "admin_users_update_button").click
 
       @browser.wait_until { @browser.text.include? "successfully updated" }
       good("Edited test user successfully")
@@ -116,9 +119,21 @@ class ISUser < ISBaseWatir
 
       @browser.wait_until { @browser.text.include? "Manage Users" }
       good("Back button worked")
-
-      @browser.wait_until { @browser.text.include? changed }
+      
+      @browser.wait_until { @browser.text.include? changed.capitalize }
       good("Edit was successful")
+      
+      link = @browser.link(href: "/admin/users/#{user.id}/edit")
+      link.click
+      
+      @browser.wait_until { @browser.text.include? "Edit User" }
+      good("Editing test user")
+      
+      scroll_to_bottom
+
+      @browser.wait_until { @browser.text.include? test_time_zone }
+      good("Time zone update successful")
+      
     end
   
 end

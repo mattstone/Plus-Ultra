@@ -55,10 +55,8 @@ class ISProduct < ISBaseWatir
 
     @browser.file_field.set(string)
 
-    @browser.scroll.to :bottom
+    scroll_to_bottom(2)
     
-    sleep 2
-
     javascript_script = "document.getElementById('product_teaser_trix_input_product').value = '<div>#{test_product[:teaser]}</div>'"
     @browser.execute_script(javascript_script)
      
@@ -102,8 +100,7 @@ class ISProduct < ISBaseWatir
     text_field = @browser.text_field(id: 'product_name')
     text_field.value = changed
 
-    @browser.scroll.to :bottom
-    sleep 1
+    scroll_to_bottom
 
     @browser.button(:id => "admin_products_update_button").click
     @browser.wait_until { @browser.text.include? 'Product was successfully updated' }
@@ -136,10 +133,8 @@ class ISProduct < ISBaseWatir
 
     text_field = @browser.text_field(id: 'product_price_in_cents')
     text_field.value = test_subscription[:price_in_cents]
-    
-    @browser.scroll.to :bottom
-    
-    sleep 1
+
+    scroll_to_bottom
     
     dropdown = @browser.select(id: 'product_purchase_type')
     dropdown.select(value: 'subscription')

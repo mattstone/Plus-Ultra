@@ -214,6 +214,10 @@ class ISBaseWatir
     communication
   end
   
+  def test_time_zone
+    'America/Phoenix'
+  end
+  
   def changed 
     "changed"
   end
@@ -250,6 +254,16 @@ class ISBaseWatir
 
   def go_dashboard
     @browser.goto "#{@base_url}/dashboard/dashboard"
+  end
+
+  def scroll_to_top(time_to_wait = 1)
+    @browser.scroll.to :top
+    sleep time_to_wait
+  end
+  
+  def scroll_to_bottom(time_to_wait = 1)
+    @browser.scroll.to :bottom
+    sleep time_to_wait
   end
   
   def good(message) 
