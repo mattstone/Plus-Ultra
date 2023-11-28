@@ -39,8 +39,8 @@
       <%= f.label :time_zone, class: "form-label" %><br />
       <select name="user[time_zone]" id="user_time_zone" class="form-control">
         <% ISTime::times_zones_for_select.each do |tz| %>
-          <% selected = user.time_zone == ActiveSupport::TimeZone[tz].to_s ? "selected" : "" %>
-          <option value="<%= ActiveSupport::TimeZone[tz].to_s %>" <%= selected %>><%= ActiveSupport::TimeZone[tz] %></option>
+          <% selected = user.time_zone == tz ? "selected" : "" %>
+          <option value="<%= tz %>" <%= selected %>><%= tz %></option>
         <% end %>
       </select>
     </div>
