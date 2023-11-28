@@ -31,13 +31,13 @@ class ISProduct < ISBaseWatir
 
     link = @browser.link(href: '/admin/products')
     link.click
-    @browser.wait_until { @browser.text.include? 'Products' }
-    good("browsed to admin/products")
+    
+    wait_for_text 'Products'
     
     link = @browser.link(href: '/admin/products/new')
     link.click
-    @browser.wait_until { @browser.text.include? 'New Product' }
-    good("browsed to admin/products/new")
+
+    wait_for_text 'New Product'
     
     sleep 2 # Give javascript time to set the page up..
     
@@ -67,8 +67,8 @@ class ISProduct < ISBaseWatir
     checkbox.set
 
     @browser.button(:id => "admin_products_update_button").click
-    @browser.wait_until { @browser.text.include? 'Product was successfully created' }
-    good("product created")
+    
+    wait_for_text 'Product was successfully created'
     
     sleep 2
     

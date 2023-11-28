@@ -63,23 +63,19 @@ class ISMailingList < ISBaseWatir
       link = @browser.link(href: '/admin/mailing_lists')
       link.click
       
-      @browser.wait_until { @browser.text.include? 'Manage Mailing Lists' }
-      good("browsed to admin/mailing_lists")
+      wait_for_text 'Manage Mailing Lists'
       
       link = @browser.link(href: '/admin/mailing_lists/new')
       link.click
 
-      @browser.wait_until { @browser.text.include? 'New mailing list' }
-      good("browsed to admin/mailing_lists/new")
+      wait_for_text 'New mailing list'
       
       text_field = @browser.text_field(id: 'mailing_list_name')
       text_field.value = test_data[:name]
       
       @browser.button(:id => "mailing_list_save_button").click
       
-      @browser.wait_until { @browser.text.include? 'Mailing list was successfully created' }
-      good("created Mailing List successfull")
-
+      wait_for_text 'Mailing list was successfully created'
     end 
     
     def edit_mailing_list 
@@ -94,12 +90,9 @@ class ISMailingList < ISBaseWatir
 
       @browser.button(:id => "mailing_list_save_button").click
       
-      @browser.wait_until { @browser.text.include? 'Mailing list was successfully updated' }
-      good("mailing list updated")
+      wait_for_text 'Mailing list was successfully updated'
 
-      @browser.wait_until { @browser.text.include? "Changed" }
-      good("mailing list updated - confirmed")
-      
+      wait_for_text "Changed"
     end 
     
     def search_mailing_list 
@@ -109,17 +102,13 @@ class ISMailingList < ISBaseWatir
       text_field.value = "zz"
       
       @browser.button(:id => "mailing_lists_filter_button").click
-      @browser.wait_until { @browser.text.include? "There are no Mailing Lists" }
-      good("mailing list filter ")
-
+      wait_for_text "There are no Mailing Lists"
 
       text_field = @browser.text_field(id: 'filter_name')
       text_field.value = ""
 
       @browser.button(:id => "mailing_lists_filter_button").click
-      @browser.wait_until { @browser.text.include? "Changed" }
-      good("mailing list filter confirmed")
-
+      wait_for_text "Changed"
     end 
     
     def add_subscriber
@@ -130,19 +119,16 @@ class ISMailingList < ISBaseWatir
       link = @browser.link(href: "/admin/mailing_lists/#{ml.id}/subscribers")
       link.click
       
-      @browser.wait_until { @browser.text.include? "Manage Subscribers for Changed" }
-      good("browse to subscribers page")
+      wait_for_text "Manage Subscribers for Changed"
 
       link = @browser.link(href: "/admin/mailing_lists/#{ml.id}/subscribers/new")
       link.click
 
-      @browser.wait_until { @browser.text.include? "New Subscriber" }
-      good("browse to subscribers page")
+      wait_for_text "New Subscriber"
 
       @browser.button(:id => "mailing_list_subscriber_save_button").click
       
-      @browser.wait_until { @browser.text.include? "1 error prohibited" }
-      good("subscriber validations good")
+      wait_for_text "1 error prohibited"
       
       sleep 1
       
@@ -153,8 +139,7 @@ class ISMailingList < ISBaseWatir
 
       @browser.button(id: "mailing_list_subscriber_save_button").click
 
-      @browser.wait_until { @browser.text.include? "Subscriber was successfully created" }
-      good("created subscriber")
+      wait_for_text "Subscriber was successfully created"
       
       # test country code and mobile numbers
       sub = test_subscriber_record
@@ -184,8 +169,7 @@ class ISMailingList < ISBaseWatir
 
       alert_ok
       
-      @browser.wait_until { @browser.text.include? "Subscriber was successfully destroyed" }
-      good("subscriber deleted")
+      wait_for_text "Subscriber was successfully destroyed"
     end
     
     def delete_mailing_list
@@ -194,10 +178,9 @@ class ISMailingList < ISBaseWatir
       link = @browser.link(href: '/admin/mailing_lists')
       link.click
 
-      @browser.wait_until { @browser.text.include? 'Manage Mailing Lists' }
-      good("browsed to admin/mailing_lists")
+      wait_for_text 'Manage Mailing Lists'
       
-      ml   = test_mailing_list
+      ml = test_mailing_list
 
       @browser.button(:id => "admin_mailing_list_delete_mailing_list_#{ml.id}").click
       sleep 1 
@@ -209,15 +192,14 @@ class ISMailingList < ISBaseWatir
       
       alert_ok
       
-      @browser.wait_until { @browser.text.include? "Mailing list was successfully destroyed" }
-      good("mailing list deleted")
+      wait_for_text "Mailing list was successfully destroyed"
 
       text_field = @browser.text_field(id: 'filter_name')
       text_field.value = "Changed"
       
       @browser.button(:id => "mailing_lists_filter_button").click
-      @browser.wait_until { @browser.text.include? "There are no Mailing Lists" }
-      good("mailing list filter does not show deleted mailing list ")
+
+      wait_for_text "There are no Mailing Lists"
 
       text_field = @browser.text_field(id: 'filter_name')
       text_field.value = ""
@@ -233,17 +215,16 @@ class ISMailingList < ISBaseWatir
       @browser.button(:id => "admin_sign_out").click
       sleep 1 
       
-      @browser.wait_until { @browser.text.include? "You have been successfully signed out" }
-      good("signed out")
+      wait_for_text "You have been successfully signed out"
 
       # Valid signup
       text_field = @browser.text_field(id: 'newsletter_email')
       text_field.value = subscriber[:email]
 
       sleep 3 # Stop capatch from killing request
+      
       @browser.button(:id => "newsletter_email_button").click
-      @browser.wait_until { @browser.text.include? "Thanks for your interest!" }
-      good("successfully subscribed")
+      wait_for_text "Thanks for your interest!"
 
       # Already signed up
       go_home
@@ -256,8 +237,7 @@ class ISMailingList < ISBaseWatir
       sleep 2 # Stop capatch from killing request
 
       @browser.button(:id => "newsletter_email_button").click
-      @browser.wait_until { @browser.text.include? "Email already subscribed" }
-      good("successfully unable to subscribe twice")
+      wait_for_text "Email already subscribed"
     end
     
 end

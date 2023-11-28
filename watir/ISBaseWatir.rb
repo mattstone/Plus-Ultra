@@ -266,6 +266,11 @@ class ISBaseWatir
     sleep time_to_wait
   end
   
+  def wait_for_text(text)
+    @browser.wait_until { @browser.text.include? text }
+    good("Found in browser: #{text}")
+  end
+  
   def good(message) 
     @total_passed += 1
     p "  👍: #{message}"

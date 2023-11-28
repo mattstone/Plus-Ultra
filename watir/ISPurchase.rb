@@ -76,14 +76,12 @@ class ISPurchase < ISBaseWatir
 
     scroll_to_top
     
-    @browser.wait_until { @browser.text.include? 'Checkout' }
-    good("product #{product.name} added to cart")
+    wait_for_text 'Checkout'
     
     link = @browser.link(href: '/checkout')
     link.click
     
-    @browser.wait_until { @browser.text.include? 'Order Summary' }
-    good("checkout link clicked")
+    wait_for_text 'Order Summary'
 
     sleep 1
     
@@ -92,8 +90,7 @@ class ISPurchase < ISBaseWatir
 
     sleep 1
     
-    @browser.wait_until { @browser.text.include? 'Please create an account to continue your order' }
-    good("user signup form presented")
+    wait_for_text 'Please create an account to continue your order'
     
     # Create user
     fill_in_user_sign_up_form!
@@ -114,9 +111,7 @@ class ISPurchase < ISBaseWatir
 
     p "Manually input test credit card details!"
     
-    
-    @browser.wait_until { @browser.text.include? 'Pending' }
-    good("Stripe payment request pending")
+    wait_for_text 'Pending'
     
     # @browser.wait_until { @browser.text.include? 'Cleared funds' }
     # good("Stripe payment request successful")
@@ -138,14 +133,12 @@ class ISPurchase < ISBaseWatir
 
     scroll_to_top
     
-    @browser.wait_until { @browser.text.include? 'Checkout' }
-    good("product #{product.name} added to cart")
+    wait_for_text 'Checkout'
     
     link = @browser.link(href: '/checkout')
     link.click
     
-    @browser.wait_until { @browser.text.include? 'Order Summary' }
-    good("checkout link clicked")
+    wait_for_text 'Order Summary'
 
     sleep 1
     
@@ -156,8 +149,7 @@ class ISPurchase < ISBaseWatir
 
     p "Manually input test credit card details!"
         
-    @browser.wait_until { @browser.text.include? 'Pending' }
-    good("Stripe payment request pending")
+    wait_for_text 'Pending'
   end
   
   def manage_product 
@@ -169,11 +161,9 @@ class ISPurchase < ISBaseWatir
     
     link = @browser.link(href: '/dashboard/products')
     link.click
-    @browser.wait_until { @browser.text.include? 'My Products' }
-    good("Products clicked")
 
-    @browser.wait_until { @browser.text.include? test_product[:name] }
-    good("#{test_product[:name]} visible")
+    wait_for_text 'My Products'
+    wait_for_text test_product[:name]
   end
   
   #
@@ -197,7 +187,6 @@ class ISPurchase < ISBaseWatir
     when false then good("product.stripe_price_id has no value")
     end
     
-        
     link = @browser.link(href: '/products')
     link.click
     sleep 3 # Wait for image to load
@@ -220,8 +209,7 @@ class ISPurchase < ISBaseWatir
 
     sleep 1
     
-    @browser.wait_until { @browser.text.include? 'Please create an account to continue your order' }
-    good("user signup form presented")
+    wait_for_text 'Please create an account to continue your order'
     
     # Create user
     fill_in_user_sign_up_form!
@@ -241,9 +229,7 @@ class ISPurchase < ISBaseWatir
 
     p "Manually input test credit card details!"
     
-    
-    @browser.wait_until { @browser.text.include? 'Pending' }
-    good("Stripe payment request pending")
+    wait_for_text 'Pending'
     
     # @browser.wait_until { @browser.text.include? 'Cleared funds' }
     # good("Stripe payment request successful")
@@ -271,6 +257,7 @@ class ISPurchase < ISBaseWatir
     when false then bad("subscription creation error")
     end
     
+    # Note: Failure here may indicate that Stripe Webhook Listener is not running
     case subscription.status_active?
     when true  then good("subscription active")
     when false then bad("subscription not active")
@@ -287,26 +274,24 @@ class ISPurchase < ISBaseWatir
     header("Manage Subscriptions")
     
     go_dashboard
-    @browser.wait_until { @browser.text.include? 'Account' }
-    good("Browsed to user dashboard")
     
+    wait_for_text 'Account'
+
     link = @browser.link(href: '/dashboard/subscriptions')
     link.click
-    @browser.wait_until { @browser.text.include? 'My Subscriptions' }
-    good("Subscriptions clicked")
+    
+    wait_for_text 'My Subscriptions'
 
-    @browser.wait_until { @browser.text.include? test_subscription[:name] }
-    good("#{test_subscription[:name]} visible")
+    wait_for_text test_subscription[:name]
     
     sleep 4
     
     link = @browser.link(href: '/dashboard/subscriptions')
     link.click
-    @browser.wait_until { @browser.text.include? 'My Subscriptions' }
-    good("Subscriptions clicked")
     
-    @browser.wait_until { @browser.text.include? 'My Subscriptions' }
-    @browser.wait_until { @browser.text.include? 'Active' }
+    wait_for_text 'My Subscriptions'
+    wait_for_text 'Active'
+    
     good("Subscription active")
     
     subscription = test_subscription_record
@@ -317,9 +302,8 @@ class ISPurchase < ISBaseWatir
     sleep 2
     
     alert_ok
-    @browser.wait_until { @browser.text.include? 'Canceled' }
-    
-    good("subscription canceled")
+
+    wait_for_text 'Canceled'
     
     subscription.reload 
     

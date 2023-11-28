@@ -23,16 +23,15 @@ class ISUser < ISBaseWatir
       link = @browser.link(href: '/users/sign_up')
       link.click
       
+      # DO NOT USER HELPER FOR THIS H2 wait
       @browser.wait_until { @browser.h2.text == 'Sign up' }
-      
       good("Reached Sign up page")
       
       fill_in_user_sign_up_form!
             
       fill_in_user_2fa! 
       
-      @browser.wait_until { @browser.text.include? 'Log Out' }
-      good("User created and successfully logged in")
+      wait_for_text 'Log Out'
       
       sleep 2
       
@@ -43,8 +42,8 @@ class ISUser < ISBaseWatir
       end
       
       @browser.button(:id => "log_out_button").click
-      @browser.wait_until { @browser.text.include? 'Signed out successfully' }
-      good("User logged out")
+      
+      wait_for_text 'Signed out successfully'
     end
     
     def sign_in 
@@ -53,10 +52,7 @@ class ISUser < ISBaseWatir
       
       @browser.button(:id => "log_out_button").click
 
-
-      @browser.wait_until { @browser.text.include? 'Signed out successfully' }
-
-      good("Signed out successfully")
+      wait_for_text 'Signed out successfully'
     end 
     
     def sign_in_admin_user
@@ -73,33 +69,29 @@ class ISUser < ISBaseWatir
       link = @browser.link(href: '/admin/users')
       link.click
 
-      @browser.wait_until { @browser.text.include? 'Manage Users' }
-      good("browsed to admin/users")
+      wait_for_text 'Manage Users'
 
-      @browser.wait_until { @browser.text.include? test_user[:email] }
-      good("found test user email: #{test_user[:email]}")
+      wait_for_text test_user[:email]
 
       text_field = @browser.text_field(id: 'filter_email')
       text_field.value = "zz"
 
       @browser.button(:id => "users_filter_button").click
       
-      @browser.wait_until { @browser.text.include? "There are no users" }
-      good("Filter filtered out #{test_user[:email]}")
+      wait_for_text "There are no users"
 
       text_field = @browser.text_field(id: 'filter_email')
       text_field.value = ""
 
       @browser.button(:id => "users_filter_button").click
-      @browser.wait_until { @browser.text.include? test_user[:email] }
-      good("found test user email: #{test_user[:email]}")
+      
+      wait_for_text test_user[:email]
       
       user = get_test_user
       link = @browser.link(href: "/admin/users/#{user.id}/edit")
       link.click
       
-      @browser.wait_until { @browser.text.include? "Edit User" }
-      good("Editing test user")
+      wait_for_text "Edit User"
 
       scroll_to_bottom
 
@@ -111,29 +103,23 @@ class ISUser < ISBaseWatir
 
       @browser.button(:id => "admin_users_update_button").click
 
-      @browser.wait_until { @browser.text.include? "successfully updated" }
-      good("Edited test user successfully")
+      wait_for_text "successfully updated"
       
       link = @browser.link(href: "/admin/users")
       link.click
 
-      @browser.wait_until { @browser.text.include? "Manage Users" }
-      good("Back button worked")
+      wait_for_text "Manage Users"
       
-      @browser.wait_until { @browser.text.include? changed.capitalize }
-      good("Edit was successful")
+      wait_for_text changed.capitalize
       
       link = @browser.link(href: "/admin/users/#{user.id}/edit")
       link.click
       
-      @browser.wait_until { @browser.text.include? "Edit User" }
-      good("Editing test user")
+      wait_for_text "Edit User"
       
       scroll_to_bottom
 
-      @browser.wait_until { @browser.text.include? test_time_zone }
-      good("Time zone update successful")
-      
+      wait_for_text test_time_zone
     end
   
 end

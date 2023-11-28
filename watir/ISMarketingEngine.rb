@@ -41,7 +41,7 @@ class ISMarketingEngine < ISBaseWatir
     campaign = channel.campaigns.create({ name: "Monthly", communication_type: "email" })
     
     communication = campaign.communications.new 
-    communication.communication_type = "bulk_email"
+    communication.communication_type = "email"
     communication.layout             = "marketing"
     communication.lifecycle          = "newsletter"
     communication.name               = "Monthly Newsletter"
@@ -60,21 +60,19 @@ class ISMarketingEngine < ISBaseWatir
     link = @browser.link(href: '/admin/channels')
     link.click
 
-    @browser.wait_until { @browser.text.include? 'Manage Channels' }
-    good("browsed to admin/channels")
+    wait_for_text 'Manage Channels'
 
     link = @browser.link(href: '/admin/channels/new')
     link.click
     
-    @browser.wait_until { @browser.text.include? 'New channel' }
-    good("browsed to admin/channels/new")
+    wait_for_text 'New channel'
 
     text_field = @browser.text_field(id: 'channel_name')
     text_field.value = test_channel[:name]
 
     @browser.button(:id => "channel_form_button").click
-    @browser.wait_until { @browser.text.include? 'Channel was successfully created' }
-    good("Channel created")
+
+    wait_for_text 'Channel was successfully created'
     
     sleep 1
     
@@ -82,14 +80,14 @@ class ISMarketingEngine < ISBaseWatir
 
     link = @browser.link(href: "/admin/channels/#{channel.id}/edit")
     link.click
-    @browser.wait_until { @browser.text.include? 'Edit Channel' }
-    good("browsed to admin/channels/#{channel.id}/edit")
+    
+    wait_for_text 'Edit Channel'
     
     text_field = @browser.text_field(id: 'channel_name')
     text_field.value = changed
     @browser.button(:id => "channel_form_button").click
-    @browser.wait_until { @browser.text.include? 'Channel was successfully updated' }
-    good("Channel was successfully updated")
+    
+    wait_for_text 'Channel was successfully updated'
   end 
   
   def campaigns 
@@ -99,13 +97,13 @@ class ISMarketingEngine < ISBaseWatir
 
     link = @browser.link(href: "/admin/channels/#{channel.id}/campaigns")
     link.click
-    @browser.wait_until { @browser.text.include? 'Manage Campaigns' }
-    good("Browsed to /admin/channels/#{channel.id}/campaigns")
+    
+    wait_for_text 'Manage Campaigns'
     
     link = @browser.link(href: "/admin/channels/#{channel.id}/campaigns/new")
     link.click
-    @browser.wait_until { @browser.text.include? 'New Campaign' }
-    good("Browsed to /admin/channels/#{channel.id}/campaigns/new")
+
+    wait_for_text 'New Campaign'
     
     sleep 1
     
@@ -113,28 +111,27 @@ class ISMarketingEngine < ISBaseWatir
     text_field.value = test_campaign[:name]
     
     @browser.button(:id => "channel_campaign_button").click
-    @browser.wait_until { @browser.text.include? 'Campaign was successfully created' }
-    good("Campaign was successfully created")
     
+    wait_for_text 'Campaign was successfully created'
+
     campaign = test_campaign_record
-    @browser.wait_until { @browser.text.include? "#{ENV['WHO_AM_I']}?tag=#{campaign.id}" }
-    good("Campaign tag successfully created")
+    
+    wait_for_text "#{ENV['WHO_AM_I']}?tag=#{campaign.id}"
     
     sleep 1
     
     link = @browser.link(href: "/admin/channels/#{channel.id}/campaigns/#{campaign.id}/edit")
     link.click
-    @browser.wait_until { @browser.text.include? 'Edit Campaign' }
-    good("Browsed to /admin/channels/#{channel.id}/campaigns/#{campaign.id}/edit")
+
+    wait_for_text 'Edit Campaign'
     
     text_field = @browser.text_field(id: 'campaign_name')
     text_field.value = changed
     @browser.button(:id => "channel_campaign_button").click
-    @browser.wait_until { @browser.text.include? 'Campaign was successfully updated' }
-    good("Campaign was successfully updated")
 
-    @browser.wait_until { @browser.text.include? changed }
-    good("Campaign was successfully changed")
+    wait_for_text 'Campaign was successfully updated'
+
+    wait_for_text changed
   end
   
   def communications
@@ -142,15 +139,14 @@ class ISMarketingEngine < ISBaseWatir
     
     link = @browser.link(href: '/admin/communications')
     link.click
-    @browser.wait_until { @browser.text.include? "Manage communications" }
-    good("Browsed to /admin/communications")
+
+    wait_for_text "Manage communications"
 
      # Create communication    
     link = @browser.link(href: '/admin/communications/new')
     link.click
     
-    @browser.wait_until { @browser.text.include? "New Communication" }
-    good("Browsed to /admin/communications/new")
+    wait_for_text "New Communication"
 
     text_field = @browser.text_field(id: 'communication_name')
     text_field.value = test_communication[:name]
@@ -181,8 +177,7 @@ class ISMarketingEngine < ISBaseWatir
     
     @browser.button(:id => "channel_form_button").click
 
-    @browser.wait_until { @browser.text.include? "Communication was successfully created" }
-    good("Communication was successfully created")
+    wait_for_text "Communication was successfully created"
     
     sleep 1 
     
@@ -192,8 +187,7 @@ class ISMarketingEngine < ISBaseWatir
     link = @browser.link(href: "/admin/communications/#{communication.id}/edit")
     link.click
 
-    @browser.wait_until { @browser.text.include? "Edit Communication" }
-    good("Browsed to /admin/communications/#{communication.id}/edit")
+    wait_for_text "Edit Communication"
 
     text_field = @browser.text_field(id: 'communication_name')
     text_field.value = changed
@@ -202,18 +196,16 @@ class ISMarketingEngine < ISBaseWatir
     
     @browser.button(:id => "channel_form_button").click
 
-    @browser.wait_until { @browser.text.include? "Communication was successfully updated" }
-    @browser.wait_until { @browser.text.include? "changed" }
-    good("Communication was successfully updated")
+    wait_for_text "Communication was successfully updated"
+    wait_for_text changed
   end
   
   def test_redirect 
     header("test_redirect")
     
     @browser.goto @redirect_campaign.redirection_url
-    @browser.wait_until { @browser.text.include? "Launching soon!" }
+    wait_for_text "Launching soon!"
     good("Redirection to #{@redirect_campaign.redirection_url} successfull")
-    
   end
   
   def test_newsletter_email 

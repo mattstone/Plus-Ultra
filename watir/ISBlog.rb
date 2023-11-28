@@ -51,14 +51,12 @@ class ISBlog < ISBaseWatir
     
     scroll_to_bottom
     
-    @browser.wait_until { @browser.text.include? 'Blogs' }
-    good("browsed to admin/blogs")
-
+    wait_for_text 'Blogs'
 
     link = @browser.link(href: '/admin/blogs/new')
     link.click
-    @browser.wait_until { @browser.text.include? 'New Blog' }
-    good("browsed to admin/blogs/new")
+
+    wait_for_text 'New Blog'
     
     sleep 2 # Give javascript time to set the page up..
 
@@ -79,8 +77,7 @@ class ISBlog < ISBaseWatir
     scroll_to_bottom(2)
 
     @browser.button(:id => "blog_save_button").click
-    @browser.wait_until { @browser.text.include? 'Blog was successfully created' }
-    good("blog created")
+    wait_for_text 'Blog was successfully created'
   end
   
   def update_blog 
@@ -90,8 +87,8 @@ class ISBlog < ISBaseWatir
     
     link = @browser.link(href: "/admin/blogs/#{blog.id}/edit")
     link.click
-    @browser.wait_until { @browser.text.include? 'Edit Blog' }
-    good("browsed to admin/blogs")
+
+    wait_for_text 'Edit Blog'
     
     text_field = @browser.text_field(id: 'blog_title')
     text_field.value = test_blog[:title]
@@ -99,8 +96,7 @@ class ISBlog < ISBaseWatir
     scroll_to_bottom
     
     @browser.button(:id => "blog_save_button").click
-    @browser.wait_until { @browser.text.include? 'Blog was successfully updated.' }
-    good("updated blog")
+    wait_for_text 'Blog was successfully updated'
   end
   
   def publish_blog 
@@ -112,14 +108,14 @@ class ISBlog < ISBaseWatir
     
     link = @browser.link(href: "/admin/blogs")
     link.click
-    @browser.wait_until { @browser.text.include? 'Blogs' }
-    good("browsed to admin/blogs")
+
+    wait_for_text 'Blogs'
     
     text_field = @browser.text_field(id: 'filter_title')
     text_field.value = "zz"
     @browser.button(:id => "blogs_filter_button").click
-    @browser.wait_until { @browser.text.include? 'There are no Blogs' }
-    good("blog search successfull")
+
+    wait_for_text 'There are no Blogs'
 
     text_field = @browser.text_field(id: 'filter_title')
     text_field.value = ""
@@ -141,8 +137,7 @@ class ISBlog < ISBaseWatir
 
     alert_ok
     
-    @browser.wait_until { @browser.text.include? 'Blog was successfully destroyed' }
-    good("blog delete successfull")
+    wait_for_text 'Blog was successfully destroyed'
   end
   
   def browse_blogs 
@@ -151,8 +146,8 @@ class ISBlog < ISBaseWatir
     
     link = @browser.link(href: "/blogs")
     link.click
-    @browser.wait_until { @browser.text.include? 'Sidebar' }
-    good("browsed to /blogs")
+    
+    wait_for_text 'Sidebar'
   end
   
   

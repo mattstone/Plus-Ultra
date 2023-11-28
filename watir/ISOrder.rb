@@ -71,13 +71,13 @@ class ISOrder < ISBaseWatir
     
     link = @browser.link(href: '/admin/orders')
     link.click
-    @browser.wait_until { @browser.text.include? 'Orders' }
-    good("browsed to admin/products")
+    
+    wait_for_text 'Orders'
 
     link = @browser.link(href: "/admin/orders/#{@order.id}")
     link.click
-    @browser.wait_until { @browser.text.include? 'Order Summary' }
-    good("browsed to admin/orders/#{@order.id}")
+    
+    wait_for_text 'Order Summary'
   end
   
 end
