@@ -17,7 +17,8 @@ class Communication < ApplicationRecord
   has_rich_text :content 
   
   belongs_to :campaign
-  has_many   :bulk_emails
+  has_many   :bulk_emails,         dependent: :destroy
+  has_many   :communication_sents, dependent: :destroy
 
   enum :communication_type, { email: 0, sms: 1, outbound_telephone: 2, inbound_telephone: 3 }, prefix: true
   enum :layout,             { operations: 0, marketing: 1 }, prefix: true
@@ -84,6 +85,13 @@ class Communication < ApplicationRecord
     end
     
     string
+  end
+  
+  def create_communication_sent!(options)
+    cs = self.communication_sents.new 
+    cs.user_id       = options[:user].id       if options[:user]
+    cs.subscriber_id = options[:subscriber].id if options[:subscriber]
+    cs.save
   end
 
 end

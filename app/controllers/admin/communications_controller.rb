@@ -124,6 +124,7 @@ class Admin::CommunicationsController < Admin::BaseController
         :campaign_id,
         :communication_type,
         :lifecycle,
+        :layout,
         :name,
         :subject,
         :preview,

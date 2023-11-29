@@ -30,11 +30,13 @@ class UserMailer < ApplicationMailer
       to_email = options[:to]
     end
     
-    # TODO: create campaign_sent record
-    
-    if options[:test] == true 
-      # setup for test
+    case options[:test] == true 
+    when true  # setup for test
+    when false # setup for tracking
+      communication.create_communication_sent!(options) # Setup tracking
     end
+    
+    #<CampaignSent:0x0000000116ae4130 id: nil, campaign_id: nil, user_id: nil, subscriber_id: nil, opens: 0, clicks: 0, history: [], created_at: nil, updated_at: nil>
     
     case 
     when communication.email? 
@@ -97,8 +99,10 @@ class UserMailer < ApplicationMailer
           html:    @html
         }
         
-        mg = ISMailgun.new
-        mg.send_mail!(mailgun_options)
+        if Rails.env.production?
+          mg = ISMailgun.new
+          mg.send_mail!(mailgun_options)
+        end
       end
       
     when communication.sms

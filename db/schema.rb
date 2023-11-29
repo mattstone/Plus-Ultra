@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_28_064219) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_28_201214) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -117,6 +117,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_28_064219) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "communication_sents", force: :cascade do |t|
+    t.bigint "communication_id"
+    t.bigint "user_id"
+    t.bigint "subscriber_id"
+    t.integer "opens", default: 0
+    t.integer "clicks", default: 0
+    t.json "history", default: []
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["communication_id"], name: "index_communication_sents_on_communication_id"
+    t.index ["subscriber_id"], name: "index_communication_sents_on_subscriber_id"
+    t.index ["user_id"], name: "index_communication_sents_on_user_id"
   end
 
   create_table "communications", force: :cascade do |t|

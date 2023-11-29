@@ -31,22 +31,23 @@ class ISMarketingEngine < ISBaseWatir
   def remove_test_data!
     Channel.destroy_all
     Communication.destroy_all
+    BulkEmail.destroy_all 
   end
   
   def setup_for_marketing_engine! 
     channel = Channel.find_by(name: "Newsletters")
     channel.destroy if channel
     
-    channel  = Channel.create({name: "Newletters"})
-    campaign = channel.campaigns.create({ name: "Monthly", communication_type: "email" })
+    @newsletter_channel  = Channel.create({name: "Newletters"})
+    @newsletter_campaign = @newsletter_channel.campaigns.create({ name: "Monthly", communication_type: "email" })
     
-    communication = campaign.communications.new 
-    communication.communication_type = "email"
-    communication.layout             = "marketing"
-    communication.lifecycle          = "newsletter"
-    communication.name               = "Monthly Newsletter"
-    communication.subject            = "#{ENV['APP_NAME']} Monthly Newsletter"
-    communication.save
+    @newsletter = @newsletter_campaign.communications.new 
+    @newsletter.communication_type = "email"
+    @newsletter.layout             = "marketing"
+    @newsletter.lifecycle          = "newsletter"
+    @newsletter.name               = "Monthly Newsletter"
+    @newsletter.subject            = "#{ENV['APP_NAME']} Monthly Newsletter"
+    @newsletter.save
 
     channel  = Channel.create({name: "Third Party Redirects"})
     @redirect_campaign = channel.campaigns.create({ name: "Example", communication_type: "redirect", redirect_url: ENV['WHO_AM_I'] })
@@ -57,14 +58,15 @@ class ISMarketingEngine < ISBaseWatir
     bad("Channel records still exist")  if Channel.count  > 0
     bad("Campaign records still exist") if Campaign.count > 0
     
-    link = @browser.link(href: '/admin/channels')
-    link.click
-
+    click '/admin/channels'
+    
     wait_for_text 'Manage Channels'
 
     click '/admin/channels/new'
     
     wait_for_text 'New channel'
+    
+    sleep 1
 
     set_text_field('channel_name', test_channel[:name])
 
@@ -168,8 +170,7 @@ class ISMarketingEngine < ISBaseWatir
 
     wait_for_text "Edit Communication"
 
-    text_field = @browser.text_field(id: 'communication_name')
-    text_field.value = changed
+    set_text_field('communication_name', changed)
 
     scroll_to_bottom(2)
     
@@ -190,6 +191,95 @@ class ISMarketingEngine < ISBaseWatir
   
   def test_newsletter_email 
     header("test_newsletter_email")
+    
+    goto_admin_dashboard
+    
+    # Set Campaign to bulk email 
+    
+    click "/admin/channels"
+    
+    click "/admin/channels/#{@newsletter_channel.id}/campaigns"
+    
+    click "/admin/channels/#{@newsletter_channel.id}/campaigns/#{@newsletter_campaign.id}/edit"
+    
+    set_select('campaign_communication_type', "bulk_email")
+
+    scroll_to_bottom 
+    
+    click_button "channel_campaign_button"
+    good("updated campaign to bulk email")
+    
+    # Set Communication to newsletter campaign
+    
+    click "/admin/communications"
+    
+    communication = test_communication_record
+    
+    click "/admin/communications/#{communication.id}/edit"
+    sleep 1
+    
+    set_select('communication_campaign_id', @newsletter_campaign.id)
+
+    set_select('communication_layout', 'marketing')
+
+    scroll_to_bottom
+    
+    click_button 'channel_form_button'
+    
+    wait_for_text 'Communication was successfully updated'
+    wait_for_text 'Marketing'
+    good("communication changed to newletter campaign")
+    
+    # Create bulk email
+    click "/admin/bulk_emails"
+    
+    sleep 1
+    
+    click "/admin/bulk_emails/new"
+    
+    wait_for_text "New bulk email"
+    
+    sleep 1
+    
+    click_button "bulk_email_submit"
+
+    sleep 1
+    
+    wait_for_text "Bulk email was successfully created"
+    
+    bulk_email = BulkEmail.last # This will be the one we just created
+    
+    click_button "bulk_email_#{bulk_email.id}_send"
+    
+    case @browser.alert.exists?
+    when true  then good("Are you sure? prompt for Send bulk email")
+    when false then bad("no Are you sure? prompt for Send bulk email")
+    end
+
+    sleep 1
+    
+    alert_ok
+    
+    sleep 4 # Give sidekiq enough time to do it's thing
+    # 
+    click '/admin/bulk_emails'
+
+    
+    wait_for_text 'UTC'
+    
+    good 'Newsletter sent'
+    
+    communication_sent = CommunicationSent.last 
+    
+    case !communication_sent.nil?
+    when true  then good("CommunicationSent created")
+    when false then bad("CommunicationSent not created")
+    end
+      
+    
+    # check tracking - opens & click
+    
+    # check unsubscribe works for subscribers and users (marketing emails)
     
   end
   

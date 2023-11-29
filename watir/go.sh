@@ -9,7 +9,10 @@
 # Catch up on tests
 RAILS_ENV=test bundle exec rails db:migrate
 
-echo "*** Remeber to start server in test mode"
+echo "********************************************"
+echo "*** Server  must be started in test mode ***"
+echo "*** Sidekiq must be started in test mode ***"
+echo "********************************************"
 echo $1
 
 RAILS_ENV=test ruby $1

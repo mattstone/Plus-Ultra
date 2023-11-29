@@ -114,14 +114,11 @@ class ISProduct < ISBaseWatir
     
     sleep 2 # Give javascript time to set the page up..
     
-    text_field = @browser.text_field(id: 'product_name')
-    text_field.value = test_subscription[:name]
+    set_text_field('product_name', test_subscription[:name])
 
-    text_field = @browser.text_field(id: 'product_sku')
-    text_field.value = test_subscription[:sku]
+    set_text_field('product_sku', test_subscription[:sku])
 
-    text_field = @browser.text_field(id: 'product_price_in_cents')
-    text_field.value = test_subscription[:price_in_cents]
+    set_text_field('product_price_in_cents', test_subscription[:price_in_cents])
 
     scroll_to_bottom
     
@@ -136,7 +133,7 @@ class ISProduct < ISBaseWatir
     
     wait_for_text 'Product was successfully created'
     
-    sleep 2 
+    sleep 2 # Wait for Stripe callback to complete
     
     test_subscription_product = test_subscription_product_record
     
@@ -151,7 +148,6 @@ class ISProduct < ISBaseWatir
     end
         
   end
-  
   
 end
 

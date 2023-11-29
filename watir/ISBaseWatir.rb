@@ -43,22 +43,19 @@ class ISBaseWatir
   end 
   
   def fill_in_user_sign_up_form!
-    text_field = @browser.text_field(id: 'user_email')
-    text_field.value = test_user[:email]
     
-    text_field = @browser.text_field(id: 'user_first_name')
-    text_field.value = test_user[:first_name]
-
-    text_field = @browser.text_field(id: 'user_last_name')
-    text_field.value = test_user[:last_name]
-
-    text_field = @browser.text_field(id: 'user_password')
-    text_field.value = test_user[:password]
-
-    text_field = @browser.text_field(id: 'user_password_confirmation')
-    text_field.value = test_user[:password]
+    set_text_field('user_email',      test_user[:email])
     
-    @browser.button(:id => "sign_up_button").click
+    set_text_field('user_first_name', test_user[:first_name])
+
+    set_text_field('user_last_name',  test_user[:last_name])
+
+    set_text_field('user_password',   test_user[:password])
+
+    set_text_field('user_password_confirmation', test_user[:password])
+
+    click_button "sign_up_button"
+    
     sleep 1
   end
   
@@ -72,24 +69,13 @@ class ISBaseWatir
     when false then good("One time code is not 6 digits")
     end
     
-    text_field = @browser.text_field(id: 'digit_1')
-    text_field.value = string[0]
+    set_text_field('digit_1', string[0])
+    set_text_field('digit_2', string[1])
+    set_text_field('digit_3', string[2])
+    set_text_field('digit_4', string[3])
+    set_text_field('digit_5', string[4])
+    set_text_field('digit_6', string[5])
 
-    text_field = @browser.text_field(id: 'digit_2')
-    text_field.value = string[1]
-
-    text_field = @browser.text_field(id: 'digit_3')
-    text_field.value = string[2]
-
-    text_field = @browser.text_field(id: 'digit_4')
-    text_field.value = string[3]
-
-    text_field = @browser.text_field(id: 'digit_5')
-    text_field.value = string[4]
-
-    text_field = @browser.text_field(id: 'digit_6')
-    text_field.value = string[5]
-    
     sleep 1
   end
   
@@ -242,16 +228,16 @@ class ISBaseWatir
     header("Remove Session")
     return if @browser.nil? 
     
-    @browser.goto "#{@base_url}/set_for_testing"
+    goto "#{@base_url}/set_for_testing"
     wait_for_text 'Empty'
   end 
   
   def go_home
-    @browser.goto @base_url
+    goto @base_url
   end
 
   def go_dashboard
-    @browser.goto "#{@base_url}/dashboard/dashboard"
+    goto "#{@base_url}/dashboard/dashboard"
   end
 
   def scroll_to_top(time_to_wait = 1)
@@ -313,6 +299,14 @@ class ISBaseWatir
     @browser.alert.cancel
   end
   
+  def goto(url)
+    @browser.goto url
+  end
+  
+  def goto_admin_dashboard 
+    goto "#{@base_url}/admin/dashboard"
+  end
+  
   def header(message)
     p ""
     p "=========================================="
@@ -344,21 +338,17 @@ class ISBaseWatir
     when false then bad("Admin user not created successfully")
     end
     
-    link = @browser.link(href: '/users/sign_in')
-    link.click
+    click '/users/sign_in'
     
     @browser.wait_until { @browser.h2.text == 'Log in' }
     
-    text_field = @browser.text_field(id: 'user_email')
-    text_field.value = test_user[:email]
+    set_text_field('user_email', test_user[:email])
     
-    text_field = @browser.text_field(id: 'user_password')
-    text_field.value = test_user[:password]
+    set_text_field('user_password', test_user[:password])
     
-    @browser.button(:id => "log_in_button").click
+    click_button "log_in_button"
     
-    @browser.wait_until { @browser.text.include? 'Admin' }
-    good("Signed in successfully")
+    wait_for_text 'Admin'
   end
   
   def sign_in_test_user 
@@ -366,22 +356,17 @@ class ISBaseWatir
     
     header("Sign in test user")
     
-    link = @browser.link(href: '/users/sign_in')
-    link.click
+    click '/users/sign_in'
     
     @browser.wait_until { @browser.h2.text == 'Log in' }
     
-    text_field = @browser.text_field(id: 'user_email')
-    text_field.value = test_user[:email]
+    set_text_field('user_email', test_user[:email])
     
-    text_field = @browser.text_field(id: 'user_password')
-    text_field.value = test_user[:password]
+    set_text_field('user_password', test_user[:password])
     
-    @browser.button(:id => "log_in_button").click
+    click_button "log_in_button"
     
-    @browser.wait_until { @browser.text.include? 'Signed in successfully' }
-
-    good("Signed in successfully")
+    wait_for_text 'Signed in successfully'
 
     sleep 1
   end
