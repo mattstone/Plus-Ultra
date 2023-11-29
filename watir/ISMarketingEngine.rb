@@ -263,7 +263,6 @@ class ISMarketingEngine < ISBaseWatir
     sleep 4 # Give sidekiq enough time to do it's thing
     # 
     click '/admin/bulk_emails'
-
     
     wait_for_text 'UTC'
     
@@ -275,8 +274,12 @@ class ISMarketingEngine < ISBaseWatir
     when true  then good("CommunicationSent created")
     when false then bad("CommunicationSent not created")
     end
+
+    case !communication_sent.subscriber_id.nil?
+    when true  then good("CommunicationSent subscriber valid")
+    when false then bad("CommunicationSent subscriber not valid")
+    end
       
-    
     # check tracking - opens & click
     
     # check unsubscribe works for subscribers and users (marketing emails)
