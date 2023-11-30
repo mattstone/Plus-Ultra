@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  default_url_options host: ENV['DOMAIN']
+  
   resources :subscriptions
   resources :orders
   resources :subscribers, :blogs
@@ -47,14 +49,15 @@ Rails.application.routes.draw do
 
   # Newsletter subscription  
   post 'subscribe_to_newsletter',          to: 'subscribers#subscribe_to_newsletter'  
-  get ' confirm_news_letter_subscription', to: 'subscribers#confirm_news_letter_subscription'  
+  get 'confirm_news_letter_subscription',  to: 'subscribers#confirm_news_letter_subscription'  
+  get 'unsubscribe_from_newsletter/:mailing_list_id/:subscriber_id', to: 'subscribers#unsubscribe', as: "unsubscribe"
   
   # Imager serving and marketing 
   get 'bitly/:bitly', to: "home#bitly", as: "bitly"
   get 'image/:image', to: "home#image", as: "image"
   
-  get 'image/:image/:campaign_id/:communication_id/:subscriber_id', to: 'home#image', as: "image_s"
-  get 'image/:image/:campaign_id/:communication_id/:user_id',       to: 'home#image', as: "image_u"
+  get 'image_s/:image/:campaign_id/:communication_id/:subscriber_id', to: 'home#image_s', as: "image_s"
+  get 'image_u/:image/:campaign_id/:communication_id/:user_id',       to: 'home#image_u', as: "image_u"
   
   namespace :dashboard do 
     get 'dashboard', to: 'dashboard#index'

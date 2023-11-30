@@ -20,11 +20,11 @@ class ISMarketingEngine < ISBaseWatir
     
     test_redirect
     
-    test_newsletter_email 
+    test_newsletter_email # marketing email
     
     test_operational_email 
     
-    test_marketing_emaail
+    test_new_user_is_tagged_with_originating_campaign
     
   end 
   
@@ -135,7 +135,7 @@ class ISMarketingEngine < ISBaseWatir
     
     click '/admin/communications'
 
-    wait_for_text "Manage communications"
+    wait_for_text "Manage Communications"
 
      # Create communication    
     click '/admin/communications/new'
@@ -158,7 +158,7 @@ class ISMarketingEngine < ISBaseWatir
 
     scroll_to_bottom
     
-    click_button "channel_form_button"
+    click_button "communication_form_button"
 
     wait_for_text "Communication was successfully created"
     
@@ -175,7 +175,7 @@ class ISMarketingEngine < ISBaseWatir
 
     scroll_to_bottom(2)
     
-    click_button "channel_form_button"
+    click_button "communication_form_button"
 
     wait_for_text "Communication was successfully updated"
     wait_for_text changed
@@ -225,7 +225,7 @@ class ISMarketingEngine < ISBaseWatir
 
     scroll_to_bottom
     
-    click_button 'channel_form_button'
+    click_button 'communication_form_button'
     
     wait_for_text 'Communication was successfully updated'
     wait_for_text 'Marketing'
@@ -289,7 +289,7 @@ class ISMarketingEngine < ISBaseWatir
     # Browse header image check tracking - opens & click
     campaign = communication_sent.communication.campaign
     
-    goto "#{header_image_url("logo")}/#{campaign.id}/#{communication_sent.communication_id}/#{communication_sent.subscriber_id}"
+    goto "#{header_image_url_subscriber("logo")}/#{campaign.id}/#{communication_sent.communication_id}/#{communication_sent.subscriber_id}"
 
     communication_sent.reload
     
@@ -311,10 +311,113 @@ class ISMarketingEngine < ISBaseWatir
   
   def test_operational_email 
     header("test_operational_email")
+
+    # Setup standard email campaign
+    channel  = test_channel_record
+    campaign = channel.campaigns.last
+    
+    campaign_name = "Operational Email Test"
+    
+    goto "#{@base_url}/admin/channels"
+    
+    wait_for_text "Manage Channels"
+
+    # p "2: channel:  #{channel.inspect}"
+    # p "2: campaign: #{campaign.inspect}"
+    # 
+    click "/admin/channels/#{channel.id}/campaigns"
+
+    wait_for_text "Manage Campaigns"
+
+    click "/admin/channels/#{channel.id}/campaigns/#{campaign.id}/edit"
+    
+    wait_for_text 'Edit Campaign'
+    
+    set_text_field('campaign_name', campaign_name)
+    
+    click_button("channel_campaign_button")
+    
+    wait_for_text "Campaign was successfully updated"
+    
+    # Change communication to belong to this campaign
+    click "/admin/communications"
+
+    wait_for_text "Manage Communications"
+    
+    communication = test_communication_record
+    
+    # p "communication: #{communication.inspect}"
+
+    click "/admin/communications/#{communication.id}/edit"
+    
+    set_select('communication_campaign_id', "#{campaign.id}")
+    
+    set_select('communication_layout', "operations")
+
+    scroll_to_bottom
+    
+    click_button 'communication_form_button'
+    
+    wait_for_text "Manage Communications"
+    
+    click_button "communication_send_test_#{communication.id}"
+    
+    sleep 1
+    
+    alert_ok
+    good("Test email sent")
+    
+    # Send as normal operational email
+    options = {
+      communication: communication,
+      user: test_user_record
+    }
+    
+    UserMailer::communication(options).deliver_now!
+    good("Operational email sent")
+    
+    sleep 2
+    
+    case CommunicationSent.count == 2 
+    when true  then good("CommunicationSent record created")
+    when false then bad("CommunicationSent record not created")
+    end
+    
+    communication_sent = CommunicationSent.last 
+    
+    case communication_sent.communication_id == communication.id
+    when true  then good("CommunicationSent communication_id correct")
+    when false then bad("CommunicationSent communication_id is not correct")
+    end
+
+    case communication_sent.user_id == test_user_record.id
+    when true  then good("CommunicationSent user_id correct")
+    when false then bad("CommunicationSent user_id is not correct")
+    end
+    
+    campaign = communication_sent.campaign
+    
+    goto "#{header_image_url_user("logo")}/#{campaign.id}/#{communication_sent.communication_id}/#{communication_sent.user_id}"
+
+    communication_sent.reload
+
+    case communication_sent.opens == 1
+    when true  then good("rendering image increments communication_sent.opens")
+    when false then bad("rendering image increments communication_sent.opens")
+    end
+
+    case communication_sent.history.count == 1
+    when true  then good("rendering image appends to communication_sent.history")
+    when false then bad("rendering image appends to communication_sent.history")
+    end
+
+    sleep 880
+    
   end
   
-  def test_marketing_emaail
-    header("test_marketing_emaail")
+  def test_new_user_is_tagged_with_originating_campaign
+
+    header("test_new_user_is_tagged_with_originating_campaign")
   end
 
 end

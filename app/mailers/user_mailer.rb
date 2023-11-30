@@ -26,7 +26,7 @@ class UserMailer < ApplicationMailer
     
     if options[:user]
       @user    = options[:user]
-      to_email = user.email 
+      to_email = @user.email 
     else 
       to_email = options[:to]
     end
@@ -34,6 +34,7 @@ class UserMailer < ApplicationMailer
     case options[:test] == true 
     when true  # setup for test
     when false # setup for tracking
+      options[:campaign] = campaign
       communication.create_communication_sent!(options) # Setup tracking
     end
     
@@ -114,7 +115,7 @@ class UserMailer < ApplicationMailer
       end
       
     when communication.sms
-      ISTwilio.sms_send!({ to: user.mobile, message: communication.transpose_content(options).html_safe })
+      ISTwilio.sms_send!({ to: @user.mobile, message: communication.transpose_content(options).html_safe })
     end
     
   end

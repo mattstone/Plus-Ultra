@@ -11,3 +11,4 @@ Rails.application.configure do
 #   config.active_storage.variable_content_types << "image/heif"
     config.action_mailer.default_url_options = { :host => ENV['DOMAIN'] }
 end
+

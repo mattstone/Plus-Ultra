@@ -29,6 +29,18 @@ class HomeController < ApplicationController
     render plain: "There may be a problem. Let me check. I might be awhile", status: 400
   end 
   
+  def image_s 
+    image 
+    communications_sent = CommunicationSent.find_by(campaign_id: params[:campaign_id], communication_id: params[:communication_id], subscriber_id: params[:subscriber_id])
+    communications_sent.add_one_to_opens!(request_ip_address)
+  end
+  
+  def image_u 
+    image 
+    communications_sent = CommunicationSent.find_by(campaign_id: params[:campaign_id], communication_id: params[:communication_id], user_id: params[:user_id])
+    communications_sent.add_one_to_opens!(request_ip_address)
+  end
+  
   def image 
 
     # TODO: if file does not exist, send default image
@@ -42,15 +54,14 @@ class HomeController < ApplicationController
     
     communications_sent = if params[:campaign_id] and params[:communication_id]
                             if params[:subscriber_id]
-                              CommunicationSend.find_by(campaign_id: params[:campaign_id], communication_id: params[:communication_id], subscriber_id: params[:subscriber_id])
+                              CommunicationSent.find_by(campaign_id: params[:campaign_id], communication_id: params[:communication_id], subscriber_id: params[:subscriber_id])
                             elsif params[:user_id]
-                              CommunicationSend.find_by(campaign_id: params[:campaign_id], communication_id: params[:communication_id], user_id: params[:user_id])
+                              CommunicationSent.find_by(campaign_id: params[:campaign_id], communication_id: params[:communication_id], user_id: params[:user_id])
                             else 
                               nil
                             end
                           end
-    communications_sent.opens += 1
-    communications_sent.save
+
   end
 
 

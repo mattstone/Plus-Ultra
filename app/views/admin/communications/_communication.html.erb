@@ -16,7 +16,7 @@
     <%= link_to "Edit", edit_admin_communication_path(communication), class: admin_button_class %>
     &nbsp;
     <%= form_with url: test_admin_communications_path(communication), method: :post do |f| %>
-      <%= f.submit "Test", class: admin_button_class_warning, onclick: "return confirm('Are you sure?')" %>
+      <%= f.submit "Test", id: "communication_send_test_#{communication.id}", class: admin_button_class_warning, onclick: "return confirm('Are you sure?')" %>
     <% end %>
     
   </div>

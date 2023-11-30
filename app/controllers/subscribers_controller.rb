@@ -22,4 +22,11 @@ class SubscribersController < ApplicationController
   def confirm_news_letter_subscription 
   end 
   
+  def unsubscribe
+    @sub = Subscriber.find_by(id: params[:subscriber_id], mailing_list_id: params[:mailing_list_id])
+    
+    @sub.destroy if @sub 
+    @success = "If you had a valid subscription you have now been unsubscribed."
+  end
+  
 end

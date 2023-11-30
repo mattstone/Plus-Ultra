@@ -89,6 +89,7 @@ class Communication < ApplicationRecord
   
   def create_communication_sent!(options)
     cs = self.communication_sents.new 
+    cs.campaign_id   = options[:campaign].id
     cs.user_id       = options[:user].id       if options[:user]
     cs.subscriber_id = options[:subscriber].id if options[:subscriber]
     cs.save
