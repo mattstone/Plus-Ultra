@@ -307,6 +307,10 @@ class ISBaseWatir
     goto "#{@base_url}/admin/dashboard"
   end
   
+  def header_image_url(image)
+    "#{@base_url}/image/#{image}"
+  end
+  
   def header(message)
     p ""
     p "=========================================="

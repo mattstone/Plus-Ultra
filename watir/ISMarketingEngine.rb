@@ -29,6 +29,7 @@ class ISMarketingEngine < ISBaseWatir
   end 
   
   def remove_test_data!
+    CommunicationSent.destroy_all
     Channel.destroy_all
     Communication.destroy_all
     BulkEmail.destroy_all 
@@ -279,8 +280,30 @@ class ISMarketingEngine < ISBaseWatir
     when true  then good("CommunicationSent subscriber valid")
     when false then bad("CommunicationSent subscriber not valid")
     end
-      
-    # check tracking - opens & click
+
+    case communication_sent.user_id.nil?
+    when true  then good("CommunicationSent has no user")
+    when false then bad("CommunicationSent has no user")
+    end
+
+    # Browse header image check tracking - opens & click
+    campaign = communication_sent.communication.campaign
+    
+    goto "#{header_image_url("logo")}/#{campaign.id}/#{communication_sent.communication_id}/#{communication_sent.subscriber_id}"
+
+    communication_sent.reload
+    
+    case communication_sent.opens == 1
+    when true  then good("rendering image increments communication_sent.opens")
+    when false then bad("rendering image increments communication_sent.opens")
+    end
+
+    case communication_sent.history.count == 1
+    when true  then good("rendering image appends to communication_sent.history")
+    when false then bad("rendering image appends to communication_sent.history")
+    end
+
+    # sleep 880
     
     # check unsubscribe works for subscribers and users (marketing emails)
     
