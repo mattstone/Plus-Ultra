@@ -1,0 +1,17 @@
+<% 
+
+  user       = nil if !defined?(user)
+  subscriber = nil if !defined?(subscriber)
+
+  url  = if campaign and communication
+           if subscriber 
+             image_s_url(image: image, campaign_id: campaign.id, communication_id: communication.id, subscriber_id: subscriber.id)
+           elsif user
+             image_s_url(image: image, campaign_id: campaign.id, communication_id: communication.id, user_id: user.id)
+           else
+             image_url(image: image)
+           end
+         end
+%>
+
+<%= image_tag url, width: "300" %>

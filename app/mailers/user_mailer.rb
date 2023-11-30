@@ -22,6 +22,7 @@ class UserMailer < ApplicationMailer
     communication = options[:communication]
     campaign      = communication.campaign
     # user          = options[:user]
+    subscriber    = options[:subscriber]
     
     if options[:user]
       @user    = options[:user]
@@ -50,12 +51,19 @@ class UserMailer < ApplicationMailer
       header = ""
       footer = ""
       
+      header_options = {}
+      header_options[:preheader]     = preview
+      header_options[:campaign]      = campaign
+      header_options[:communication] = communication
+      header_options[:user]          = options[:user].blank?       ? nil : options[:user]
+      header_options[:subscriber]    = options[:subscriber].blank? ? nil : options[:subscriber]
+      
       case 
       when communication.marketing?  
-        header = render_to_string(partial: 'shared/mailer/header_marketing', locals: { preheader: preview })
+        header = render_to_string(partial: 'shared/mailer/header_marketing', locals: header_options)
         footer = render_to_string(partial: 'shared/mailer/footer_marketing', locals: {})
       when communication.operations?  
-        header = render_to_string(partial: 'shared/mailer/header_operations', locals: { preheader: preview })
+        header = render_to_string(partial: 'shared/mailer/header_operations', locals: header_options)
         footer = render_to_string(partial: 'shared/mailer/footer_operations', locals: {})
       end
       

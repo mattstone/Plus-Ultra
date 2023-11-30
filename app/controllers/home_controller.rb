@@ -32,6 +32,7 @@ class HomeController < ApplicationController
   def image 
 
     # TODO: if file does not exist, send default image
+    
     send_file(
       "app/assets/images/email/#{params[:image]}.png",
       disposition: 'inline',
@@ -39,7 +40,17 @@ class HomeController < ApplicationController
       x_sendfile:  true
     )
     
-    return
+    communications_sent = if params[:campaign_id] and params[:communication_id]
+                            if params[:subscriber_id]
+                              CommunicationSend.find_by(campaign_id: params[:campaign_id], communication_id: params[:communication_id], subscriber_id: params[:subscriber_id])
+                            elsif params[:user_id]
+                              CommunicationSend.find_by(campaign_id: params[:campaign_id], communication_id: params[:communication_id], user_id: params[:user_id])
+                            else 
+                              nil
+                            end
+                          end
+    communications_sent.opens += 1
+    communications_sent.save
   end
 
 

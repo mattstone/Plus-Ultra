@@ -53,6 +53,9 @@ Rails.application.routes.draw do
   get 'bitly/:bitly', to: "home#bitly", as: "bitly"
   get 'image/:image', to: "home#image", as: "image"
   
+  get 'image/:image/:campaign_id/:communication_id/:subscriber_id', to: 'home#image', as: "image_s"
+  get 'image/:image/:campaign_id/:communication_id/:user_id',       to: 'home#image', as: "image_u"
+  
   namespace :dashboard do 
     get 'dashboard', to: 'dashboard#index'
 

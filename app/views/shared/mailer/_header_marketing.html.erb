@@ -87,7 +87,8 @@
     <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
     <tr>
   			<td align="center" style="padding:0;">
-          <%= image_tag image_url(image: "logo"), width: "300" %>
+          <%#= image_tag image_url(image: "logo"), width: "300" %>
+          <%= render 'shared/mailer/image', image: "logo", campaign: campaign, communication: communication, subscriber: subscriber, user: user %>
         </td>
     </tr>
 		<tr>

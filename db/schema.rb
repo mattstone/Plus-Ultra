@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_28_201214) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_29_222514) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -128,6 +128,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_28_201214) do
     t.json "history", default: []
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "campaign_id"
+    t.index ["campaign_id"], name: "index_communication_sents_on_campaign_id"
     t.index ["communication_id"], name: "index_communication_sents_on_communication_id"
     t.index ["subscriber_id"], name: "index_communication_sents_on_subscriber_id"
     t.index ["user_id"], name: "index_communication_sents_on_user_id"
@@ -276,4 +278,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_28_201214) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "communication_sents", "campaigns"
 end

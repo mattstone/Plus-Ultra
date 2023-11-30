@@ -26,10 +26,11 @@ class BulkEmail < ApplicationRecord
   end
   
   def send_from_sidekiq!(user_id = nil)
-    @user = User.find(user_id) if !user_id.nil?
+    @user   = User.find(user_id) if !user_id.nil?
     
     options = { communication: self.communication }
 
+    # TODO: Batch email sending.. 
     self.mailing_list.subscribers
       .find_in_batches(batch_size: 20).each do |subscribers|
         subscribers.each do |sub|
@@ -47,7 +48,7 @@ class BulkEmail < ApplicationRecord
     if @user
       options = {
         user: @user,
-        message: "Bulk email: #{communication.name} has been sent to #{count} subscribers"
+        message: "Bulk email: #{communication.name} has been sent to #{self.sent} subscribers"
       }
       
       Rails.logger.info "send_from_sidekiq: #{options.inspect}".red
