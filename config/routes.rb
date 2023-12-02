@@ -121,15 +121,16 @@ Rails.application.routes.draw do
     
   end  
   
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
-  
+  # For Testing and Development purposes
   if !Rails.env.production?
     get 'set_for_testing', to: 'home#set_for_testing'
     get 'qr_code',         to: 'home#qr_code'
+    
+    get 'session_data',    to: 'home#session_data'
+    get 'session_clear',   to: 'home#session_clear'
   end
   
+  # Defines the root path route ("/")
+  # root "articles#index"
   root 'home#index'
 end

@@ -1,7 +1,7 @@
 <%= render "shared/form_results", resource: resource %>
 
-<% if resource.new_record? and !session[:tag].blank? %>
-  <%= f.hidden_field :campaign_id, session[:tag] %>
+<% if resource.new_record? and session[:campaign_id] %>
+  <%= f.hidden_field :campaign_id, value: session[:campaign_id].to_s %>
 <% end %>
 
 <div class="field">

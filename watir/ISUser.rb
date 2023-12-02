@@ -18,34 +18,6 @@ class ISUser < ISBaseWatir
       tests_complete
     end 
     
-    def sign_up 
-      header("User sign up")
-      
-      click '/users/sign_up'
-      
-      # DO NOT USER HELPER FOR THIS H2 wait
-      @browser.wait_until { @browser.h2.text == 'Sign up' }
-      good("Reached Sign up page")
-      
-      fill_in_user_sign_up_form!
-            
-      fill_in_user_2fa! 
-      
-      wait_for_text 'Log Out'
-      
-      sleep 2
-      
-      user = test_user_record
-      case !user.stripe_customer_id.nil?
-      when true  then good("Stripe user create callback created stripe_customer_id")
-      when false then bad("Stripe user create callback did not creat stripe_customer_id")
-      end
-      
-      click_button "log_out_button"
-      
-      wait_for_text 'Signed out successfully'
-    end
-    
     def sign_in 
       
       sign_in_test_user

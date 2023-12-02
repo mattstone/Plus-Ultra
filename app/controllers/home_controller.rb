@@ -65,4 +65,20 @@ class HomeController < ApplicationController
   end
 
 
+  if !Rails.env.production?
+    
+    def session_data 
+      render plain: session.inspect.to_s
+    end 
+    
+    def session_clear
+      session[:shopping_cart]  = {}
+      session["shopping_cart"] = {}
+      session[:campaign_id]    = nil
+      
+      render plain: "OK"
+    end
+    
+  end
+
 end

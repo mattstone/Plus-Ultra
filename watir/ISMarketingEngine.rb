@@ -411,13 +411,63 @@ class ISMarketingEngine < ISBaseWatir
     when false then bad("rendering image appends to communication_sent.history")
     end
 
-    sleep 880
-    
   end
   
   def test_new_user_is_tagged_with_originating_campaign
 
     header("test_new_user_is_tagged_with_originating_campaign")
+    
+    
+    p "test_new_user_is_tagged_with_originating_campaign: 1"
+
+    communication = test_communication_record
+    campaign      = communication.campaign 
+    
+    case !campaign.nil?
+    when true  then good("campaign is valid")
+    when false then bad("campaign is not valid")
+    end
+    
+    #
+    # Now logout and clear any session data
+    #
+
+    goto_admin_dashboard
+    
+    wait_for_text "Admin"
+
+    click_button "admin_sign_out" # Sign out admin
+    
+    wait_for_text "You have been successfully signed out"
+
+    goto_session_clear
+
+    wait_for_text "OK"
+    
+    destroy_test_user!
+    
+    case User.count == 0 
+    when true  then good("Test user destroyed")
+    when false then bad("Test user not destroyed")
+    end
+
+    #
+    # Browse to site with tagged url and user created should be tagged with the campaign
+    #
+
+    goto "#{@base_url}?tag=#{campaign.id}"
+    
+    sleep 1
+
+    sign_up
+    
+    user = test_user_record
+    
+    case user.campaign_id == campaign.id
+    when true  then good("user tagged with correct campaign id: #{campaign.id}")
+    when false then bad("user not tagged with correct campaign id: #{campaign.id}")
+    end
+    
   end
 
 end

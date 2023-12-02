@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_29_222514) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_02_031412) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -76,7 +76,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_222514) do
 
   create_table "blogs", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "status", default: 0
+    t.integer "status"
     t.string "title"
     t.string "slug"
     t.datetime "datetime_to_publish"

@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_shopping_cart
   before_action :set_seo
-  before_action :set_referrer
+  before_action :set_campaign
   
   def l(string)
     case Rails.env.test?
@@ -66,14 +66,13 @@ class ApplicationController < ActionController::Base
     )
   end
   
-  def set_referrer
-    # TODO: handle seach engine referrers 
-    return if params[:tag].blank?
-    session[:tag] = params[:tag]  # Overwrite any previous with latest
-  end
-  
   def request_ip_address
     request.env['HTTP_X_FORWARDED_FOR'].blank? ? request.remote_ip : request.env['HTTP_X_FORWARDED_FOR']
+  end
+  
+  def set_campaign
+    session[:campaign_id] = params[:campaign_id] if params[:campaign_id] # from image url
+    session[:campaign_id] = params[:tag]         if params[:tag]         # from button or url
   end
   
   private 

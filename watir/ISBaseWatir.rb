@@ -41,6 +41,16 @@ class ISBaseWatir
       password: "password1234!"
     }
   end 
+
+  def test_user2 
+    { 
+      email: "test2@internetschminternet.com",
+      first_name: "first 2",
+      last_name: "last 2",
+      role: "customer",
+      password: "password1234!"
+    }
+  end 
   
   def fill_in_user_sign_up_form!
     
@@ -53,7 +63,7 @@ class ISBaseWatir
     set_text_field('user_password',   test_user[:password])
 
     set_text_field('user_password_confirmation', test_user[:password])
-
+    
     click_button "sign_up_button"
     
     sleep 1
@@ -82,6 +92,10 @@ class ISBaseWatir
   def test_user_record 
     test_user_db
   end 
+  
+  def destroy_test_user!
+    test_user_db.destroy
+  end
   
   def test_user_db
     User.find_by(email: test_user[:email])
@@ -315,6 +329,14 @@ class ISBaseWatir
     "#{@base_url}/image_u/#{image}"
   end
   
+  def goto_session_data
+    goto "#{@base_url}/session_data"
+  end
+
+  def goto_session_clear
+    goto "#{@base_url}/session_clear"
+  end
+  
   def header(message)
     p ""
     p "=========================================="
@@ -333,6 +355,38 @@ class ISBaseWatir
     p "------------------------------------------"
     p ""
   end
+  
+  def sign_up 
+    header("User sign up")
+    
+    click '/users/sign_up'
+    
+    sleep 1
+
+    # DO NOT USER HELPER FOR THIS H2 wait
+    @browser.wait_until { @browser.h2.text == 'Sign up' }
+    
+    good("Reached Sign up page")
+    
+    fill_in_user_sign_up_form!
+          
+    fill_in_user_2fa! 
+    
+    wait_for_text 'Log Out'
+    
+    sleep 1
+    
+    user = test_user_record
+    case !user.stripe_customer_id.nil?
+    when true  then good("Stripe user create callback created stripe_customer_id")
+    when false then bad("Stripe user create callback did not creat stripe_customer_id")
+    end
+    
+    click_button "log_out_button"
+
+    wait_for_text 'Signed out successfully'
+  end
+  
   
   def sign_in_admin
     go_home 

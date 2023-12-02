@@ -39,7 +39,11 @@ class User < ApplicationRecord
   end
   
   def send_one_time_code 
-    UserMailer::send_2fa_code({ user: self }).deliver_now!
+    # UserMailer::send_2fa_code({ user: self }).deliver_now!
+    options = {}
+    options[:communication] = Communication::sign_up_2fa_email
+    options[:user]          = self
+    UserMailer::communication(options).deliver_now!
   end
  
   def generate_one_time_code!

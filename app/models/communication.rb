@@ -29,6 +29,10 @@ class Communication < ApplicationRecord
   validates :campaign_id, presence: true
   
   validates_with CustomCommunicationValidator
+  
+  def self.sign_up_2fa_email
+    Communication.find_by(name: "Sign up 2FA Authentication")
+  end
 
   def email?
     self.communication_type_email?
