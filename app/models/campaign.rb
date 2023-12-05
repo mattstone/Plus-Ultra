@@ -17,6 +17,10 @@ class Campaign < ApplicationRecord
     "#{ENV['WHO_AM_I']}?tag=#{self.tag}"
   end
   
+  def qr_code
+    ISQRCode::generate_as_png(link)
+  end
+  
   def redirect?
     self.communication_type_redirect?
   end

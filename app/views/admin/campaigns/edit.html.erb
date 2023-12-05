@@ -5,6 +5,16 @@
 
 <br>
 
+<hr>
+
+<h4>QR Code</h4>
+<br>
+<%= link_to "Download", qr_code_admin_channel_campaign_path(@channel, @campaign), target: "_blank" %>
+<br>
+<br>
+
+<%= image_tag src="#{@campaign.qr_code}" %>
+
 <div>
   <%= link_to "Back to Campaigns", admin_channel_campaigns_path(@channel) %>
 </div>

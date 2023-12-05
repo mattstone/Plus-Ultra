@@ -1,6 +1,6 @@
 class Admin::CampaignsController < Admin::BaseController
   before_action :set_channel
-  before_action :set_campaign, only: %i[ show edit update destroy ]
+  before_action :set_campaign, only: %i[ show edit update destroy qr_code]
 
   # GET /Campaigns or /Campaigns.json
   def index
@@ -74,6 +74,11 @@ class Admin::CampaignsController < Admin::BaseController
       format.html { redirect_to admin_channel_campaigns_url(@channel), notice: "Campaign was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+  
+  def qr_code 
+    image = @campaign.qr_code.to_s.gsub("data:image/png;base64,", "")
+    send_data Base64.decode64(image), filename: "#{@campaign.name.gsub(" ", "_")}.png", type: 'image/png', disposition: 'attachment'
   end
 
   private

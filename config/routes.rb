@@ -102,7 +102,11 @@ Rails.application.routes.draw do
     end
     
     resources :channels do 
-      resources :campaigns
+      resources :campaigns do 
+        member do 
+          get 'qr_code'
+        end
+      end
     end
             
     resources :mailing_lists do 
