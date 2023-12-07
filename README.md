@@ -140,8 +140,9 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 * System dependencies
 - See Gem file 
 - Mailcatcher for development and test environments 
-- chromedriver 
-- postgres
+- Chromedriver 
+- Postgres
+- Redis
 
 * Configuration
 
@@ -149,6 +150,7 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - rails db:create 
 
 * Database initialization
+- rails db:migrate
 
 * How to run the test suite
 - cd watir 
@@ -177,7 +179,7 @@ gem install mailcatcher
 - sudo apt install certbot python3-certbot-apache
 - sudo certbot --nginx -d my_site.domain -d www.my_site.domain
 - Choose to redirect HTTP to HTTPS
-- Verify certbot has automated 90 renewal process: sudo systemctl status certbot.timer
+- Verify certbot has automated 90 day renewal process: sudo systemctl status certbot.timer
 - Test certbot renewal: sudo certbot renew --dry-run
 - Resolve any errors
 
