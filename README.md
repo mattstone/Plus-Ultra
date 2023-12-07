@@ -35,7 +35,7 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 
 ## 5. Testing 
 
-- Watir & Chromedrive
+- Watir & Chromedriver
 - install Chrome and compatible version of chromedriver
 
 ## Development Environment
