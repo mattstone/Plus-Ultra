@@ -1,11 +1,13 @@
 class Transaction < ApplicationRecord
   audited
   
-  belongs_to :order 
-  belongs_to :user 
+  belongs_to :order, touch: true
+  belongs_to :user,  touch: true
   belongs_to :subscription, optional: true
   
   belongs_to :campaigns,    optional: true
+
+  broadcasts_refreshes
 
   scope :recently_created, ->  { where(created_at: 1.minutes.ago..DateTime.now) }
 

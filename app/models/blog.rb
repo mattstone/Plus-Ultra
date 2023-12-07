@@ -17,6 +17,10 @@ class Blog < ApplicationRecord
   before_create :set_slug
   before_update :set_slug
   
+  belongs_to :user
+  
+  broadcasts_refreshes
+  
   def hero_image?
     return false if self.hero_image.nil?
     self.hero_image.url.nil? == false

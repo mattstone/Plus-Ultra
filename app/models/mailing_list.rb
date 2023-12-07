@@ -5,6 +5,8 @@ class MailingList < ApplicationRecord
 
   has_many :subscribers, dependent: :destroy
   
+  broadcasts_refreshes
+  
   def self.newsletter 
     MailingList.find_by(name: "Newsletter")
   end 

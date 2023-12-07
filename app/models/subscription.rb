@@ -1,11 +1,13 @@
 class Subscription < ApplicationRecord
   audited
   
-  belongs_to :user 
+  belongs_to :user, touch: true
   belongs_to :product 
-  belongs_to :order
+  belongs_to :order, touch: true
   
   has_many   :transactions
+  
+  broadcasts_refreshes
   
   enum :status, { incomplete: 0, incomplete_expired: 1, trialing: 2, active: 3, past_due: 4, canceled: 5, unpaid: 6 }, prefix: true 
   

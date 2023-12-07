@@ -23,6 +23,8 @@
     
     <%= render 'layouts/shared/facebook_meta_tags' %>
     <%= render 'layouts/shared/google_tag_manager_head' %>
+    
+    <%= turbo_refreshes_with method: :morph, scroll: :preserve  %>
   </head>
   <body>
     <%= render 'layouts/shared/google_tag_manager_body' %>

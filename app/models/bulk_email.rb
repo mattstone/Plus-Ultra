@@ -6,6 +6,8 @@ class BulkEmail < ApplicationRecord
   belongs_to :mailing_list
   belongs_to :communication
   
+  broadcasts_refreshes  
+  
   after_update_commit -> { 
       broadcast_render_to(
         "bulk_email_#{self.id}",

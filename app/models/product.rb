@@ -15,6 +15,8 @@ class Product < ApplicationRecord
   has_many :orders, through: :product_orders
   
   after_save   :update_stripe
+  
+  broadcasts_refreshes
 
   # add validations 
   validates :name, :price_in_cents, :sku, presence: true

@@ -59,6 +59,7 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 ## Application Notes
 
 ### Rails 
+- Turbo 8
 - Active Storage for file uploads
 - ActionText Trix WYSIWYG editor
 - dotenv for environment
@@ -116,10 +117,11 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - Phony & Phonelib for international telephone numbers
 - International Time Zones
 - Invisible Captcha for anti-spam form catching
-- QRCode to generate QR codes
+- Generate QR and Barcodes
 - SEO optimisation - Title, Meta Description/Keywords and image tagging
 - Charting Chartkick https://chartkick.com/ & ApexCharts https://github.com/styd/apexcharts.rb
 - Font awesome free
+- Turbo 8 - how to use: https://fly.io/ruby-dispatch/turbo-8-in-8-minutes/
 
 ### Make money with Stripe
 - Once off Purchase
@@ -130,7 +132,6 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 * TODO 
 
 - elastic search
-- Outbound campaigns and inbound tracking
 - subscriptions history
 - upgrade to Ruby 3.3 & YJIT
 - campaign management - move sending of bulk emails to background task

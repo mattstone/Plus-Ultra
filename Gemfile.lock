@@ -366,7 +366,7 @@ GEM
     tilt (2.3.0)
     timeout (0.4.1)
     ttfunk (1.7.0)
-    turbo-rails (1.5.0)
+    turbo-rails (2.0.0.pre.beta.1)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
@@ -447,7 +447,7 @@ DEPENDENCIES
   stimulus-rails
   stripe
   stripe_event
-  turbo-rails
+  turbo-rails (~> 2.0.0.pre.beta)
   twilio-ruby
   tzinfo-data
   watir

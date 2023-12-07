@@ -34,6 +34,7 @@ class Admin::BlogsController < Admin::BaseController
   # POST /blogs or /blogs.json
   def create
     @blog = Blog.new(blog_params)
+    @blog.user = current_user
   
     respond_to do |format|
       if @blog.save
@@ -85,7 +86,9 @@ class Admin::BlogsController < Admin::BaseController
         :teaser,
         :hero_image,
         :content,
-        :datetime_to_publish
+        :datetime_to_publish,
+        :meta_description,
+        :meta_keywords
       )
     end
     

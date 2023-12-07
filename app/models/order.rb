@@ -6,9 +6,11 @@ class Order < ApplicationRecord
   has_many :transactions
   has_many :subscriptions
   
-  belongs_to :user
+  belongs_to :user, touch: true
   
   validates :amount_in_cents, presence:   true
+  
+  broadcasts_refreshes
 
   
   # Note: subscriptions.. must use different process.

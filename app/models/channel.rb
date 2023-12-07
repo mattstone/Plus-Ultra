@@ -3,5 +3,7 @@ class Channel < ApplicationRecord
   
   validates :name, presence: true
   validates :name, uniqueness: true
+  
+  broadcasts_refreshes
 
 end

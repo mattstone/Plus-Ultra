@@ -12,8 +12,11 @@ class User < ApplicationRecord
   has_many :transactions
   has_many :orders
   has_many :subscriptions
+  has_many :blogs
   
   belongs_to :campaigns, optional: true
+  
+  broadcasts_refreshes
   
   validates :first_name, :last_name, presence: true
   

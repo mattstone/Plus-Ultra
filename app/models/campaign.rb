@@ -11,6 +11,9 @@ class Campaign < ApplicationRecord
   
   after_save :set_tag_and_name
   
+  broadcasts_refreshes
+
+  
   enum :communication_type, { none: 0, email: 1, bulk_email: 2, sms: 3, outbound_telephone: 4, inbound_telephone: 5, redirect: 6 }, prefix: true
   
   def link 
