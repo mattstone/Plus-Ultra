@@ -42,7 +42,7 @@ class WebhooksController < ApplicationController
     rescue Stripe::SignatureVerificationError => e 
       render json: { message: e}, status: 400 and return
     end
-    
+
     # If we get here.. all is good!
     
     if !Rails.env.production?

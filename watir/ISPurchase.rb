@@ -225,7 +225,7 @@ class ISPurchase < ISBaseWatir
     
     sleep 1
 
-    button_click "pay_now"
+    click_button "pay_now"
     
     good("clicked on Pay Now")
     

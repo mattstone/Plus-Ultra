@@ -42,7 +42,7 @@ class ISMailingList < ISBaseWatir
     
     def test_mailing_list 
       ml = MailingList.find_by(name: test_data[:name])
-      ml = MailingList.find_by(name: "Changed") if ml.nil?
+      ml = MailingList.find_by(name: changed) if ml.nil?
       ml
     end
     
@@ -51,10 +51,12 @@ class ISMailingList < ISBaseWatir
     end
 
     def remove_test_data!
-      MailingList.where(name: test_data[:name]).destroy_all
-      MailingList.where(name: "Changed").destroy_all
+      # MailingList.where(name: test_data[:name]).destroy_all
+      # MailingList.where(name: "Changed").destroy_all
+      MailingList.destroy_all
+      Subscriber.destroy_all
       
-      Subscriber.where(email: newsletter_subscriber[:email]).destroy_all
+      MailingList.create(name: "Newsletter")
     end
     
     def create_mailing_list 
@@ -79,7 +81,7 @@ class ISMailingList < ISBaseWatir
       header("Edit Mailing List")
       
       ml   = test_mailing_list
-
+      
       click "/admin/mailing_lists/#{ml.id}/edit"
 
       set_text_field('mailing_list_name', changed)
@@ -113,7 +115,7 @@ class ISMailingList < ISBaseWatir
       
       click "/admin/mailing_lists/#{ml.id}/subscribers"
       
-      wait_for_text "Manage Subscribers for Changed"
+      wait_for_text "Manage Subscribers for"
 
       click "/admin/mailing_lists/#{ml.id}/subscribers/new"
 

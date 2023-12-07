@@ -5,7 +5,7 @@ class ISRedis
   end
   
   def self.set_ex(key, object, ex = 60) # expires in 60 seconds
-    $redis.set(key, object.to_json, ex)
+    $redis.setex(key, ex, object.to_json)
   end
   
   def self.get(key)

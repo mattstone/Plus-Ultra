@@ -1,5 +1,5 @@
 class Dashboard::SubscriptionsController < Dashboard::BaseController
-  before_action :set_subscription, only: %i[ show edit update destroy cancel ]
+  before_action :set_subscription, only: %i[ show cancel ]
 
   # GET /subscriptions or /subscriptions.json
   def index

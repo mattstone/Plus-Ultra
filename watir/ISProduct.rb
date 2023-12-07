@@ -135,14 +135,14 @@ class ISProduct < ISBaseWatir
     
     sleep 2 # Wait for Stripe callback to complete
     
-    test_subscription_product = test_subscription_product_record
+    test_product_subscription = test_product_subscription_record
     
-    case !test_subscription_product.stripe_product_id.blank?
+    case !test_product_subscription.stripe_product_id.blank?
     when true  then good("product.stripe_product_id has value")
     when false then good("product.stripe_product_id has no value")
     end
 
-    case !test_subscription_product.stripe_price_id.blank?
+    case !test_product_subscription.stripe_price_id.blank?
     when true  then good("product.stripe_price_id has value")
     when false then good("product.stripe_price_id has no value")
     end

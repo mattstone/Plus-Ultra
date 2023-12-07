@@ -4,6 +4,7 @@ class ISStripe < ISBaseLib
 
   def initialize 
     Stripe.api_key    = ENV["STRIPE_SECRET_KEY"]
+    p "ISStripe: 1"
   end
 
   #
@@ -267,6 +268,9 @@ class ISStripe < ISBaseLib
   
   def handle_webhook(event)
     
+    p "ISStripe: 2"
+    p event.type
+    
     case event.type 
       
     when 'customer.created'
@@ -385,7 +389,12 @@ class ISStripe < ISBaseLib
       subscription.status_active! if subscription
       
     when 'customer.subscription.deleted'
+      
+      p 'customer.subscription.deleted'
+      
       object = event.data.object 
+      
+      p object.inspect
       
       if object["metadata"]
         subscription = Subscription.find(object["metadata"["subscription_id"]])

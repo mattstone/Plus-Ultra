@@ -1,5 +1,5 @@
 class Admin::CommunicationsController < Admin::BaseController
-  before_action :set_communication, only: %i[ show edit update destroy, test, preview ]
+  before_action :set_communication, only: %i[ show edit update test preview ]
 
   # GET /Communications or /Communications.json
   def index

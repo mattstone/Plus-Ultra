@@ -1,6 +1,6 @@
 class TransactionsController < ApplicationController
   before_action :authenticate_user!, only: %i[ complete ]
-  before_action :set_transaction,    only: %i[ show edit update destroy poll_for_webhook_response ]
+  before_action :set_transaction,    only: %i[ show poll_for_webhook_response ]
 
   # GET /transactions or /transactions.json
   def index
