@@ -73,7 +73,7 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 -- marketing emails use Mailgun (or it's easy to add a different 3rd Party Mailer)
 - Setup SPF, DKIM and DMARK records for your email sending domain 
 - Ensure reverse DNS responds with the domain name used for sending email
-- Detup and monitor abuse@mydomain.com
+- Setup and monitor abuse@mydomain.com
 - Review Spam Blacklists for any of your IP addresses and domains 
 
 ### Third parties 
