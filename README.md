@@ -47,7 +47,7 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 
 * Mailcatcher url: http://127.0.0.1:1080/
  - run mailcatcher in console 
- - mailcatcher -f -b -v
+
 
 ### Stripe CLI
 - https://stripe.com/docs/stripe-cli
@@ -67,8 +67,8 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - Boostrap SCSS
 - Sanitize for cleaning up text input by user
 
-### Ensure your marketing do not end up in spam bin
-- Email sending is seperated into operational and marketing. So if your marketing emails are flagged as spam, operational emails will not be affected. Aggressive marketing tactics may see your email domain added to Spam Blacklists and it's time consuming to get these removed.
+### Ensure your email marketing does not end up in the spam bin
+- Email sending is separated into operational and marketing. So if your marketing emails are flagged as spam, operational emails will not be affected. Aggressive marketing tactics may see your email domain added to Spam Blacklists and it's time consuming to get these removed.
 -- operational emails use SMTP 
 -- marketing emails use Mailgun (or it's easy to add a different 3rd Party Mailer)
 - Setup SPF, DKIM and DMARK records for your email sending domain 
