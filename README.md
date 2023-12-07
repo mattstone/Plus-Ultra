@@ -66,6 +66,7 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - Boostrap SCSS
 - Sanitize for cleaning up text input by user
 - Bulk emails sent on background thread
+- Simple calendar for events
 
 ### Ensure your email marketing does not end up in the spam bin
 - Email sending is separated into operational and marketing. So if your marketing emails are flagged as spam, operational emails will not be affected. Aggressive marketing tactics may see your email domain added to Spam Blacklists and it's time consuming to get these removed.
@@ -79,8 +80,8 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 ### Third parties 
 - Google Tag Manager 
 - Facebook Open Graph Pixel tracking
-- Twilio for SMS - outbound and inbound
-- Stripe for purchased and subscriptions
+- Twilio SMS - outbound and inbound
+- Stripe for purchase and subscriptions
 
 #### Sample .env 
 
@@ -131,9 +132,10 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 # 
 * TODO 
 
-- elastic search
+- Elastic search
 - subscriptions history
 - upgrade to Ruby 3.3 & YJIT
+- Calendar
 
 * Ruby version
 
