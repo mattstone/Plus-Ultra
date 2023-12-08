@@ -67,6 +67,7 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - Sanitize for cleaning up text input by user
 - Bulk emails sent on background thread
 - Simple calendar for events
+- Users individual time zones
 
 ### Ensure your email marketing does not end up in the spam bin
 - Email sending is separated into operational and marketing. So if your marketing emails are flagged as spam, operational emails will not be affected. Aggressive marketing tactics may see your email domain added to Spam Blacklists and it's time consuming to get these removed.
