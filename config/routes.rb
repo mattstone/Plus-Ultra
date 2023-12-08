@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :events
   default_url_options host: ENV['DOMAIN']
   
   resources :subscriptions

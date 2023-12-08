@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :orders
   has_many :subscriptions
   has_many :blogs
+  has_many :events
   
   belongs_to :campaigns, optional: true
   
