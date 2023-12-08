@@ -8,12 +8,12 @@ class BulkEmail < ApplicationRecord
   
   broadcasts_refreshes  
   
-  after_update_commit -> { 
-      broadcast_render_to(
-        "bulk_email_#{self.id}",
-        partial: "admin/bulk_emails/bulk_email", bulk_email: self
-      )  
-  }
+  # after_update_commit -> { 
+  #     broadcast_render_to(
+  #       "bulk_email_#{self.id}",
+  #       partial: "admin/bulk_emails/bulk_email", bulk_email: self
+  #     )  
+  # }
 
   def self.communications_for_select 
     Communication 
