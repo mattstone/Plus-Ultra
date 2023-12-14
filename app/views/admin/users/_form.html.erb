@@ -1,6 +1,6 @@
 <br>
 <%= form_with(model: [:admin, user], local: true) do |f| %>
-  
+    <%= render 'shared/form_results', resource: user %>
   
     <div class="field">
       <%= f.label :email, class: "form-label" %><br />

@@ -287,6 +287,10 @@ class ISPurchase < ISBaseWatir
 
     wait_for_text test_subscription[:name]
     
+    #
+    # TODO: morphing does not seem to work in test mode
+    #
+    
     sleep 4 # Wait for stripe callback
     
     click '/dashboard/subscriptions'

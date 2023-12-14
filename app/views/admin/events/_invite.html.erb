@@ -1,0 +1,16 @@
+<div id="invite_to_event">
+  <div data-controller="invitees">
+    <%= form_with url: search_for_invitee_admin_user_events_path(current_user), html: { "data-invitees-target": "inviteForm" }, method: :post do |f| %>
+      <div class="field">
+        <%= f.label "invite", class: "form-label" %> 
+        <%= render 'admin/events/invitees_search_form_hidden_field', invitees: event.invitees %>
+
+        <%= render 'admin/events/invitees_search_form_query' %>
+      </div>
+    <% end %>
+  </div>
+  
+  <%= render 'admin/events/invitees_search_results', results: [], invitees: event.invitees %>
+  
+  <%= render 'admin/events/invitees', invitees: event.invitees %>
+</div>

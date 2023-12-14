@@ -1,0 +1,26 @@
+<div id="event_invitees_partial">
+  <br>
+  <div class="field">
+    <%#= label_tag "Invitees" %>
+    <%# Note: do not change the below line... will bork up javascript controller %>
+    <% array = invitees.split(",") %>
+    <% if array.count == 0 %>
+      <p>There are no invitees</p>
+    <% else %>
+      <% count = 0 %>
+      <% array.each do |e| %>
+        <div class="row">
+          <div class="col-3"><%= e.to_s.strip %></div> 
+          <div class="col-1">
+            <%= form_with url: remove_invitee_admin_user_events_path(current_user), method: :post do |f| %>
+              <%= hidden_field_tag :element,  count %>
+              <%= hidden_field_tag :invitees, invitees %>
+              <%= f.submit "X", class: "btn btn-sm btn-danger" %>
+            <% end %>
+          </div>
+        </div>
+        <% count += 1 %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

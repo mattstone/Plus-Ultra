@@ -40,6 +40,14 @@ module ApplicationHelper
   def short_date_and_time(datetime)
     datetime&.strftime("%d/%m/%Y %H:%M %P %Z")
   end
+
+  def event_date_and_time_short(datetime)
+    datetime&.strftime("%a %d %B %Y %H:%M%P")
+  end
+  
+  def event_date_and_time_long(datetime)
+    datetime&.strftime("%A %d %B %Y %H:%M%P")
+  end
     
   def current_page?(options)
     params[:controller] == options[:controller] and params[:action] == options[:action]

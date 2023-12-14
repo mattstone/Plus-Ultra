@@ -81,12 +81,22 @@ Rails.application.routes.draw do
     get 'dashboard', to: 'dashboard#index'
     get 'logout',    to: 'dashboard#logout'
     
-    resources :users,
-              :products,
+    resources :products,
               :transactions,
               :blogs,
               :orders,
               :communications
+              
+    resources :users do 
+      resources :events do 
+        collection do 
+          post 'search_for_invitee'
+          post 'add_invitee'
+          post 'remove_invitee'
+        end
+      end
+      
+    end
               
     resource :communications do 
       member do 

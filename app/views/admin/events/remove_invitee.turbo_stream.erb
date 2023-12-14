@@ -1,0 +1,4 @@
+<%= turbo_stream.replace "event_invitees_partial",            partial: 'admin/events/invitees',                          locals: { invitees: @invitees } %>
+<%= turbo_stream.replace "invitees_search_form_hidden_field", partial: 'admin/events/invitees_search_form_hidden_field', locals: { invitees: @invitees } %>
+<%#= turbo_stream.replace "invitees_search_form_query",        partial: 'admin/events/invitees_search_form_query'%>
+<%= turbo_stream.replace "invitees_form_hidden_field",        partial: 'admin/events/invitees_form_hidden_field', locals: { invitees: @invitees } %>

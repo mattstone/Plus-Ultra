@@ -1,0 +1,65 @@
+
+<div data-controller="googlemaps">
+
+<%= form_with(model: [:admin, @user, event]) do |f| %>
+  <%= render 'shared/form_results', resource: event %>
+  
+  <%= f.hidden_field :invitees %>
+  
+  <br>
+  <div class="field">
+    <%= f.label :type, class: "form-label" %><br />
+    <%= f.select :event_type, Event.event_types.keys.map { |key| [key.titleize, key]}, {}, { class: "form-control" } %>
+  </div>
+  
+  <br>
+  <div class="field">
+    <%= f.label "Start", class: "form-label" %>  
+    <%= f.datetime_field :start_datetime, class: "form_control", required: true %>
+  </div>
+
+  <br>
+  <div class="field">
+    <%= f.label "End", class: "form-label" %>  
+    <%= f.datetime_field :end_datetime, class: "form_control", required: true %>
+  </div>
+
+  <br>
+  <div class="field">
+    <%= f.label "Name", class: "form-label" %> 
+    <%= f.text_field :name, class: "form_control", required: true %>
+  </div>
+
+  <br>
+  <div class="field">
+    <%= f.label "Location", class: "form-label" %> 
+    <%= f.text_field :location, class: "form_control", "data-googlemaps-target": "searchLocation" %>
+  </div>
+  
+  <%= render 'admin/events/invitees_form_hidden_field', invitees: event.invitees %>
+
+  <div data-invitees-target="searchUrl" class="d-none"><%= search_for_invitee_admin_user_events_url(current_user) %></div>
+  <div data-invitees-target="addUrl"    class="d-none"><%= add_invitee_admin_user_events_url(current_user) %></div>
+  <div data-invitees-target="removeUrl" class="d-none"><%= remove_invitee_admin_user_events_url(current_user) %></div>
+
+  <br>
+  <br>
+  
+  <div>
+    <%= f.submit "Save", class: admin_button_class, id: "admin_user_event_button" %>
+  </div>
+<% end %>
+
+<br>
+
+
+<%= render 'admin/events/invite', event: event %>
+
+<br>
+
+<%= render 'shared/google_maps', latitude: event.latitude, longitude: event.longitude %>
+
+</div>
+
+
+

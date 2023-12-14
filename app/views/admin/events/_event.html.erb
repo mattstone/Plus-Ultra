@@ -1,0 +1,26 @@
+<div id="<%= dom_id(event) %>">
+    <div class="row bg-light">
+      <div class="col-3"><%= event.name %></div>
+      <div class="col-2"><strong>Time Zone</strong></div>
+      <div class="col-3"><%= current_user.time_zone %></div>
+    </div>
+    <div class="row">
+      <div class="col-1"><strong>Start</strong></div>
+      <div class="col-4"><%= event_date_and_time_short event.start_datetime %></div>
+      <div class="col-1"><strong>End</strong></div>
+      <div class="col-4"><%= event_date_and_time_short event.end_datetime %></div>
+    </div>
+    <div class="row">
+      <div class="col-2"><strong>Location</strong></div>
+      <div class="col-3"><%= event.location %></div>
+    </div>
+    <div class="row">
+      <div class="col-2"><strong>Invitees</strong></div>
+      <div class="col-3"><%= event.invitees %></div>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <%= link_to "Edit", edit_admin_user_event_path(current_user, event) %>
+      </div>
+    </div>    
+</div>

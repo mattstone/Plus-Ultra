@@ -1,0 +1,32 @@
+<%= render 'admin/shared/header', title: "Manage User Events" %>
+<br>
+
+<div class="row"">
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Start</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>End</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Location</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Invitees</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Action</strong>
+  </div>
+</div>
+
+<div id="events">
+  <% @events.each do |event| %>
+    <%= render event %>
+  <% end %>
+</div>
+
+<%= render 'shared/paging', resources: @events %>
+<br>
+<%= link_to "New event", new_admin_user_event_path(@user) %>
+
+<br>

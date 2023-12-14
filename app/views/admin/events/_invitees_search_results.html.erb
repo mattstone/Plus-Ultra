@@ -1,0 +1,16 @@
+<div id="event_invitees_search_results">
+  <% if results.count == 0 %>
+  <% else %>
+    <% results.each do |u| %>
+      <%= form_with url: add_invitee_admin_user_events_url(current_user), method: :post do |f| %>
+        <%= hidden_field_tag :email,    u.email  %>
+        <%= hidden_field_tag :invitees, invitees %>
+        <div class="row">
+          <div class="col-4">
+            <%= f.submit "#{u.email} <#{u.full_name}>", class: "btn btn-light" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

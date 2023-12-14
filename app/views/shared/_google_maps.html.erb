@@ -1,0 +1,13 @@
+<h5>Map</h5>
+<div class="d-none" data-googlemaps-target="google_maps_api_key"><%= ENV['GOOGLE_MAPS_API_KEY'] %></div>
+
+<%# for auto drawing %>
+
+<% if defined?(latitude) and defined?(longitude) %>
+  <div class="d-none" data-googlemaps-target="latitude"><%= latitude %></div>
+  <div class="d-none" data-googlemaps-target="longitude"><%= longitude %></div>
+<% end %>
+
+<div class="map-container">
+  <div id="map" style="width: 800px; height: 500px;"></div>
+</div>

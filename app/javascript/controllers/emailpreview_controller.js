@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import BaseController from "controllers/base_controller"
 
 export default class extends Controller {
   static targets = [ "iframe", "communication", "url", "height", "heightInputRow", "emailPreview", "emailContent", "layout", "subscribers", "mailing_list", "subscribers_count_url" ]
@@ -13,13 +14,8 @@ export default class extends Controller {
   }
 
   options_for_post() {
-    return {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-      }
-    }
+    const base_controller = new BaseController();
+    return base_controller.options_for_post()
   }
 
   bulk_preview() {

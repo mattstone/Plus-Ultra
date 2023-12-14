@@ -18,3 +18,4 @@ pin "@stripe/stripe-js", to: "https://ga.jspm.io/npm:@stripe/stripe-js@2.1.10/di
 # Charting
 pin "chartkick", to: "chartkick.js"
 pin "Chart.bundle", to: "Chart.bundle.js"
+pin "@googlemaps/js-api-loader", to: "https://ga.jspm.io/npm:@googlemaps/js-api-loader@1.16.2/dist/index.esm.js"
