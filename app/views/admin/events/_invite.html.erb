@@ -4,13 +4,11 @@
       <div class="field">
         <%= f.label "invite", class: "form-label" %> 
         <%= render 'admin/events/invitees_search_form_hidden_field', invitees: event.invitees %>
-
         <%= render 'admin/events/invitees_search_form_query' %>
       </div>
     <% end %>
   </div>
   
   <%= render 'admin/events/invitees_search_results', results: [], invitees: event.invitees %>
-  
   <%= render 'admin/events/invitees', invitees: event.invitees %>
 </div>

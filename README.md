@@ -33,6 +33,11 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - Campaign tracking - open, clicks, signups & purchases
 - Sales performance 
 
+## 5 Events / Meetings / Appointments
+- Invitations
+- Acceptance / Decline 
+- GoogleMaps for location
+
 ## 5. Testing 
 
 - Watir & Chromedriver
@@ -106,8 +111,8 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - TWILIO_MOBILE_NUMBER = "+61400000000"
 - FROM_EMAIL           = "role@mydomain.com"
 - FROM_EMAIL_MARKETING = 'mydomain <noreply@mydomain.com>'
-
 - MAILGUN_API_KEY      = ""
+- GOOGLE_MAPS_API_KEY  = ""
 
 ### Operations
 - Admin Dashboard 
@@ -136,7 +141,7 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - Elastic search
 - subscriptions history
 - upgrade to Ruby 3.3 & YJIT
-- Calendar
+- Calendar - https://github.com/icalendar/icalendar & 
 
 * Ruby version
 

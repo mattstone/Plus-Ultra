@@ -3,23 +3,37 @@
   <div class="field">
     <%#= label_tag "Invitees" %>
     <%# Note: do not change the below line... will bork up javascript controller %>
-    <% array = invitees.split(",") %>
-    <% if array.count == 0 %>
+    <% if invitees.count == 0 %>
       <p>There are no invitees</p>
     <% else %>
-      <% count = 0 %>
-      <% array.each do |e| %>
-        <div class="row">
-          <div class="col-3"><%= e.to_s.strip %></div> 
-          <div class="col-1">
-            <%= form_with url: remove_invitee_admin_user_events_path(current_user), method: :post do |f| %>
-              <%= hidden_field_tag :element,  count %>
-              <%= hidden_field_tag :invitees, invitees %>
-              <%= f.submit "X", class: "btn btn-sm btn-danger" %>
-            <% end %>
+    
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-1"><strong>Accepted</strong></div>
+        <div class="col-1"><strong>Remove</strong></div>
+      </div>
+    
+      <% invitees.each do |i| %>
+        <% 
+          i     = i.symbolize_keys
+          email = i[:email].to_s.strip
+        %>
+        <%= form_with url: remove_invitee_admin_user_events_path(current_user), method: :post,
+        data: { turbo_confirm: "Are you sure you wish to remove #{email}?"} do |f| %>
+          <%= hidden_field_tag :email, email %>
+          <%= hidden_field_tag :invitees, url_encode_object(invitees) %>
+          
+          <div class="row">
+            <div class="col-3"><%= email %></div> 
+            <div class="col-1">
+              <%= i[:accepted] == true ? "✅" : "" %>
+            </div>
+            <div class="col-1">
+                <%= f.submit "X", class: "btn btn-sm btn-danger" %>
+            </div>
           </div>
-        </div>
-        <% count += 1 %>
+        <% end %>
+
       <% end %>
     <% end %>
   </div>

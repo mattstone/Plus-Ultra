@@ -1,6 +1,7 @@
 class Admin::EventsController < Admin::BaseController
   before_action :set_user
   before_action :set_event, only: %i[ show edit update destroy ]
+  before_action :set_invitees, only: %i[ search_for_invitee add_invitee remove_invitee ]
 
   # GET /events or /events.json
   def index
@@ -69,7 +70,10 @@ class Admin::EventsController < Admin::BaseController
   #
   
   def search_for_invitee
-    @invitees = params[:invitees]
+    Rails.logger.info params[:invitees]
+    
+    Rails.logger.info URI.decode_www_form_component(params[:invitees]).green 
+    
     @results  = User 
                  .where('email ILIKE ?', "%#{params[:query]}%")
                  .limit(10)
@@ -80,19 +84,24 @@ class Admin::EventsController < Admin::BaseController
     end
   end 
   
-  def add_invitee
-    @invitees  = params[:invitees]
-    
-    if !@invitees.include?(params[:email])
-      @invitees += ", " if !@invitees.blank?
-      @invitees += params[:email]
-    end
+  def add_invitee    
+    email_exists = false 
+    @invitees.each { |i| email_exists = true if i["email"].to_s.downcase == params[:email].to_s.downcase }
+    @invitees << Event::invitee(params[:email].to_s.downcase) if !email_exists
   end
   
   def remove_invitee
-    @invitees = params[:invitees].split(", ")
-    @invitees.delete_at(params[:element].to_i)
-    @invitees = @invitees.join(", ")
+    # @invitees = params[:invitees].split(", ")
+    # @invitees.delete_at(params[:element].to_i)
+    # @invitees = @invitees.join(", ")
+    
+    Rails.logger.info @invitees.inspect
+    
+    new_invitees = []
+    @invitees.each { |i| new_invitees << i if i["email"].downcase != params[:email].downcase }
+    @invitees = new_invitees
+    
+    # @invitees = @invitees.inject([]) { |array, i| array << i if i["email"].downcase != params[:email].downcase}
     
     Rails.logger.info @invitees.inspect.to_s.red
   end
@@ -107,6 +116,10 @@ class Admin::EventsController < Admin::BaseController
     def set_event
       @event = Event.find(params[:id])
     end
+    
+    def set_invitees 
+      @invitees = JSON.parse URI.decode_www_form_component(params[:invitees])
+    end
 
     # Only allow a list of trusted parameters through.
     def event_params
@@ -116,7 +129,8 @@ class Admin::EventsController < Admin::BaseController
         :end_datetime,
         :name,
         :location,
-        :invitees
+        :invitees,
+        :new_invitiees
       )
       
     end

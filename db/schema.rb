@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_11_012349) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_15_025122) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -155,11 +155,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_11_012349) do
     t.string "video_url"
     t.datetime "start_datetime"
     t.datetime "end_datetime"
-    t.json "invitees", default: []
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "latitude"
     t.decimal "longitude"
+    t.json "invitees", default: []
     t.index ["event_type"], name: "index_events_on_event_type"
     t.index ["start_datetime"], name: "index_events_on_start_datetime"
     t.index ["user_id"], name: "index_events_on_user_id"

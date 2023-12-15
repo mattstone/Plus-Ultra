@@ -57,6 +57,11 @@ module ApplicationHelper
     "#{cents_to_dollars product.price_in_cents} #{product.pricing_string}"    
   end
   
+  def url_encode_object(object)
+    return "" if object.nil?
+    URI.encode_www_form_component(object.to_json.to_s)    
+  end
+  
   def qr_magic(text)
       # only load when needed
       require 'barby'

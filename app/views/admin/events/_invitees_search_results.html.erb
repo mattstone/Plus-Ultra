@@ -4,7 +4,7 @@
     <% results.each do |u| %>
       <%= form_with url: add_invitee_admin_user_events_url(current_user), method: :post do |f| %>
         <%= hidden_field_tag :email,    u.email  %>
-        <%= hidden_field_tag :invitees, invitees %>
+        <%= hidden_field_tag :invitees, url_encode_object(invitees) %>
         <div class="row">
           <div class="col-4">
             <%= f.submit "#{u.email} <#{u.full_name}>", class: "btn btn-light" %>

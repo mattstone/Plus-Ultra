@@ -37,6 +37,10 @@ class Event < ApplicationRecord
     event.end_datetime   = event.start_datetime + 1.hour
   end  
   
+  def self.invitee(email) 
+    { email: email, accepted: false, date_accepted: nil }
+  end
+  
   def reminder?
     self.type_reminder?
   end
