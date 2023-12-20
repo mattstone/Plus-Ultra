@@ -60,6 +60,12 @@ Rails.application.routes.draw do
   get 'image_s/:image/:campaign_id/:communication_id/:subscriber_id', to: 'home#image_s', as: "image_s"
   get 'image_u/:image/:campaign_id/:communication_id/:user_id',       to: 'home#image_u', as: "image_u"
   
+  # Events 
+  get 'events/accept_invitation/:event_id/:uuid',  to: 'events#accept',  as: "accept_invitation"
+  get 'events/decline_invitation/:event_id/:uuid', to: 'events#decline', as: "decline_invitation"
+  
+  
+  
   namespace :dashboard do 
     get 'dashboard', to: 'dashboard#index'
 

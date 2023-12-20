@@ -38,7 +38,7 @@ class Event < ApplicationRecord
   end  
   
   def self.invitee(email) 
-    { email: email, accepted: false, date_accepted: nil }
+    { email: email, accepted: false, date_accepted: nil, uuid: SecureRandom.uuid }
   end
   
   def reminder?
@@ -51,6 +51,12 @@ class Event < ApplicationRecord
 
   def appointment?
     self.type_appointment?
+  end
+
+  def accept_invitation!(uuid)
+  end 
+
+  def decline_invitation!(uuid)
   end
 
 end

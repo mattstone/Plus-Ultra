@@ -141,9 +141,14 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - Elastic search
 - subscriptions history
 - upgrade to Ruby 3.3 & YJIT
-- Calendar - https://github.com/icalendar/icalendar & 
+- Calendar - https://github.com/icalendar/icalendar
+-- events 
+-- invitations 
+-- accept & decline invitations
 
 * Ruby version
+- https://github.com/rbenv/rbenv
+- 3.1.3
 
 * System dependencies
 - See Gem file 
