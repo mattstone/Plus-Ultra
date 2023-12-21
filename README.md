@@ -6,7 +6,7 @@ Aim:
 
 Starter app with everything needed to launch and run a business. Just add an idea and designer.
 
-Modern Rails 7 Hotwire app with no Javascript build complexity.
+Modern Rails 7 Hotwire app, embracing the the no build philosophy on the front-end.
 
 Note: Not production ready. Still work in progress. Aim is to be completed in Feb 2024.
 
@@ -324,4 +324,13 @@ server {
 ## License
 
 Plus Ultra is released under the [MIT License](https://opensource.org/licenses/MIT).
+
+
+
+* Ruby 3.2.2 fix 
+gem install thin 
+gem update --system 3.5.1
+
+gem install watir
+gem install mailcatcher
 
