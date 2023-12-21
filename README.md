@@ -328,9 +328,17 @@ Plus Ultra is released under the [MIT License](https://opensource.org/licenses/M
 
 
 * Ruby 3.2.2 fix 
-gem install thin 
+
+- note vips install takes awhile..
+
 gem update --system 3.5.1
+gem install thin 
 
 gem install watir
 gem install mailcatcher
+gem install puma
+
+brew install wget
+brew uninstall vips 
+brew install vips
 
