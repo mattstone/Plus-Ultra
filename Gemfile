@@ -132,7 +132,6 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'watir'
   gem 'faker'
-  gem 'mailcatcher'
 end
 
 group :development do

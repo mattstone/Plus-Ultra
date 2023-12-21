@@ -75,7 +75,7 @@ GEM
       minitest (>= 5.1)
       mutex_m
       tzinfo (~> 2.0)
-    addressable (2.8.5)
+    addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     apexcharts (0.2.0)
     audited (5.4.2)
@@ -86,7 +86,7 @@ GEM
     barby (0.6.9)
     base64 (0.2.0)
     bcrypt (3.1.20)
-    bigdecimal (3.1.4)
+    bigdecimal (3.1.5)
     bindex (0.8.1)
     bootsnap (1.17.0)
       msgpack (~> 1.2)
@@ -104,21 +104,20 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    chartkick (5.0.4)
+    chartkick (5.0.5)
     chunky_png (1.4.0)
     colorize (1.1.0)
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
-    countries (5.7.0)
+    countries (5.7.1)
       unaccent (~> 0.3)
     country_select (8.0.3)
       countries (~> 5.0)
     crass (1.0.6)
-    daemons (1.4.1)
     date (3.3.4)
-    debug (1.8.0)
-      irb (>= 1.5.0)
-      reline (>= 0.3.1)
+    debug (1.9.0)
+      irb (~> 1.10)
+      reline (>= 0.3.8)
     devise (4.9.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -133,11 +132,10 @@ GEM
     drb (2.2.0)
       ruby2_keywords
     erubi (1.12.0)
-    eventmachine (1.2.7)
     execjs (2.9.1)
     faker (3.2.2)
       i18n (>= 1.8.11, < 2)
-    faraday (2.7.12)
+    faraday (2.8.0)
       base64
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
@@ -150,10 +148,6 @@ GEM
       activesupport (>= 6.1)
     groupdate (6.4.0)
       activesupport (>= 6.1)
-    haml (6.2.3)
-      temple (>= 0.8.2)
-      thor
-      tilt
     hiredis (0.6.3)
     http-accept (1.7.0)
     http-cookie (1.0.5)
@@ -172,14 +166,13 @@ GEM
       railties (>= 6.0.0)
     invisible_captcha (2.1.0)
       rails (>= 5.2)
-    io-console (0.6.0)
-    irb (1.10.1)
+    io-console (0.7.1)
+    irb (1.11.0)
       rdoc
       reline (>= 0.3.8)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
-    json (2.7.1)
     jwt (2.7.1)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
@@ -205,16 +198,6 @@ GEM
       net-imap
       net-pop
       net-smtp
-    mailcatcher (0.2.4)
-      eventmachine
-      haml
-      i18n
-      json
-      mail
-      sinatra
-      skinny (>= 0.1.2)
-      sqlite3-ruby
-      thin
     mailgun-ruby (1.2.13)
       rest-client (>= 2.0.2)
     marcel (1.0.2)
@@ -227,10 +210,8 @@ GEM
     minitest (5.20.0)
     msgpack (1.7.2)
     multi_xml (0.6.0)
-    mustermann (3.0.0)
-      ruby2_keywords (~> 0.0.1)
     mutex_m (0.2.0)
-    net-imap (0.4.7)
+    net-imap (0.4.8)
       date
       net-protocol
     net-pop (0.1.2)
@@ -241,12 +222,25 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.7.0)
+    nokogiri (1.15.5)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
+    nokogiri (1.15.5-aarch64-linux)
+      racc (~> 1.4)
+    nokogiri (1.15.5-arm-linux)
+      racc (~> 1.4)
     nokogiri (1.15.5-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.15.5-x86-linux)
+      racc (~> 1.4)
+    nokogiri (1.15.5-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.15.5-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pdf-core (0.9.0)
     pg (1.5.4)
-    phonelib (0.8.5)
+    phonelib (0.8.6)
     phony (2.20.11)
     popper_js (2.11.8)
     prawn (2.4.0)
@@ -254,24 +248,22 @@ GEM
       ttfunk (~> 1.7)
     prawn-table (0.2.2)
       prawn (>= 1.3.0, < 3.0.0)
-    psych (5.1.1.1)
+    psych (5.1.2)
       stringio
     public_suffix (5.0.4)
     puma (5.6.7)
       nio4r (~> 2.0)
     racc (1.7.3)
-    rack (2.2.8)
-    rack-mini-profiler (3.2.0)
+    rack (3.0.8)
+    rack-mini-profiler (3.3.0)
       rack (>= 1.2.0)
-    rack-protection (3.1.0)
-      rack (~> 2.2, >= 2.2.4)
-    rack-session (1.0.2)
-      rack (< 3)
+    rack-session (2.0.0)
+      rack (>= 3.0.0)
     rack-test (2.1.0)
       rack (>= 1.3)
-    rackup (1.0.0)
-      rack (< 3)
-      webrick
+    rackup (2.1.0)
+      rack (>= 3)
+      webrick (~> 1.8)
     rails (7.1.2)
       actioncable (= 7.1.2)
       actionmailbox (= 7.1.2)
@@ -302,13 +294,13 @@ GEM
       thor (~> 1.0, >= 1.2.2)
       zeitwerk (~> 2.6)
     rake (13.1.0)
-    rdoc (6.6.1)
+    rdoc (6.6.2)
       psych (>= 4.0.0)
     receipts (2.2.0)
       prawn (>= 1.3.0, < 3.0.0)
       prawn-table (~> 0.2.1)
     redis (4.8.1)
-    redis-client (0.18.0)
+    redis-client (0.19.0)
       connection_pool
     redis-namespace (1.11.0)
       redis (>= 4)
@@ -353,14 +345,6 @@ GEM
       redis-client (>= 0.14.0)
     simple_calendar (2.4.3)
       rails (>= 3.0)
-    sinatra (3.1.0)
-      mustermann (~> 3.0)
-      rack (~> 2.2, >= 2.2.4)
-      rack-protection (= 3.1.0)
-      tilt (~> 2.0)
-    skinny (0.2.2)
-      eventmachine (~> 1.0)
-      thin
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -368,9 +352,14 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    sqlite3 (1.6.9)
+      mini_portile2 (~> 2.8.0)
+    sqlite3 (1.6.9-aarch64-linux)
+    sqlite3 (1.6.9-arm-linux)
     sqlite3 (1.6.9-arm64-darwin)
-    sqlite3-ruby (1.3.3)
-      sqlite3 (>= 1.3.3)
+    sqlite3 (1.6.9-x86-linux)
+    sqlite3 (1.6.9-x86_64-darwin)
+    sqlite3 (1.6.9-x86_64-linux)
     stimulus-rails (1.3.0)
       railties (>= 6.0.0)
     stringio (3.1.0)
@@ -378,20 +367,15 @@ GEM
     stripe_event (2.7.0)
       activesupport (>= 3.1)
       stripe (>= 2.8, < 9)
-    temple (0.10.3)
-    thin (1.8.2)
-      daemons (~> 1.0, >= 1.0.9)
-      eventmachine (~> 1.0, >= 1.0.4)
-      rack (>= 1, < 3)
     thor (1.3.0)
     tilt (2.3.0)
     timeout (0.4.1)
     ttfunk (1.7.0)
-    turbo-rails (2.0.0.pre.beta.1)
+    turbo-rails (2.0.0.pre.beta.2)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
-    twilio-ruby (6.8.3)
+    twilio-ruby (6.9.0)
       faraday (>= 0.9, < 3.0)
       jwt (>= 1.5, < 3.0)
       nokogiri (>= 1.6, < 2.0)
@@ -418,7 +402,13 @@ GEM
     zeitwerk (2.6.12)
 
 PLATFORMS
-  arm64-darwin-22
+  aarch64-linux
+  arm-linux
+  arm64-darwin
+  ruby
+  x86-linux
+  x86_64-darwin
+  x86_64-linux
 
 DEPENDENCIES
   apexcharts
@@ -448,7 +438,6 @@ DEPENDENCIES
   jbuilder
   kaminari
   kredis
-  mailcatcher
   mailgun-ruby (~> 1.2.5)
   pg
   phonelib
@@ -481,4 +470,4 @@ RUBY VERSION
    ruby 3.2.2p53
 
 BUNDLED WITH
-   2.3.26
+   2.5.1
