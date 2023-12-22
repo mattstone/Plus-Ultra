@@ -162,6 +162,12 @@ class ISBaseWatir
     }
   end
   
+  def test_event_db
+    event = Event.find_by(name: "test event")
+    event = Event.find_by(name: changed) if event.nil?
+    event
+  end
+  
   def create_test_product! 
     Product.create(test_product)
   end

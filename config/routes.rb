@@ -61,8 +61,8 @@ Rails.application.routes.draw do
   get 'image_u/:image/:campaign_id/:communication_id/:user_id',       to: 'home#image_u', as: "image_u"
   
   # Events 
-  get 'events/accept_invitation/:event_id/:uuid',  to: 'events#accept',  as: "accept_invitation"
-  get 'events/decline_invitation/:event_id/:uuid', to: 'events#decline', as: "decline_invitation"
+  get 'events/accept_invitation/:event_id/:uuid',  to: 'events#accept_invitation',  as: "accept_invitation"
+  get 'events/decline_invitation/:event_id/:uuid', to: 'events#decline_invitation', as: "decline_invitation"
   
   
   

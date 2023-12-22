@@ -32,6 +32,9 @@ class ISEvents < ISBaseWatir
     
     new_event
     
+    edit_event
+    
+    invitiations
   end
   
   def browse_to_events
@@ -77,10 +80,108 @@ class ISEvents < ISBaseWatir
     
     sleep 2 # Wait for map to draw
     
+    set_text_field('query', 't')
+
+    sleep 2
+    
+    click_button "search_results_#{test_user_db.id}"
+
     click_button "admin_user_event_button"
     
-      
-    sleep 880
+    wait_for_text "Event was successfully created"
+  end
+  
+
+  def edit_event
+    header("Edit event")
+
+    sleep 1
+    
+    click "/admin/users/#{@user.id}/events/#{test_event_db.id}/edit"
+    
+    wait_for_text "Editing event"
+    
+    set_text_field('event_name', changed)
+
+    click_button "admin_user_event_button"
+    
+    wait_for_text "Event was successfully updated"
+    wait_for_text changed
+  end
+  
+  def invitiations
+    header("Invitiations")
+    
+    event = test_event_db
+    first = event.invitees.first 
+    
+    case first.class.to_s.downcase == "hash"
+    when true  then good("first invite is a hash")
+    when false then good("first invite is not a hash")
+    end
+
+    case first["email"] == @user.email
+    when true  then good("email is good")
+    when false then good("email is not good: #{first["email"]}")
+    end
+
+    case !first["uuid"].blank?
+    when true  then good("uuid is good")
+    when false then good("uuid is not good: #{first["uuid"]}")
+    end
+
+    # Build accept and decline urls
+    routes      = Rails.application.routes.url_helpers
+    accept_url  = routes.accept_invitation_url(event_id:  event.id, uuid: first["uuid"])
+    decline_url = routes.decline_invitation_url(event_id: event.id, uuid: first["uuid"])
+    
+    case !accept_url.blank?
+    when true  then good("accept_url is good")
+    when false then good("accept_url is not good: #{accept_url}")
+    end
+
+    case !decline_url.blank?
+    when true  then good("decline_url is good")
+    when false then good("decline_url is not good: #{decline_url}")
+    end
+    
+    # accept invitation 
+    goto accept_url
+    
+    wait_for_text "accepted"
+    
+    event.reload
+    
+    first = event.invitees.first 
+
+    case first["accepted"] == true
+    when true  then good("accepted is good")
+    when false then good("accepted is not good: #{first.inspect}")
+    end
+
+    case !first["date_accepted"].nil?
+    when true  then good("date_accepted is good")
+    when false then good("date_accepted is not good: #{first.inspect}")
+    end
+    
+    # decline invitation
+
+    goto decline_url
+
+    event.reload
+    
+    first = event.invitees.first 
+
+    case first["accepted"] == false
+    when true  then good("accepted is false")
+    when false then good("accepted is not false: #{first.inspect}")
+    end
+
+    case first["date_accepted"].nil?
+    when true  then good("date_accepted is nil")
+    when false then good("date_accepted is not nil: #{first.inspect}")
+    end
+    
   end
   
 end

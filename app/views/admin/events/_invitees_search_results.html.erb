@@ -7,7 +7,7 @@
         <%= hidden_field_tag :invitees, url_encode_object(invitees) %>
         <div class="row">
           <div class="col-4">
-            <%= f.submit "#{u.email} <#{u.full_name}>", class: "btn btn-light" %>
+            <%= f.submit "#{u.email} <#{u.full_name}> search_results_#{u.id}", id: "search_results_#{u.id}", class: "btn btn-light" %>
           </div>
         </div>
       <% end %>

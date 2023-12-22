@@ -54,9 +54,25 @@ class Event < ApplicationRecord
   end
 
   def accept_invitation!(uuid)
+    self.invitees.each do |i|
+      if i["uuid"] == uuid 
+        i["accepted"]      = true 
+        i["date_accepted"] = DateTime.now
+        self.save 
+        break
+      end
+    end
   end 
 
   def decline_invitation!(uuid)
+    self.invitees.each do |i|
+      if i["uuid"] == uuid 
+        i["accepted"]      = false 
+        i["date_accepted"] = nil
+        self.save 
+        break
+      end
+    end
   end
 
 end
