@@ -18,7 +18,21 @@
     </div>
     <div class="row">
       <div class="col-2"><strong>Invitees</strong></div>
-      <div class="col-3"><%= event.invitees %></div>
+      <div class="col-3">
+        <% if event.invitees.count == 0 %>
+          <p>None</p>
+        <% else %>
+          <% 
+            string = ""
+            event.invitees.each do |e|
+              string += ", " if !string.blank?
+              string += "#{e["email"]}"
+            end
+          %>
+          
+          <%= string %>
+        <% end %>
+      </div>
     </div>
     <div class="row">
       <div class="col-2">

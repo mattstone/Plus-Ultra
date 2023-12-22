@@ -29,6 +29,14 @@ class Admin::EventsController < Admin::BaseController
 
   # POST /events or /events.json
   def create
+    
+    x = event_params 
+    
+    Rails.logger.info "create: 1".red
+    Rails.logger.info x[:invitees].inspect
+    Rails.logger.info x[:invitees].class
+    
+    
     @event = @user.events.new(event_params)
 
     respond_to do |format|
@@ -117,21 +125,22 @@ class Admin::EventsController < Admin::BaseController
       @event = Event.find(params[:id])
     end
     
-    def set_invitees 
+    def set_invitees
       @invitees = JSON.parse URI.decode_www_form_component(params[:invitees])
     end
 
     # Only allow a list of trusted parameters through.
     def event_params
-      params.fetch(:event, {}).permit(
+      temp = params.fetch(:event, {}).permit(
         :event_type,
         :start_datetime,
         :end_datetime,
         :name,
         :location,
-        :invitees,
-        :new_invitiees
+        :invitees
       )
       
+      temp[:invitees] = JSON::parse(temp[:invitees])
+      temp
     end
 end

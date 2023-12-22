@@ -149,6 +149,19 @@ class ISBaseWatir
     }
   end 
   
+  def test_event
+    {
+       user_id: test_user_db.id,
+       event_type: Event::event_types[:meeting],
+       name: "test event",
+       location: "1 Martin Place, Sydney NSW, Australia",
+       video_url: "",
+       start_datetime: Time.now + 1.month,
+       end_datetime: Time.now + 1.month + 1.hour,
+       invitees: []
+    }
+  end
+  
   def create_test_product! 
     Product.create(test_product)
   end
@@ -226,6 +239,9 @@ class ISBaseWatir
   #
   # 
   
+  def test_runner 
+  end
+  
   def get_test_user
     User.find_by(email: test_user[:email])
   end
@@ -289,6 +305,12 @@ class ISBaseWatir
     select = @browser.select(id: id)
     select.focus()
     select.select(value:value)
+  end
+  
+  def set_datetime_field(id, datetime)
+    datetime_field = @browser.date_time_field(id: id)
+    datetime_field.focus
+    datetime_field.set(datetime.strftime("%Y-%m-%dT%H:%M:%S"))
   end
   
   def execute_javascript(script)

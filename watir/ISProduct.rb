@@ -103,6 +103,7 @@ class ISProduct < ISBaseWatir
   
   
   def create_subscription 
+    header("Update Subscription")
     
     click "/admin/products"
     
