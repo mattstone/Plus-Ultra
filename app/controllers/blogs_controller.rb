@@ -6,6 +6,7 @@ class BlogsController < ApplicationController
     @featured_blog = Blog.last 
     
     @blogs = Blog
+               .includes([:rich_text_teaser])
                .order(created_at: :desc)
                .page params[:page]
   end

@@ -144,7 +144,7 @@ group :development do
   # Databae optimisation [https://github.com/flyerhzm/bullet]
   gem 'bullet' 
   
-  # Rails debugging [https://dev.to/zeeshan1414/how-to-debug-your-rails-app-using-pry-rails-36cf]
+  # # Rails debugging [https://dev.to/zeeshan1414/how-to-debug-your-rails-app-using-pry-rails-36cf]
   gem 'pry-rails'
   gem 'pry-doc'
 

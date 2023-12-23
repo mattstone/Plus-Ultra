@@ -1,0 +1,9 @@
+<div class="card mb-3  <%= classes if defined?(classes) %>" style="<%= styles if defined?(styles) %>">
+  <div class="card-body" >
+    <% if defined?(title) %>
+      <h4 class="card-title  " ><%= title %></h4>
+      <br>
+    <% end %>
+    <%= yield %>
+  </div>
+</div>
