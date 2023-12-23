@@ -142,8 +142,12 @@ class ISBlog < ISBaseWatir
     click "/blogs"
 
     wait_for_text 'Sidebar'
+
+    routes = Rails.application.routes.url_helpers
+    goto routes.blogs_url(format: :xml)
+    
+    wait_for_text ENV['APP_NAME']
   end
-  
   
 end
 

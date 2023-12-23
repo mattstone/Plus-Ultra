@@ -268,6 +268,11 @@ class ISBaseWatir
     wait_for_text 'Empty'
   end 
   
+  
+  def browse_to(url)
+    goto url  
+  end 
+  
   def go_home
     goto @base_url
   end
