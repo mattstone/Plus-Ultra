@@ -142,13 +142,11 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - subscriptions history
 - upgrade to Ruby 3.3 & YJIT
 - Calendar - https://github.com/icalendar/icalendar
--- events 
--- invitations 
--- accept & decline invitations
+- Kamal 0 https://kamal-deploy.org/docs/installation
 
 * Ruby version
 - https://github.com/rbenv/rbenv
-- 3.1.3
+- 3.2.2
 
 * System dependencies
 - See Gem file 
