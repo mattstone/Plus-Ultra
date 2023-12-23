@@ -21,10 +21,15 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     
+    <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" %>
+view raw
+    
     <%= render 'layouts/shared/facebook_meta_tags' %>
     <%= render 'layouts/shared/google_tag_manager_head' %>
     
     <%= turbo_refreshes_with method: :morph, scroll: :preserve  %>
+    
+    <%= yield :head %>    
   </head>
   <body>
     <%= render 'layouts/shared/google_tag_manager_body' %>

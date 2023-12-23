@@ -1,3 +1,7 @@
+<% content_for :head do %>
+  <%= auto_discovery_link_tag(:rss, blogs_url(format: "rss")) %>
+<% end %>
+
 <main class="container">
   <p style="color: green"><%= notice %></p>
   

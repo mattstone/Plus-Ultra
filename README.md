@@ -6,13 +6,13 @@ Aim:
 
 Starter app with everything needed to launch and run a business. Just add an idea and designer.
 
-Modern Rails 7 Hotwire app, embracing the the no build philosophy on the front-end.
+Modern Rails 7 Hotwire app, embracing the the no build philosophy on the front-end. All javascripts are loaded via Import Maps.
 
 Note: Not production ready. Still work in progress. Aim is to be completed in Feb 2024.
 
 ## 1. Marketing
 
-- Blog 
+- Blog with RSS/XML feed
 - Email lists (https://www.mailgun.com/ to send marketing emails )
 - Campaign management
 
