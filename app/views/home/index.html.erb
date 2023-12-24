@@ -1,23 +1,31 @@
-<div class="row align-items-center g-lg-5 py-5">
-  <div class="col-lg-7 text-center text-lg-start">
-    <%= image_tag("logo", class: "img-fluid mx-auto d-block", style: "width: 19vw; min-width: 330px;") %>
+<%= render 'shared/ui/hero', title: "Launching soon!" do %>
 
-    <h2 class="display-6 fw-bold lh-1 mb-3 text-center">Launching soon!</h2>
-    
-    <p class="text-center">
-      <i class="fa-solid fa-user-secret fa-7x fa-flip"></i>
-    </p>
+  <div class="row">
+    <div class="col-6 text-center text-lg-start">
+      <%= image_tag("logo", class: "img-fluid mx-auto d-block", style: "width: 19vw; min-width: 330px;") %>
 
-    <p class="fs-4 text-center">
-      Signup to our newsletter to be the first to know.
-    </p>
+      <p class="text-center">
+        <i class="fa-solid fa-user-secret fa-7x fa-flip"></i>
+      </p>
+
+      <p class="fs-4 text-center">
+        Signup to our newsletter to be the first to know.
+      </p>
+    </div>
     
-  </div>
-  <div class="col-md-10 mx-auto col-lg-5">
-    <div class="p-4 p-md-5 border rounded-3 bg-light">
+    <div class="col-6 mx-auto">
       <br>
       <br>
-      <%= render 'home/launch/subscribe' %>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="p-4 p-md-5 border rounded-3 bg-light">
+        <%= render 'home/launch/subscribe' %>
+      </div>
     </div>
   </div>
-</div>
+
+<% end %>
