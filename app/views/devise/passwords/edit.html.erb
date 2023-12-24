@@ -18,7 +18,9 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "Change my password" %>
+    <%= render 'shared/ui/button', button_class: standard_button_class, id: "password_change" do %>
+      Change my password
+    <% end %>
   </div>
 <% end %>
 

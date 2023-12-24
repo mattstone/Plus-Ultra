@@ -34,5 +34,9 @@
 </div>
 
 <div class="actions">
-  <%= f.submit "Sign up", class: standard_button_class, id: "sign_up_button" %>
+  <%= render 'shared/ui/button', button_class: standard_button_class, id: "sign_up_button" do %>
+    Sign up
+  <% end %>
+  
 </div>
+

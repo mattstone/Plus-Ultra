@@ -18,9 +18,10 @@
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in", class: standard_button_class, id: "log_in_button" %>
-  </div>
+  <%= render 'shared/ui/button', button_class: standard_button_class, id: "log_in_button" do %>
+    Log in
+  <% end %>
+  
 <% end %>
 
 <%= render "devise/shared/links" %>

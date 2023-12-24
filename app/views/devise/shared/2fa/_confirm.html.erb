@@ -33,8 +33,16 @@
           </div>
         </div>
         
-        <%= submit_tag "Confirm", class: 'btn btn-primary w-100 mt-4', id: "confirm_2fa_button" %>
-        <%= submit_tag "Resend",  class: 'btn btn-outline-primary btn-sm w-100 mt-2 '%>
+        <%#= submit_tag "Confirm", class: 'btn btn-primary w-100 mt-4', id: "confirm_2fa_button" %>
+        <%#= submit_tag "Resend",  class: 'btn btn-outline-primary btn-sm w-100 mt-2 '%>
+        
+        <%= render 'shared/ui/button', button_class: "btn-primary w-100 mt-4", id: "confirm_2fa_button" do %>
+          Confirm
+        <% end %>
+
+        <%= render 'shared/ui/button', button_class: "btn-outline-primary btn-sm w-100 mt-2", id: "resend_2fa_button" do %>
+          Resend
+        <% end %>
         
     <% end %>
     

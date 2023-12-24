@@ -42,7 +42,9 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "Update" %>
+    <%= render 'shared/ui/button', button_class: standard_button_class, id: "user_update" do %>
+      Update
+    <% end %>
   </div>
 <% end %>
 
