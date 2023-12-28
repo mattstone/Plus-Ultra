@@ -355,6 +355,8 @@ GEM
       redis-client (>= 0.14.0)
     simple_calendar (2.4.3)
       rails (>= 3.0)
+    solid_queue (0.1.2)
+      rails (>= 7.0.3.1)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -467,6 +469,7 @@ DEPENDENCIES
   selenium-webdriver
   sidekiq
   simple_calendar (~> 2.4)
+  solid_queue
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails

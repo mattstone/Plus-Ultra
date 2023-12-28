@@ -17,7 +17,7 @@ class BulkEmail < ApplicationRecord
 
   def send!(current_user = nil)
     # Could be long running tasks, so run on background thread
-    BulkEmailJob.perform_async(self.id, current_user.id)
+    BulkEmailSenderJob.perform_later(self.id, current_user.id)
   end
   
   def send_from_sidekiq!(user_id = nil)

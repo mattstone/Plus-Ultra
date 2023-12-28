@@ -45,8 +45,8 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 
 ## Development Environment
 
-### Sidekiq for background task 
-- bundle exec sidekiq
+### Solid Queue for background task 
+- bundle exec rake solid_queue:start
 
 ### Mailcatcher
 

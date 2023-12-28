@@ -119,7 +119,7 @@ gem 'sanitize' # https://github.com/rgrove/sanitize
 gem 'mailgun-ruby', '~>1.2.5'
 
 # Background tasks 
-gem 'sidekiq'
+gem "solid_queue"
 
 # Calendar
 gem "simple_calendar", "~> 2.4"
@@ -145,8 +145,8 @@ group :development do
   gem 'bullet' 
   
   # # Rails debugging [https://dev.to/zeeshan1414/how-to-debug-your-rails-app-using-pry-rails-36cf]
-  gem 'pry-rails'
-  gem 'pry-doc'
+  # gem 'pry-rails'
+  # gem 'pry-doc'
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
