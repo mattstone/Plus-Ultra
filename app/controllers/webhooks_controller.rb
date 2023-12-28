@@ -44,10 +44,7 @@ class WebhooksController < ApplicationController
     end
 
     # If we get here.. all is good!
-    
-    if !Rails.env.production?
-      Rails.logger.info event.type.to_s.red
-    end 
+    Rails.logger.info event.type.to_s.red if !Rails.env.production?
     
     stripe = ISStripe.new 
     stripe.handle_webhook(event)
