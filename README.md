@@ -66,6 +66,8 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - Turbo 8
 - Active Storage for file uploads
 - ActionText Trix WYSIWYG editor
+- Solid Queue for background tasks 
+- Solid Cache for caching
 - dotenv for environment
 - Redis for key value store
 - Boostrap SCSS
