@@ -20,7 +20,7 @@ class BulkEmail < ApplicationRecord
     BulkEmailSenderJob.perform_later(self.id, current_user.id)
   end
   
-  def send_from_sidekiq!(user_id = nil)
+  def send_from_background_job!(user_id = nil)
     @user   = User.find(user_id) if !user_id.nil?
     
     options = { communication: self.communication }
@@ -46,7 +46,7 @@ class BulkEmail < ApplicationRecord
         message: "Bulk email: #{communication.name} has been sent to #{self.sent} subscribers"
       }
       
-      Rails.logger.info "send_from_sidekiq: #{options.inspect}".red
+      Rails.logger.info "send_from_background_job: #{options.inspect}".red
       
       UserMailer::admin(options).deliver_now!
     end

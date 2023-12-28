@@ -144,7 +144,7 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - subscriptions history
 - upgrade to Ruby 3.3 & YJIT
 - Calendar - https://github.com/icalendar/icalendar
-- Kamal 0 https://kamal-deploy.org/docs/installation
+- Kamal - https://kamal-deploy.org/docs/installation
 
 * Ruby version
 - https://github.com/rbenv/rbenv
@@ -152,18 +152,17 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 
 * System dependencies
 - See Gem file 
-- Mailcatcher for development and test environments 
-- Chromedriver 
+- Mailcatcher & Chromedriverfor development and test environments -  
 - Postgres
 - Redis
 
 * Configuration
 
 * Database creation
-- rails db:create 
+- bin/rails db:create 
 
 * Database initialization
-- rails db:migrate
+- bin/rails db:migrate
 
 * How to run the test suite
 - cd watir 
@@ -325,10 +324,8 @@ server {
 
 Plus Ultra is released under the [MIT License](https://opensource.org/licenses/MIT).
 
-
-
 * Ruby 3.2.2 fix 
-
+- Probably things to do after upgrading ruby version
 - note vips install takes awhile..
 
 gem update --system 3.5.1
