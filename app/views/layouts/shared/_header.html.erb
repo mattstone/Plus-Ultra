@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <%= stylesheet_link_tag 'ui' %>
     <meta
       name="description"
       content="<%= @meta_description %>"
@@ -22,8 +22,7 @@
     <%= javascript_importmap_tags %>
     
     <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" %>
-view raw
-    
+    view raw
     <%= render 'layouts/shared/facebook_meta_tags' %>
     <%= render 'layouts/shared/google_tag_manager_head' %>
     
