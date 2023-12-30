@@ -119,7 +119,10 @@ gem 'sanitize' # https://github.com/rgrove/sanitize
 gem 'mailgun-ruby', '~>1.2.5'
 
 # Background tasks 
-gem 'sidekiq'
+gem "solid_queue"
+
+# Caching - preparation for Rails 8
+gem "solid_cache"
 
 # Calendar
 gem "simple_calendar", "~> 2.4"
