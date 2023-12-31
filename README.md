@@ -144,13 +144,12 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 
 - Elastic search
 - subscriptions history
-- upgrade to Ruby 3.3 & YJIT
 - Calendar - https://github.com/icalendar/icalendar
 - Kamal - https://kamal-deploy.org/docs/installation
 
 * Ruby version
 - https://github.com/rbenv/rbenv
-- 3.2.2
+- 3.3.0
 
 * System dependencies
 - See Gem file 
@@ -326,22 +325,33 @@ server {
 
 Plus Ultra is released under the [MIT License](https://opensource.org/licenses/MIT).
 
-* Ruby 3.2.2 fix 
-- Probably things to do after upgrading ruby version
-- note vips install takes awhile..
+* Ruby 3.3 upgrade 
+- brew may decide to upgrade a lot of things..
+- vips install takes awhile..
 
-gem update --system 3.5.1
+brew install ruby-build
+rbenv install -list    
+ensure 3.3.0 or above is on the list
+
+rbenv install 3.3.0
+rbenv local 3.3.0
+
+gem update --system 
 gem install thin 
 
 gem install watir
 gem install mailcatcher
 gem install puma
 
+gem install pg
 brew install wget
 brew uninstall vips 
 brew install vips
 gem install brakeman
 gem install rails_best_practices
 gem install reek
+
+rm Gemfile.lock
+bundle install 
 
 

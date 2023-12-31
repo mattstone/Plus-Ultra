@@ -12,7 +12,9 @@ class Admin::BlogsController < Admin::BaseController
       args  << "%#{params[:title]}%"
     end    
     
-    @blogs = Blog.all
+    @blogs = Blog
+              .includes(:hero_image_attachment)
+              .includes(:blob)
               .where(where, *args)
               .order(created_at: :desc)
               .page params[:page]
