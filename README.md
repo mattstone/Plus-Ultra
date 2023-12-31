@@ -76,7 +76,7 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - Simple calendar for events
 - Users individual time zones
 - Bullet for database optimisation
-- Pry for runtime debugging - developmen mode only
+- Pry for runtime debugging - development mode only
 
 ### Ensure your email marketing does not end up in the spam bin
 - Email sending is separated into operational and marketing. So if your marketing emails are flagged as spam, operational emails will not be affected. Aggressive marketing tactics may see your email domain added to Spam Blacklists and it's time consuming to get these removed.
