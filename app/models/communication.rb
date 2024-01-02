@@ -88,10 +88,10 @@ class Communication < ApplicationRecord
       string.gsub!("%2FA_CODE%",   user.one_time_code.to_s)
     end
     
-    if params[:event] and params[:uuid]
+    if options[:event] and options[:uuid]
       routes = Rails.application.routes.url_helpers
-      string.gsub!("%ACCEPT_INVITATION_URL%",  routes.accept_invitation_url(event_id:  params[:event].id, uuid: params[:uuid]))
-      string.gsub!("%DECLINE_INVITATION_URL%", routes.decline_invitation_url(event_id: params[:event].id, uuid: params[:uuid]))
+      string.gsub!("%ACCEPT_INVITATION_URL%",  routes.accept_invitation_url(event_id:  options[:event].id, uuid: options[:uuid]))
+      string.gsub!("%DECLINE_INVITATION_URL%", routes.decline_invitation_url(event_id: options[:event].id, uuid: options[:uuid]))
     end
     
     string
