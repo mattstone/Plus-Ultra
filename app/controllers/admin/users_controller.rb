@@ -26,6 +26,7 @@ class Admin::UsersController < Admin::BaseController
     end
     
     @users = User
+              .includes([:events])
               .where(where, *args)
               .order(created_at: :desc)
               .page params[:page]

@@ -64,6 +64,9 @@ class ISBaseWatir
 
     set_text_field('user_password_confirmation', test_user[:password])
     
+    checkbox = @browser.checkbox(id: 'terms_and_conditions_checkbox')
+    checkbox.set
+    
     click_button "sign_up_button"
     
     sleep 1

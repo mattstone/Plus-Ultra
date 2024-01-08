@@ -12,6 +12,10 @@ class TermsAndCondition < ApplicationRecord
     TermsAndCondition.where(status: "published").order(created_at: :desc).last
   end
   
+  def self.latest?(terms_and_conditions)
+    TermsAndCondition::lastest&.id == terms_and_conditions&.id
+  end
+  
   def published?
     self.status_published?
   end

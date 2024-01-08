@@ -165,5 +165,12 @@ class User < ApplicationRecord
     end
   end
   
+  #
+  # Terms and conditions
+  #
+  
+  def accepted_terms_and_conditions?
+    !self.terms_and_condition_id.nil?
+  end
   
 end

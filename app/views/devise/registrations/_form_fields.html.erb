@@ -33,10 +33,40 @@
   <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
 </div>
 
-<div class="actions">
-  <%= render 'shared/ui/button', button_class: standard_button_class, id: "sign_up_button" do %>
-    Sign up
-  <% end %>
+<br>
+
+<div class="field">
+  <div style="overflow-y: scroll; height:40px; width: 400px;">
+    <%= TermsAndCondition.latest&.content %>
+  </div>
+</div>
+
+<div data-controller="termsandconditions">
+  <div class="field">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox"
+        id = "terms_and_conditions_checkbox"
+        data-termsandconditions-target = "checkbox"
+        data-action = "change->termsandconditions#checkbox_ticked" 
+        required>
+      <label class="form-check-label" for="terms_and_conditions_checkbox">
+        Agree to terms and conditions
+      </label>
+      <div class="invalid-feedback">
+        You must agree before submitting.
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="actions">
+    <%= render 'shared/ui/button', button_class: standard_button_class, id: "sign_up_button", data_target: "data-termsandconditions-target = 'submitButton'", disabled: true do %>
+      Sign up
+    <% end %>
+  </div>
   
 </div>
+
+
+
 
