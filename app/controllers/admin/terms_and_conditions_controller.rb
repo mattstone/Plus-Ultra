@@ -14,7 +14,8 @@ end
 
   # GET /TermsAndConditions/new
   def new
-    @terms_and_condition = TermsAndCondition.new
+    @terms_and_condition = TermsAndCondition.where(status: "published").order(updated_at: :desc).first
+    @terms_and_condition = TermsAndCondition.new if @terms_and_condition.nil?
   end
 
   # GET /TermsAndConditions/1/edit
