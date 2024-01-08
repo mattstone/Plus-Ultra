@@ -79,6 +79,9 @@ class HomeController < ApplicationController
       render plain: "OK"
     end
     
+    def calendar_test 
+    end
+    
   end
 
 end

@@ -72,6 +72,10 @@ module ApplicationHelper
       barcode = Barby::QrCode.new(text, level: :q, size: 10)
       base64_output = Base64.encode64(barcode.to_png({ xdim: 5 }))
       "data:image/png;base64,#{base64_output}"
-    end  
+  end  
+  
+  def humanize(string)
+    string.to_s.humanize
+  end
   
 end

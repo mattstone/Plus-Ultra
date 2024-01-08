@@ -17,6 +17,8 @@ class User < ApplicationRecord
   
   belongs_to :campaigns, optional: true
   
+  belongs_to :terms_and_conditions, optional: true
+  
   broadcasts_refreshes
   
   validates :first_name, :last_name, presence: true

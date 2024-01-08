@@ -1,0 +1,28 @@
+<%= form_with(model: [:admin, terms_and_condition]) do |f| %>
+  <%= render 'shared/form_results', resource: terms_and_condition %>
+
+  <div class="field">
+    <%= f.label :version %>
+    <% if terms_and_condition.new_record? %>
+      <p>Latest</p>
+    <% else %>
+      <%= terms_and_condition.id %>
+    <% end %>
+  </div>
+  
+  <div class="field">
+      <%= f.label :content %>
+      <%= f.rich_text_area :content, class: "form-control", data: { controller: "trix" } %>
+  </div>
+
+  <br>
+  
+  <%= f.submit "Save", class: admin_button_class, id: "admin_terms_and_conditions_update_button" %>
+
+<% end %>
+
+<hr>
+
+<%# transaction = User::test %>
+<%#= render 'transactions/stripe_payment_form', transaction: transaction %>
+

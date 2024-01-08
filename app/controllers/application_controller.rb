@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   before_action :set_seo
   before_action :set_campaign
   
+  around_action :switch_time_zone, :if => :current_user
+  
   def l(string)
     case Rails.env.test?
     when true  then Rails.logger.debug(string.to_s.yellow)
@@ -97,6 +99,9 @@ class ApplicationController < ActionController::Base
     when false then @error = "Unable to cancel subscription. Status: #{response["status"]}"
     end
   end
-
+  
+  def switch_time_zone(&block)
+    Time.use_zone(current_user.time_zone, &block)
+  end  
   
 end

@@ -1,0 +1,49 @@
+<%= render 'admin/shared/header', title: "Manage Terms and Conditions" %>
+<br>
+
+
+<br>
+
+<div class="row"">
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Version</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Status</strong>
+  </div>
+  <div class="col-3 <%= admin_background_class %>">
+    <strong>Updated</strong>
+  </div>
+  <div class="col-2 <%= admin_background_class %>">
+    <strong>Action</strong>
+  </div>
+</div>
+
+
+<% if @terms_and_conditions.empty? %>
+  <div class="row">
+    <div class="col-12 d-flex">
+      <p>
+        There are no Terms and Conditions
+      </p>
+    </div>
+  </div>
+<% else %>
+  <% @terms_and_conditions.each do |tc| %>
+    <div class="row">
+      <div class="col-2"><%= tc.id %></div>
+      <div class="col-2"><%= humanize tc.status %></div>
+      <div class="col-3"><%= short_date_and_time tc.updated_at %></div>
+      <div class="col-2">
+        <%= link_to "Edit", edit_admin_terms_and_condition_path(tc) %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<br>
+
+<%= render 'shared/paging', resources: @terms_and_conditions %>
+
+<%= link_to "New Terms and conditions", new_admin_terms_and_condition_path %>
+

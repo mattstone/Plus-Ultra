@@ -91,7 +91,8 @@ Rails.application.routes.draw do
               :transactions,
               :blogs,
               :orders,
-              :communications
+              :communications,
+              :terms_and_conditions
               
     resources :users do 
       resources :events do 
@@ -149,6 +150,8 @@ Rails.application.routes.draw do
     
     get 'session_data',    to: 'home#session_data'
     get 'session_clear',   to: 'home#session_clear'
+    
+    get 'calendar_test',   to: 'home#calendar_test'
   end
   
   # Defines the root path route ("/")
