@@ -19,7 +19,13 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if resource.class.to_s == "User"
-      return admin_dashboard_path if resource.admin?
+      
+      # TODO: handle new terms and conditions
+      # case resource.new_terms_and_conditions?
+      # when true  then redirect to new t & c's acceptance
+      # when false then 
+        return admin_dashboard_path if resource.admin?
+      # end
     end
     dashboard_dashboard_path
   end

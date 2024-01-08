@@ -16,6 +16,10 @@ class TermsAndCondition < ApplicationRecord
     TermsAndCondition::lastest&.id == terms_and_conditions&.id
   end
   
+  def latest?
+    TermsAndCondition::lastest&.id == self.id
+  end
+  
   def published?
     self.status_published?
   end

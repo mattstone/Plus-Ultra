@@ -173,4 +173,10 @@ class User < ApplicationRecord
     !self.terms_and_condition_id.nil?
   end
   
+  def new_terms_and_conditions?
+    return true if self.terms_and_condition.nil?
+    
+    self.terms_and_condition.lastest? ? false : true
+  end
+  
 end
