@@ -168,6 +168,18 @@ class ISBaseWatir
     event
   end
   
+  def test_terms_and_conditions
+    {
+      status: "draft",
+      content: "Test content"
+    }
+  end
+
+  def test_terms_and_conditions_db
+    TermsAndCondition.last
+  end
+  
+  
   def create_test_product! 
     Product.create(test_product)
   end

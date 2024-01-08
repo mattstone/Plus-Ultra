@@ -8,6 +8,8 @@ class ISTemplate < ISBaseWatir
     super
     
     remove_test_data!
+    test_runner
+    tests_complete
   end
   
   def remove_test_data!
@@ -18,6 +20,10 @@ class ISTemplate < ISBaseWatir
     {
       variable: "value"
     }
+  end
+  
+  def test_runner
+    super
   end
   
 end

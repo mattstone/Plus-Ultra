@@ -31,9 +31,6 @@ class ISPurchase < ISBaseWatir
       manage_subscriptions
     end
     
-    
-    
-    
     tests_complete
   end 
   

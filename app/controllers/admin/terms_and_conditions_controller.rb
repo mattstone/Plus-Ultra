@@ -1,5 +1,5 @@
 class Admin::TermsAndConditionsController < Admin::BaseController
-  before_action :set_terms_and_condition, only: %i[ show edit update destroy cancel ]
+  before_action :set_terms_and_condition, only: %i[ show edit update ]
 
   # GET /TermsAndConditions or /TermsAndConditions.json
   def index

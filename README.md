@@ -26,6 +26,7 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - User/Customer management with 2FA
 - Admin Dashboard
 - Receipts
+- Terms and conditions
 
 ## 4. Reporting
 
