@@ -11,3 +11,6 @@ import "activestorage"
 
 import "chartkick"
 import "Chart.bundle"
+
+import LocalTime from "local-time"
+LocalTime.start()

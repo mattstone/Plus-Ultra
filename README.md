@@ -6,7 +6,7 @@ Aim:
 
 Starter app with everything needed to launch and run a business. Just add an idea and designer.
 
-Modern Rails 7 Hotwire app, embracing the the no build philosophy on the front-end. All javascripts are loaded via Import Maps.
+Modern Rails 7 Hotwire app. embracing the the no build philosophy on the front-end. All javascripts are loaded via Import Maps.
 
 Note: Not production ready. Still work in progress. Aim is to be completed in Feb 2024.
 
@@ -73,10 +73,10 @@ Note: Not production ready. Still work in progress. Aim is to be completed in Fe
 - Redis for key value store
 - Boostrap SCSS
 - Sanitize for cleaning up text input by user
-- Bulk emails sent on background thread
+- Emails sent on background thread
 - Simple calendar for events
 - Users individual time zones
-- Bullet for database optimisation
+- Bullet for database optimisation - development mode only
 - Pry for runtime debugging - development mode only
 
 ### Ensure your email marketing does not end up in the spam bin
