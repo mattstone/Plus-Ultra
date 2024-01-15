@@ -22,8 +22,7 @@ class ISTwilio
         to:              options[:to]
       )
       
-      # TODO: handle campaign_sent -> result.sid
-      
+      # TODO: handle campaign_sent -> result.sid      
     rescue => e 
     end
 

@@ -131,8 +131,10 @@ gem "simple_calendar", "~> 2.4"
 # Geolocation 
 gem 'geocoder'
 
-# Local time 
+# Local time -> https://github.com/basecamp/local_time
 gem 'local_time'
+
+gem 'oauth'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

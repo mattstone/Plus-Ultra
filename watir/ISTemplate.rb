@@ -8,6 +8,7 @@ class ISTemplate < ISBaseWatir
     super
     
     remove_test_data!
+    
     test_runner
     tests_complete
   end
