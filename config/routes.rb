@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   resources :transactions do 
     collection do 
       post 'stripe_payment_intent/product_id', to: 'transactions#stripe_payment_intent'
-      get  'complete', to: 'transaction/complete'
+      get  'complete', to: 'transactions#complete'
     end
     
     post 'poll_for_webhook_response', to: 'transactions#poll_for_webhook_response'

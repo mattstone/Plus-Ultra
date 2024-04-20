@@ -321,6 +321,16 @@ server {
     listen 80;
 }
 
+## Upgrade Rails
+
+* https://guides.rubyonrails.org/upgrading_ruby_on_rails.html
+
+* Confirm all tests run
+* Backup application 
+* Update gemfile to next version 
+* bundle install 
+* THOR_MERGE=vimdiff bin/rails app:update 
+
 
 ## License
 

@@ -15,4 +15,3 @@ Rails.application.configure do
     config.active_job.queue_adapter = :solid_queue
     # config.active_job.queue_name_prefix = "starter_production"
 end
-
